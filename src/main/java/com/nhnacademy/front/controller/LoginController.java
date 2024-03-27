@@ -1,6 +1,6 @@
 package com.nhnacademy.front.controller;
 
-import com.nhnacademy.front.adaptor.LoginAdaptor;
+import com.nhnacademy.front.adaptor.UserAdaptor;
 import com.nhnacademy.front.dto.AccessTokenResponse;
 import com.nhnacademy.front.dto.LoginRequest;
 import lombok.RequiredArgsConstructor;
@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 @Controller
 @RequiredArgsConstructor
 public class LoginController {
-    private final LoginAdaptor loginAdaptor;
+    private final UserAdaptor userAdaptor;
     @GetMapping("/login")
     public String loginForm(Model model){
         model.addAttribute("loginRequest", new LoginRequest());
@@ -21,7 +21,7 @@ public class LoginController {
 
     @PostMapping("/login")
     public String login(LoginRequest loginRequest, Model model){
-        AccessTokenResponse token = loginAdaptor.doLogin(loginRequest);
+        AccessTokenResponse token = userAdaptor.doLogin(loginRequest);
         model.addAttribute("token", token);
 
         return "redirect:/";
