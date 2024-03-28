@@ -34,6 +34,9 @@ public class LoginController {
         Cookie accessCookie = new Cookie("accessToken", accessTokenResponse.getAccessToken());
         Cookie refreshCookie = new Cookie("refreshToken", refreshTokenResponse.getRefreshToken());
 
+        accessCookie.setHttpOnly(true);
+        refreshCookie.setHttpOnly(true);
+
         response.addCookie(accessCookie);
         response.addCookie(refreshCookie);
 
