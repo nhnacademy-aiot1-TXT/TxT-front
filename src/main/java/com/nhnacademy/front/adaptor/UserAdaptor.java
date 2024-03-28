@@ -9,8 +9,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 @FeignClient(value = "user-management", url = "${gateway.url}")
 public interface UserAdaptor {
-    @PostMapping("/login")
+    @PostMapping("/api/auth/login")
     AccessTokenResponse doLogin(LoginRequest loginRequest);
-    @PostMapping("/register")
+    @PostMapping("/api/user/register")
     void createUser(UserRegisterRequest userRegisterRequest);
 }
