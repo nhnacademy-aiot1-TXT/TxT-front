@@ -25,7 +25,7 @@ public class LoginController {
     }
 
     @PostMapping("/login")
-    public String login(LoginRequest loginRequest, Model model, HttpServletResponse response){
+    public String login(LoginRequest loginRequest, HttpServletResponse response){
         Map<String, Object> tokens = userAdaptor.doLogin(loginRequest);
 
         AccessTokenResponse accessTokenResponse = (AccessTokenResponse) tokens.get("accessToken");
