@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 public interface UserAdaptor {
     @PostMapping("/api/auth/login")
     AccessTokenResponse doLogin(LoginRequest loginRequest);
+    @PostMapping("/api/auth/logout")
+    void doLogout(String refreshToken);
     @PostMapping("/api/user/register")
     void createUser(UserRegisterRequest userRegisterRequest);
 }
