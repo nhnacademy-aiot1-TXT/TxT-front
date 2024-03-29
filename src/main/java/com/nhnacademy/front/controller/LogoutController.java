@@ -25,9 +25,9 @@ public class LogoutController {
                 .findFirst()
                 .orElse(new Cookie("accessToken", ""));
         Cookie refreshCookie = Arrays.stream(request.getCookies())
-                .filter(c -> "refreshCookie".equals(c.getName()))
+                .filter(c -> "refreshToken".equals(c.getName()))
                 .findFirst()
-                .orElse(new Cookie("refreshCookie", ""));
+                .orElse(new Cookie("refreshToken", ""));
 
         accessCookie.setMaxAge(0);
         accessCookie.setPath("/");
@@ -42,6 +42,6 @@ public class LogoutController {
 
         userAdapter.doLogout(refreshCookie.getValue());
 
-        return "redirect:/login";
+        return "redirect:/";
     }
 }
