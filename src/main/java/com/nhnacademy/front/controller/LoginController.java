@@ -1,23 +1,22 @@
 package com.nhnacademy.front.controller;
 
-import com.nhnacademy.front.adaptor.UserAdaptor;
+import com.nhnacademy.front.adaptor.UserAdapter;
 import com.nhnacademy.front.dto.AccessTokenResponse;
 import com.nhnacademy.front.dto.LoginRequest;
 import com.nhnacademy.front.dto.RefreshTokenResponse;
+import com.nhnacademy.front.dto.TokensResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
-import java.util.Map;
 
 @Controller
 @RequiredArgsConstructor
 public class LoginController {
-    private final UserAdaptor userAdaptor;
+    private final UserAdapter userAdapter;
     @GetMapping("/login")
     public String loginForm(Model model){
         model.addAttribute("loginRequest", new LoginRequest());
@@ -26,10 +25,10 @@ public class LoginController {
 
     @PostMapping("/login")
     public String login(LoginRequest loginRequest, HttpServletResponse response){
-        Map<String, Object> tokens = userAdaptor.doLogin(loginRequest);
+        TokensResponse tokens = userAdapter.doLogin(loginRequest);
 
-        AccessTokenResponse accessTokenResponse = (AccessTokenResponse) tokens.get("accessToken");
-        RefreshTokenResponse refreshTokenResponse = (RefreshTokenResponse) tokens.get("refreshToken");
+        AccessTokenResponse accessTokenResponse = tokens.getAccessToken();
+        RefreshTokenResponse refreshTokenResponse = tokens.getRefreshToken();
 
         Cookie accessCookie = new Cookie("accessToken", accessTokenResponse.getAccessToken());
         Cookie refreshCookie = new Cookie("refreshToken", refreshTokenResponse.getRefreshToken());
