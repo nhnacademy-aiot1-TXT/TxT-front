@@ -11,6 +11,9 @@ import java.util.Map;
 @FeignClient(value = "user-management", url = "${gateway.url}")
 public interface UserAdaptor {
     @PostMapping("/api/auth/login")
+    AccessTokenResponse doLogin(LoginRequest loginRequest);
+    @PostMapping("/api/auth/logout")
+    void doLogout(String refreshToken);
     Map<String, Object> doLogin(LoginRequest loginRequest);
     @PostMapping("/api/user/register")
     void createUser(UserRegisterRequest userRegisterRequest);
