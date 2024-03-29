@@ -1,6 +1,6 @@
 package com.nhnacademy.front.controller;
 
-import com.nhnacademy.front.adaptor.UserAdaptor;
+import com.nhnacademy.front.adaptor.UserAdapter;
 import com.nhnacademy.front.utils.RedisUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -15,7 +15,7 @@ import java.util.Objects;
 @Controller
 @RequiredArgsConstructor
 public class LogoutController {
-    private final UserAdaptor userAdaptor;
+    private final UserAdapter userAdapter;
     private final RedisUtil redisUtil;
 
     @GetMapping("/logout")
@@ -40,7 +40,7 @@ public class LogoutController {
             redisUtil.setBlackList(accessCookie.getValue(), "access_token", (long) (1000 * 60 * 60));
         }
 
-        userAdaptor.doLogout(refreshCookie.getValue());
+        userAdapter.doLogout(refreshCookie.getValue());
 
         return "redirect:/login";
     }
