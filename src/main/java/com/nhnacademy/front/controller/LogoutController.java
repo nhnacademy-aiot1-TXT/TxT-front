@@ -24,11 +24,6 @@ public class LogoutController {
 
     @GetMapping("/logout")
     public String logout(HttpServletRequest request, HttpServletResponse response, @RequestAttribute("_csrf") CsrfToken csrfToken) {
-        log.debug("request: {}", request);
-        log.debug("cookies : {}", request.getCookies());
-        System.out.println(request);
-        System.out.println(request.getCookies());
-
         Cookie accessCookie = Arrays.stream(request.getCookies())
                 .filter(c -> "accessToken".equals(c.getName()))
                 .findFirst()
