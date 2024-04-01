@@ -6,10 +6,13 @@ import com.nhnacademy.front.dto.LoginRequest;
 import com.nhnacademy.front.dto.RefreshTokenResponse;
 import com.nhnacademy.front.dto.TokensResponse;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.web.csrf.CsrfToken;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestAttribute;
+
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
 
@@ -17,15 +20,16 @@ import javax.servlet.http.HttpServletResponse;
 @RequiredArgsConstructor
 public class LoginController {
     private final UserAdapter userAdapter;
+
     @GetMapping("/login")
-    public String loginForm(Model model){
+    public String loginForm(Model model) {
         model.addAttribute("loginRequest", new LoginRequest());
         return "login";
     }
 
     @PostMapping("/login")
-    public String login(LoginRequest loginRequest, HttpServletResponse response){
-        TokensResponse tokens = userAdapter.doLogin(loginRequest);
+    public String login(LoginRequest loginRequest, HttpServletResponse response, @RequestAttribute("_csrf") CsrfToken csrfToken) {
+        TokensResponse tokens = userAdapter.doLogin(loginRequest, csrfToken.getToken());
 
         AccessTokenResponse accessTokenResponse = tokens.getAccessToken();
         RefreshTokenResponse refreshTokenResponse = tokens.getRefreshToken();
