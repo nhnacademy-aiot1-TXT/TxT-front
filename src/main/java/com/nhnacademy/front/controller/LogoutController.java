@@ -33,9 +33,11 @@ public class LogoutController {
 
         accessCookie.setMaxAge(0);
         accessCookie.setPath("/");
+        accessCookie.setHttpOnly(true);
         response.addCookie(accessCookie);
         refreshCookie.setMaxAge(0);
         refreshCookie.setPath("/");
+        refreshCookie.setHttpOnly(true);
         response.addCookie(refreshCookie);
 
         if (Objects.nonNull(accessCookie.getValue()) && !"".equals(accessCookie.getValue())) {
