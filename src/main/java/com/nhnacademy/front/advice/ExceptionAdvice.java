@@ -18,11 +18,9 @@ public class ExceptionAdvice {
     private final UserAdapter userAdapter;
     @ExceptionHandler(FeignException.class)
     public String feignExceptionHandler(FeignException exception, HttpServletRequest request, HttpServletResponse response) {
-        System.out.println(exception.getMessage());
         if (exception.status() == 401) {
             try {
                 Cookie refreshToken = Arrays.stream(request.getCookies()).filter(cookie -> cookie.getName().equals("refreshToken")).findFirst().orElse(null);
-                refreshToken.setHttpOnly(true);
                 refreshToken.setPath("/");
 
                 AccessTokenResponse accesstokenresponse = userAdapter.reissue(refreshToken.getValue());
