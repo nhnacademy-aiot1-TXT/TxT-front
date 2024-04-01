@@ -24,8 +24,6 @@ public class ExceptionAdvice {
     public String feignExceptionHandler(FeignException exception, HttpServletRequest request, HttpServletResponse response) {
         if (exception.status() == 401) {
             try {
-                log.info("cookies : {}", request);
-                log.info("cookies : {}", request.getCookies());
                 Cookie refreshToken = Arrays.stream(request.getCookies()).filter(cookie -> cookie.getName().equals("refreshToken")).findFirst().orElse(null);
 
                 if (Objects.nonNull(refreshToken) && !"".equals(refreshToken.getValue())) {

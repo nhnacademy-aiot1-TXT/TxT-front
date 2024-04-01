@@ -3,6 +3,7 @@ package com.nhnacademy.front.controller;
 import com.nhnacademy.front.adaptor.UserAdapter;
 import com.nhnacademy.front.utils.RedisUtil;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.web.csrf.CsrfToken;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,6 +15,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.util.Arrays;
 import java.util.Objects;
 
+@Slf4j
 @Controller
 @RequiredArgsConstructor
 public class LogoutController {
@@ -22,6 +24,9 @@ public class LogoutController {
 
     @GetMapping("/logout")
     public String logout(HttpServletRequest request, HttpServletResponse response, @RequestAttribute("_csrf") CsrfToken csrfToken) {
+        log.info("request: {}", request);
+        log.info("cookies : {}", request.getCookies());
+
         Cookie accessCookie = Arrays.stream(request.getCookies())
                 .filter(c -> "accessToken".equals(c.getName()))
                 .findFirst()
