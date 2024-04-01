@@ -22,9 +22,13 @@ public class ExceptionAdvice {
         if (exception.status() == 401) {
             try {
                 Cookie refreshToken = Arrays.stream(request.getCookies()).filter(cookie -> cookie.getName().equals("refreshToken")).findFirst().orElse(null);
+                refreshToken.setHttpOnly(true);
+                refreshToken.setPath("/");
 
                 AccessTokenResponse accesstokenresponse = userAdapter.reissue(refreshToken.getValue());
                 Cookie accessCookie = new Cookie("accessToken", accesstokenresponse.getAccessToken());
+                accessCookie.setHttpOnly(true);
+                accessCookie.setPath("/");
 
                 response.addCookie(accessCookie);
                 return "redirect:" + request.getRequestURI();
