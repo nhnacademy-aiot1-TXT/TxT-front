@@ -14,12 +14,22 @@ import javax.servlet.http.HttpServletResponse;
 import java.util.Arrays;
 import java.util.Objects;
 
+/**
+ * 전역적으로 예외를 처리하는 Controller Advice 클래스
+ */
 @Slf4j
 @RequiredArgsConstructor
 @ControllerAdvice(basePackages = "com.nhnacademy.front")
 public class ExceptionAdvice {
     private final UserAdapter userAdapter;
 
+    /**
+     * FeignException 예외 처리 메서드
+     * @param exception FeignException 객체
+     * @param request HTTP 요청 객체
+     * @param response HTTP 응답 객체
+     * @return redirect 할 URL 문자열
+     */
     @ExceptionHandler(FeignException.class)
     public String feignExceptionHandler(FeignException exception, HttpServletRequest request, HttpServletResponse response) {
         if (exception.status() == 401) {

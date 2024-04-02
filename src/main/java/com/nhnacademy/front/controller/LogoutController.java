@@ -15,6 +15,9 @@ import javax.servlet.http.HttpServletResponse;
 import java.util.Arrays;
 import java.util.Objects;
 
+/**
+ * 로그아웃 처리 Controller 클래스
+ */
 @Slf4j
 @Controller
 @RequiredArgsConstructor
@@ -22,6 +25,13 @@ public class LogoutController {
     private final UserAdapter userAdapter;
     private final RedisUtil redisUtil;
 
+    /**
+     * 로그아웃 처리 핸들러 메서드
+     * @param request HTTP 요청 객체
+     * @param response HTTP 응답 객체
+     * @param csrfToken CSRF Token
+     * @return redirect 할 URL 문자열
+     */
     @GetMapping("/logout")
     public String logout(HttpServletRequest request, HttpServletResponse response, @RequestAttribute("_csrf") CsrfToken csrfToken) {
         Cookie accessCookie = Arrays.stream(request.getCookies())
