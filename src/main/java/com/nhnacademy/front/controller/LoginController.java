@@ -6,6 +6,7 @@ import com.nhnacademy.front.dto.LoginRequest;
 import com.nhnacademy.front.dto.RefreshTokenResponse;
 import com.nhnacademy.front.dto.TokensResponse;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.web.csrf.CsrfToken;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -14,11 +15,13 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestAttribute;
 
 import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
  * 로그인 처리 Controller 클래스
  */
+@Slf4j
 @Controller
 @RequiredArgsConstructor
 public class LoginController {
@@ -30,7 +33,8 @@ public class LoginController {
      * @return 로그인 폼 뷰 이름
      */
     @GetMapping("/login")
-    public String loginForm(Model model) {
+    public String loginForm(HttpServletRequest req, Model model) {
+        log.debug("request port: {}", req.getServerPort());
         model.addAttribute("loginRequest", new LoginRequest());
         return "login";
     }
