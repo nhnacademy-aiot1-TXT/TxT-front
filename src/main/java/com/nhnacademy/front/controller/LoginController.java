@@ -34,7 +34,7 @@ public class LoginController {
      */
     @GetMapping("/login")
     public String loginForm(HttpServletRequest req, Model model) {
-        log.debug("request port: {}", req.getServerPort());
+        System.out.println("request port: " + req.getServerPort());
         model.addAttribute("loginRequest", new LoginRequest());
         return "login";
     }
