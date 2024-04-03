@@ -15,6 +15,10 @@ public class SecurityConfig {
                 .csrf((csrf) -> csrf
                         .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
                 );
+        http
+                .authorizeRequests()
+                .antMatchers("/admin/**").access("hasRole('ROLE_ADMIN')");
+
         return http.build();
     }
 }

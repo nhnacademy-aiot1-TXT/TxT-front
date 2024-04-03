@@ -3,6 +3,8 @@ package com.nhnacademy.front.dto;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
 
+import java.util.List;
+
 @Getter
 @Setter
 @AllArgsConstructor
@@ -14,4 +16,6 @@ public class AccessTokenResponse {
     private String tokenType;
     @JsonProperty("expire_in")
     private Integer expiresIn;
+    @JsonProperty("authorities")
+    private List<String> authorities;
 }
