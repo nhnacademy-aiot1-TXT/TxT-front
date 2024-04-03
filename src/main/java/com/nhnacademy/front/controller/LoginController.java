@@ -33,7 +33,6 @@ public class LoginController {
      */
     @GetMapping("/login")
     public String loginForm(Model model) {
-        log.info("front login output");
         model.addAttribute("loginRequest", new LoginRequest());
         return "login";
     }
