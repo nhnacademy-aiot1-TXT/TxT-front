@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestAttribute;
 
 import javax.servlet.http.Cookie;
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
@@ -33,8 +32,8 @@ public class LoginController {
      * @return 로그인 폼 뷰 이름
      */
     @GetMapping("/login")
-    public String loginForm(HttpServletRequest req, Model model) {
-        System.out.println("request port: " + req.getServerPort());
+    public String loginForm(Model model) {
+        log.debug("front login output");
         model.addAttribute("loginRequest", new LoginRequest());
         return "login";
     }
