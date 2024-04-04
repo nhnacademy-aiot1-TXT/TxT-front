@@ -21110,7 +21110,7 @@ fieldset:disabled .btn {
   }
 
   .dropdown:not(.dropdown-hover) .dropdown-menu {
-    margin-top: 10px !important;
+    margin-top: 3px !important;
   }
 
   .dropdown .dropdown-menu:before {
@@ -21118,7 +21118,7 @@ fieldset:disabled .btn {
     content: "\f0d8";
     position: absolute;
     top: 0;
-    left: 28px;
+    left: 18px;
     right: auto;
     font-size: 22px;
     color: #fff;
@@ -21207,7 +21207,7 @@ fieldset:disabled .btn {
   }
 
   .dropdown:not(.dropdown-hover) .dropdown-menu {
-    margin-top: 10px !important;
+    margin-top: 5px !important;
   }
 
   .dropdown .dropdown-menu.show {

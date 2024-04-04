@@ -30,12 +30,15 @@ public class AddAuthorityToModelInterceptor implements HandlerInterceptor {
         if (modelAndView == null) {
             return;
         }
+        if (request.getRequestURI().equals("/logout")) {
+            return;
+        }
         ModelMap model = modelAndView.getModelMap();
 
         Cookie cookie = Arrays.stream(request.getCookies())
-                              .filter(c -> "accessToken".equals(c.getName()))
-                              .findFirst()
-                              .orElse(null);
+                .filter(c -> "accessToken".equals(c.getName()))
+                .findFirst()
+                .orElse(null);
         if (cookie == null) {
             return;
         }

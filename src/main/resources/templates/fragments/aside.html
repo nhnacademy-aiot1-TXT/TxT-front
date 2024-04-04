@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
@@ -61,7 +61,7 @@
             <li class="nav-item mt-3">
                 <h6 class="ps-4 ms-2 text-uppercase text-xs font-weight-bolder opacity-6">Account pages</h6>
             </li>
-            <th:block sec:authorize="isAuthenticated()">
+            <th:block th:if="${authority != null}">
                 <li class="nav-item">
                     <a class="nav-link " href="/user/profile">
                         <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
@@ -71,7 +71,7 @@
                     </a>
                 </li>
             </th:block>
-            <th:block sec:authorize="isAnonymous()">
+            <th:block th:if="${authority == null}">
                 <li class="nav-item">
                     <a class="nav-link " href="/auth/login">  <!--./pages/sign-in.html-->
                         <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
