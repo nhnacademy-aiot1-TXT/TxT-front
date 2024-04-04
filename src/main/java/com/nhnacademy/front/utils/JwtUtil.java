@@ -12,10 +12,7 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
-import java.util.Base64;
-import java.util.Collection;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -28,7 +25,9 @@ public class JwtUtil {
 
         Map<String, Object> map = mapper.readValue(payload, Map.class);
         String username = (String) map.get("userId");
-        List<String> authorities = (List<String>) map.get("authorities");
+        String authority = (String) map.get("authority");
+        List<String> authorities = new ArrayList<>();
+        authorities.add(authority);
 
         Collection<? extends GrantedAuthority> grantedAuthorities = authorities.stream()
                 .map(SimpleGrantedAuthority::new)
