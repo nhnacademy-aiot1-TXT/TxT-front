@@ -8,6 +8,7 @@ import com.nhnacademy.front.dto.RefreshTokenResponse;
 import com.nhnacademy.front.dto.TokensResponse;
 import com.nhnacademy.front.utils.JwtUtil;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.csrf.CsrfToken;
@@ -21,6 +22,7 @@ import javax.servlet.http.HttpServletResponse;
 /**
  * 로그인 처리 Controller 클래스
  */
+@Slf4j
 @Controller
 @RequiredArgsConstructor
 public class LoginController {
