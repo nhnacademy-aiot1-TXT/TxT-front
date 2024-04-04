@@ -15,11 +15,21 @@ import org.springframework.stereotype.Service;
 import java.util.*;
 import java.util.stream.Collectors;
 
+/**
+ * jwt 관련 유틸리티 클래스
+ */
 @Service
 @RequiredArgsConstructor
 public class JwtUtil {
     private final ObjectMapper mapper;
 
+    /**
+     * jwt의 authority를 가져와 Authentication 반환하는 메서드
+     *
+     * @param accessTokenResponse jwt accessToken
+     * @return Authentication
+     * @throws JsonProcessingException
+     */
     public Authentication getAuthentication(AccessTokenResponse accessTokenResponse) throws JsonProcessingException {
         String payload = new String(Base64.getDecoder().decode(accessTokenResponse.getAccessToken().split("\\.")[1]));
 
