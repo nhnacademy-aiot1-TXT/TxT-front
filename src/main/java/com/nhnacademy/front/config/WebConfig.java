@@ -16,15 +16,18 @@ import java.time.Duration;
 public class WebConfig implements WebMvcConfigurer {
     /**
      * ViewController 등록
+     *
      * @param registry ViewControllerRegistry 객체
      */
     @Override
     public void addViewControllers(ViewControllerRegistry registry) {
         registry.addViewController("/").setViewName("index");
+        registry.addViewController("/auth/login").setViewName("login");
     }
 
     /**
      * RestTemplate 빈 생성
+     *
      * @param restTemplateBuilder RestTemplateBuilder 객체
      * @return RestTemplate 객체
      */
