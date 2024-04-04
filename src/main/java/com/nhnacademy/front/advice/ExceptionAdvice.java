@@ -50,6 +50,10 @@ public class ExceptionAdvice {
             }
         }
 
+        if (exception.status() == 403) {
+            return "redirect:/";
+        }
+
         return "redirect:/logout";
     }
 }
