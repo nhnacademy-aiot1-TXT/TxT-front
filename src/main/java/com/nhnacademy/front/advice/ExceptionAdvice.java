@@ -39,6 +39,7 @@ public class ExceptionAdvice {
                 if (Objects.nonNull(refreshToken) && !"".equals(refreshToken.getValue())) {
                     AccessTokenResponse accesstokenresponse = userAdapter.reissue(refreshToken.getValue());
                     Cookie accessCookie = new Cookie("accessToken", accesstokenresponse.getAccessToken());
+
                     accessCookie.setHttpOnly(true);
                     accessCookie.setPath("/");
 
