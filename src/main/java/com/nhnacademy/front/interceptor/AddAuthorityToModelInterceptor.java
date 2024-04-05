@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.Arrays;
 import java.util.Base64;
+import java.util.Objects;
 
 /**
  * Model에 authority 속성을 추가해주는 interceptor입니다.
@@ -34,7 +35,9 @@ public class AddAuthorityToModelInterceptor implements HandlerInterceptor {
             return;
         }
         ModelMap model = modelAndView.getModelMap();
-
+        if (Objects.isNull(request.getCookies())) {
+            return;
+        }
         Cookie cookie = Arrays.stream(request.getCookies())
                 .filter(c -> "accessToken".equals(c.getName()))
                 .findFirst()
