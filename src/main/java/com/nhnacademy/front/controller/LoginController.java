@@ -6,7 +6,6 @@ import com.nhnacademy.front.dto.AccessTokenResponse;
 import com.nhnacademy.front.dto.LoginRequest;
 import com.nhnacademy.front.dto.RefreshTokenResponse;
 import com.nhnacademy.front.dto.TokensResponse;
-import com.nhnacademy.front.utils.JwtUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.web.csrf.CsrfToken;
@@ -25,7 +24,6 @@ import javax.servlet.http.HttpServletResponse;
 @RequiredArgsConstructor
 public class LoginController {
     private final UserAdapter userAdapter;
-    private final JwtUtil jwtUtil;
 
     /**
      * 로그인 처리 핸들러 메서드

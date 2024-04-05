@@ -1,6 +1,7 @@
 package com.nhnacademy.front.config;
 
 import com.nhnacademy.front.interceptor.AddAuthorityToModelInterceptor;
+import com.nhnacademy.front.interceptor.LoginCheckInterceptor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.context.annotation.Bean;
@@ -16,6 +17,7 @@ import java.time.Duration;
 @RequiredArgsConstructor
 public class WebConfig implements WebMvcConfigurer {
     private final AddAuthorityToModelInterceptor addAuthorityToModelInterceptor;
+    private final LoginCheckInterceptor loginCheckInterceptor;
 
     @Override
     public void addViewControllers(ViewControllerRegistry registry) {
@@ -34,5 +36,8 @@ public class WebConfig implements WebMvcConfigurer {
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(addAuthorityToModelInterceptor);
+        registry.addInterceptor(loginCheckInterceptor)
+                .addPathPatterns("/**")
+                .excludePathPatterns("/auth/login", "/login", "/css/**", "/js/**", "/images/**");
     }
 }
