@@ -23,6 +23,7 @@ public class WebConfig implements WebMvcConfigurer {
     public void addViewControllers(ViewControllerRegistry registry) {
         registry.addViewController("/").setViewName("index");
         registry.addViewController("/auth/login").setViewName("login");
+        registry.addViewController("/auth/register").setViewName("register");
     }
 
     @Bean
@@ -38,6 +39,6 @@ public class WebConfig implements WebMvcConfigurer {
         registry.addInterceptor(addAuthorityToModelInterceptor);
         registry.addInterceptor(loginCheckInterceptor)
                 .addPathPatterns("/**")
-                .excludePathPatterns("/auth/login", "/login", "/css/**", "/js/**", "/images/**");
+                .excludePathPatterns("/auth/login", "/login", "/register", "/auth/register", "/api/auth/register", "/css/**", "/js/**", "/images/**");
     }
 }

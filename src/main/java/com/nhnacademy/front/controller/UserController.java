@@ -23,18 +23,6 @@ public class UserController {
     private final UserAdapter userAdapter;
 
     /**
-     * 회원가입 폼을 보여주는 핸들러 메서드
-     *
-     * @param model Model 객체
-     * @return 회원가입 폼 뷰 이름
-     */
-    @GetMapping("/register")
-    public String registerForm(Model model) {
-        model.addAttribute("registerRequest", new UserRegisterRequest());
-        return "register";
-    }
-
-    /**
      * 회원가입을 처리하는 핸들러 메서드
      *
      * @param userRegisterRequest 사용자 등록 요청 정보
@@ -56,7 +44,7 @@ public class UserController {
                 .getValue();
 
         UserDataResponse user = userAdapter.getUserData(accessToken);
-        
+
         model.addAttribute("user", user);
 
         return "profile";
