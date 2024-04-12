@@ -1,4 +1,4 @@
-// lightchart.js
+// lightChart.js
 function initializeCO2Chart() {
 
 
