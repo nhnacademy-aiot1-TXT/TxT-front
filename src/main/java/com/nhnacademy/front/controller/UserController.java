@@ -1,5 +1,8 @@
 package com.nhnacademy.front.controller;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.nhnacademy.front.adaptor.UserAdapter;
 import com.nhnacademy.front.dto.UserDataResponse;
 import com.nhnacademy.front.dto.UserRegisterRequest;
@@ -30,8 +33,21 @@ public class UserController {
      * @return redirect 할 URL 문자열
      */
     @PostMapping("/register")
-    public String register(UserRegisterRequest userRegisterRequest, @RequestAttribute("_csrf") CsrfToken csrfToken) {
-        userAdapter.createUser(userRegisterRequest, csrfToken.getToken());
+    public String register(UserRegisterRequest userRegisterRequest, @RequestAttribute("_csrf") CsrfToken csrfToken, Model model) throws JsonProcessingException {
+        try{
+            userAdapter.createUser(userRegisterRequest, csrfToken.getToken());
+        } catch (RuntimeException e) {
+            ObjectMapper mapper = new ObjectMapper();
+            String jsonString = e.getMessage().substring(e.getMessage().indexOf("{"), e.getMessage().lastIndexOf("}") + 1);
+            JsonNode root = mapper.readTree(jsonString);
+            String errorMessage = root.get("title").asText();
+
+            model.addAttribute("errorMessage", errorMessage);
+            if(!userRegisterRequest.getId().isEmpty() || !userRegisterRequest.getName().isEmpty() || !userRegisterRequest.getEmail().isEmpty()){
+                model.addAttribute("userRegisterRequest", userRegisterRequest);
+            }
+            return "register";
+        }
         return "redirect:/login";
     }
 
