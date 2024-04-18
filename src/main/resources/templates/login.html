@@ -13,7 +13,7 @@
 * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 -->
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 
 <head>
     <meta charset="utf-8"/>
@@ -53,7 +53,7 @@
                                 <form role="form" action="/login" method="post" onsubmit="return checkField()">
                                     <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
                                     <div class="mb-0">
-                                        <input type="text" class="form-control form-control-lg" placeholder="아이디" aria-label="Id" name="id">
+                                        <input type="text" class="form-control form-control-lg" placeholder="아이디" aria-label="Id" name="id" th:value="${loginRequest != null && loginRequest.id != null} ? ${loginRequest.id} : ''">
                                         <span class="ms-2 form-label text-danger" id="notificationId"></span>
                                     </div>
                                     <div class="mb-0">
@@ -61,7 +61,8 @@
                                         <span class="ms-2 form-label text-danger" id="notificationPw"></span>
                                     </div>
                                     <div class="text-center">
-                                        <button type="submit" class="btn btn-lg btn-primary btn-lg w-100 mt-4 mb-0">
+                                        <span class="ms-2 form-label text-danger" id="error" th:text="${errorMessage}"></span>
+                                        <button type="submit" class="btn btn-lg btn-primary btn-lg w-100 mt-1 mb-0">
                                             로그인
                                         </button>
                                     </div>
