@@ -284,16 +284,6 @@
 
         return !(!nameValue.trim() || !passwordValue.trim() || !emailValue.trim() || (passwordValue.trim().length < 4));
     }
-
-    function handleSubmit(errorMessage){
-        console.log(errorMessage)
-        // errorMessage가 존재하는지 확인하고 처리
-        if (errorMessage) {
-            alert(errorMessage); // errorMessage가 있으면 alert로 표시
-        } else {
-            alert("수정이 완료되었습니다"); // errorMessage가 없으면 수정이 완료되었습니다 메시지 표시
-        }
-    }
 </script>
 <script>
     var win = navigator.platform.indexOf('Win') > -1;
