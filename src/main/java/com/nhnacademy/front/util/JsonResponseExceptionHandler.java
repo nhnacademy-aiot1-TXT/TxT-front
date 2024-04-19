@@ -14,7 +14,10 @@ public class JsonResponseExceptionHandler {
     public static String title(RuntimeException e) throws JsonProcessingException {
         String jsonString = e.getMessage().substring(e.getMessage().indexOf("{"), e.getMessage().lastIndexOf("}") + 1);
         JsonNode root = mapper.readTree(jsonString);
-        return root.get("title").asText();
+        if (root.has("title")){
+            return root.get("title").asText();
+        }
+        return root.toString();
     }
 
 }
