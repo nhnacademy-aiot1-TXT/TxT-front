@@ -4,6 +4,7 @@ import com.nhnacademy.front.dto.*;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestHeader;
 
 /**
@@ -47,4 +48,8 @@ public interface UserAdapter {
 
     @GetMapping("/api/user/myPage")
     UserDataResponse getUserData(@RequestHeader("Authorization") String accessToken);
+
+    @PutMapping("/api/user/update")
+    UserUpdateRequest updateUser(UserUpdateRequest userUpdateRequest, @RequestHeader("Authorization") String accessToken);
+
 }

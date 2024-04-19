@@ -1,11 +1,11 @@
 package com.nhnacademy.front.controller;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.nhnacademy.front.adaptor.UserAdapter;
 import com.nhnacademy.front.dto.UserDataResponse;
 import com.nhnacademy.front.dto.UserRegisterRequest;
+import com.nhnacademy.front.dto.UserUpdateRequest;
+import com.nhnacademy.front.util.JsonResponseExceptionHandler;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.web.csrf.CsrfToken;
 import org.springframework.stereotype.Controller;
@@ -37,12 +37,7 @@ public class UserController {
         try{
             userAdapter.createUser(userRegisterRequest, csrfToken.getToken());
         } catch (RuntimeException e) {
-            ObjectMapper mapper = new ObjectMapper();
-            String jsonString = e.getMessage().substring(e.getMessage().indexOf("{"), e.getMessage().lastIndexOf("}") + 1);
-            JsonNode root = mapper.readTree(jsonString);
-            String errorMessage = root.get("title").asText();
-
-            model.addAttribute("errorMessage", errorMessage);
+            model.addAttribute("errorMessage", JsonResponseExceptionHandler.title(e));
             if(!userRegisterRequest.getId().isEmpty() || !userRegisterRequest.getName().isEmpty() || !userRegisterRequest.getEmail().isEmpty()){
                 model.addAttribute("userRegisterRequest", userRegisterRequest);
             }
@@ -60,9 +55,34 @@ public class UserController {
                 .getValue();
 
         UserDataResponse user = userAdapter.getUserData(accessToken);
-
         model.addAttribute("user", user);
 
+        return "profile";
+    }
+
+    @PostMapping("/user/update")
+    public String update(HttpServletRequest request, Model model) throws JsonProcessingException {
+        try{
+            String accessToken = Arrays.stream(request.getCookies())
+                    .filter(cookie -> "accessToken".equals(cookie.getName()))
+                    .findFirst()
+                    .orElse(null)
+                    .getValue();
+
+            UserDataResponse user = userAdapter.getUserData(accessToken);
+            model.addAttribute("user", user);
+
+            userAdapter.updateUser(new UserUpdateRequest(request.getParameter("name"),
+                    request.getParameter("password"),
+                    request.getParameter("email")),
+                    accessToken);
+
+            model.addAttribute("successMessage", "수정이 완료되었습니다.");
+
+        } catch (RuntimeException e){
+            model.addAttribute("errorMessage", JsonResponseExceptionHandler.title(e));
+            return "profile";
+        }
         return "profile";
     }
 }
