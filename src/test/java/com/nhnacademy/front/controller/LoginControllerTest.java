@@ -13,12 +13,15 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.springframework.mock.web.MockHttpServletResponse;
 import org.springframework.security.web.csrf.HttpSessionCsrfTokenRepository;
+import org.springframework.ui.ExtendedModelMap;
+import org.springframework.ui.Model;
 
 import javax.servlet.http.Cookie;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.when;
 
 class LoginControllerTest {
@@ -34,11 +37,12 @@ class LoginControllerTest {
     }
 
     @Test
-    public void testLogin() throws JsonProcessingException {
+    void testLogin() throws JsonProcessingException {
         // Given
         LoginRequest loginRequest = new LoginRequest();
         loginRequest.setId("testUser");
         loginRequest.setPassword("testPassword");
+        Model model = new ExtendedModelMap();
 
         TokensResponse mockTokensResponse = new TokensResponse();
         AccessTokenResponse mockAccessTokenResponse = new AccessTokenResponse("testAccessToken", "test", 1);
@@ -51,7 +55,7 @@ class LoginControllerTest {
         MockHttpServletResponse response = new MockHttpServletResponse();
 
         // When
-        String result = loginController.login(loginRequest, response, new HttpSessionCsrfTokenRepository().generateToken(null));
+        String result = loginController.login(loginRequest, response, new HttpSessionCsrfTokenRepository().generateToken(null), model);
 
         // Then
         assertEquals("redirect:/", result);
@@ -63,5 +67,24 @@ class LoginControllerTest {
         assertEquals("testAccessToken", cookies[0].getValue());
         assertEquals("refreshToken", cookies[1].getName());
         assertEquals("testRefreshToken", cookies[1].getValue());
+    }
+
+    @Test
+    void testLogin_exception() throws JsonProcessingException {
+        // Given
+        LoginRequest loginRequest = new LoginRequest();
+        loginRequest.setId("testUser");
+        loginRequest.setPassword("testPassword");
+        MockHttpServletResponse response = new MockHttpServletResponse();
+        Model model = new ExtendedModelMap();
+        RuntimeException testException = new RuntimeException("test Exception");
+
+        doThrow(testException).when(userAdapter).doLogin(any(LoginRequest.class), anyString());
+
+        // When
+        String result = loginController.login(loginRequest, response, new HttpSessionCsrfTokenRepository().generateToken(null), model);
+
+        // Then
+        assertEquals("login", result);
     }
 }

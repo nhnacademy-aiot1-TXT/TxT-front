@@ -1,8 +1,11 @@
 package com.nhnacademy.front.controller;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.nhnacademy.front.adaptor.UserAdapter;
 import com.nhnacademy.front.dto.UserDataResponse;
 import com.nhnacademy.front.dto.UserRegisterRequest;
+import com.nhnacademy.front.dto.UserUpdateRequest;
+import com.nhnacademy.front.util.JsonResponseExceptionHandler;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.web.csrf.CsrfToken;
 import org.springframework.stereotype.Controller;
@@ -30,8 +33,16 @@ public class UserController {
      * @return redirect 할 URL 문자열
      */
     @PostMapping("/register")
-    public String register(UserRegisterRequest userRegisterRequest, @RequestAttribute("_csrf") CsrfToken csrfToken) {
-        userAdapter.createUser(userRegisterRequest, csrfToken.getToken());
+    public String register(UserRegisterRequest userRegisterRequest, @RequestAttribute("_csrf") CsrfToken csrfToken, Model model) throws JsonProcessingException {
+        try{
+            userAdapter.createUser(userRegisterRequest, csrfToken.getToken());
+        } catch (RuntimeException e) {
+            model.addAttribute("errorMessage", JsonResponseExceptionHandler.title(e));
+            if(!userRegisterRequest.getId().isEmpty() || !userRegisterRequest.getName().isEmpty() || !userRegisterRequest.getEmail().isEmpty()){
+                model.addAttribute("userRegisterRequest", userRegisterRequest);
+            }
+            return "register";
+        }
         return "redirect:/login";
     }
 
@@ -44,9 +55,34 @@ public class UserController {
                 .getValue();
 
         UserDataResponse user = userAdapter.getUserData(accessToken);
-
         model.addAttribute("user", user);
 
+        return "profile";
+    }
+
+    @PostMapping("/user/update")
+    public String update(HttpServletRequest request, Model model) throws JsonProcessingException {
+        try{
+            String accessToken = Arrays.stream(request.getCookies())
+                    .filter(cookie -> "accessToken".equals(cookie.getName()))
+                    .findFirst()
+                    .orElse(null)
+                    .getValue();
+
+            UserDataResponse user = userAdapter.getUserData(accessToken);
+            model.addAttribute("user", user);
+
+            userAdapter.updateUser(new UserUpdateRequest(request.getParameter("name"),
+                    request.getParameter("password"),
+                    request.getParameter("email")),
+                    accessToken);
+
+            model.addAttribute("successMessage", "수정이 완료되었습니다.");
+
+        } catch (RuntimeException e){
+            model.addAttribute("errorMessage", JsonResponseExceptionHandler.title(e));
+            return "profile";
+        }
         return "profile";
     }
 }
