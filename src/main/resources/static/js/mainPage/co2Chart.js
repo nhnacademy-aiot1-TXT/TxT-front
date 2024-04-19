@@ -15,14 +15,29 @@ function initializeCO2Chart() {
 
 
 
-    new Chart(ctx, {
+    var CO2Chart = new Chart(ctx, {
         type: "line",
         data: {
-            labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul"],
+            labels: [],
             datasets: [{
-                label: "CO2",
+                label: "Maximum",
                 fill: true,
-                backgroundColor: "rgba(78, 115, 223, 0.05)",
+                backgroundColor: "rgb(226,72,205,0.2)",
+                borderColor: "rgb(226,72,205)",
+                pointBorderColor: "#FFF",
+                pointBackgroundColor: "rgb(226,72,205)",
+                pointBorderWidth: 2,
+                pointHoverRadius: 5,
+                pointHoverBackgroundColor: "rgb(226,72,205)",
+                pointHoverBorderColor: "rgba(220, 220, 220, 1)",
+                pointHoverBorderWidth: 2,
+                pointRadius: 3,
+                pointHitRadius: 10,
+                data: [],
+            }, {
+                label: "Minimum",
+                fill: true,
+                backgroundColor: "rgba(78, 115, 223, 0.3)",
                 borderColor: "rgba(78, 115, 223, 1)",
                 pointBorderColor: "#FFF",
                 pointBackgroundColor: "rgba(78, 115, 223, 1)",
@@ -33,7 +48,7 @@ function initializeCO2Chart() {
                 pointHoverBorderWidth: 2,
                 pointRadius: 3,
                 pointHitRadius: 10,
-                data: [65, 59, 80, 81, 56, 55, 40],
+                data: [],
             }]
         },
         options: {
@@ -84,10 +99,19 @@ function initializeCO2Chart() {
     });
 
 
-
-
-
-
+    // 데이터 업데이트 함수를 전역 변수로 설정하여 외부 파일에서 접근 가능하게 함
+    window.CO2Chart = CO2Chart;
 
 }
 
+document.addEventListener('DOMContentLoaded', function() {
+
+    //initializeTempChart();
+    initializeCO2Chart();
+
+    // setTimeout을 사용하여 차트가 초기화된 후 데이터를 업데이트함
+    setTimeout(function() {
+        // jsonData는 실제 사용하는 데이터 변수
+        updateCO2Chart(jsonData);
+    }); // 1초 후 데이터 업데이트
+});

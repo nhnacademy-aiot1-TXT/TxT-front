@@ -32,6 +32,14 @@
     <link href="/css/nucleo-svg.css" rel="stylesheet"/>
     <!-- CSS Files -->
     <link id="pagestyle" href="/css/argon-dashboard.css?v=2.0.4" rel="stylesheet"/>
+
+
+
+
+
+
+
+
 </head>
 
 <body class="g-sidenav-show bg-gray-100">
@@ -122,7 +130,7 @@
             <div class="col-lg-7 mb-lg-0 mb-4">
                 <div class="card z-index-2 h-100">
                     <div class="card-header pb-0 pt-3 bg-transparent">
-                        <h6 class="text-capitalize">Sales overview</h6>
+                        <h6 class="text-capitalize">Brightness</h6>
                         <p class="text-sm mb-0">
                             <i class="fa fa-arrow-up text-success"></i>
                             <span class="font-weight-bold">4% more</span> in 2021
@@ -150,7 +158,7 @@
                     </div>
 
                     <!--슬라이드 바-->
-                    <div id="carouselExampleCaptions" class="carousel slide h-100" data-bs-ride="carousel">
+                    <div id="carouselExampleCaptions" class="carousel slide h-100" data-bs-interval="false">
 
                         <div class="carousel-inner border-radius-lg h-100">
                             <div class="carousel-item h-100 active">
@@ -182,49 +190,50 @@
 
         <div class="row mt-4 justify-content-center">
             <div class="col-xl-2 col-sm-6 mb-xl-0 mb-4">
-                <div class="card GaugeMeter"
-                     data-percent="0"
+                <div class="card GaugeMeter" id="temp"
+
                      data-min="-35"
-                     data-used="21"
                      data-total="40"
                      data-append="°C"
                      data-width="10"
                      data-size="250"
                      data-label="온도"
                      data-theme="Green-Gold-Red"
-                     data-text="21">
+                     data-text_size="0.15">
+                    <!--data-text_size :텍스트 사이즈-->
+
                 </div>
             </div>
             <div class="col-xl-2 col-sm-6 mb-xl-0 mb-4">
-                <div class="card GaugeMeter"
-                     data-percent="50"
+                <div class="card GaugeMeter" id="moist"
+                     data-min="0"
+                     data-total="100"
                      data-append="%"
                      data-width="10"
                      data-size="250"
                      data-theme="Green-Gold-Red"
-                     data-label="습도">
+                     data-label="습도"
+                     data-text_size="0.15">
                 </div>
             </div>
             <div class="col-xl-2 col-sm-6 mb-xl-0 mb-4">
-                <div class="card GaugeMeter"
-                     data-percent="0"
+                <div class="card GaugeMeter" id="co2"
+
                      data-min="0"
-                     data-used="600"
                      data-total="4000"
                      data-append="ppm"
                      data-width="10"
                      data-size="250"
                      data-label="Co2"
                      data-theme="Green-Gold-Red"
-                     data-text="600"
+
                      data-text_size="0.15">
                 </div>
             </div>
             <div class="col-xl-2 col-sm-6 mb-xl-0 mb-4">
                 <div class="card GaugeMeter"
-                     data-percent="0"
+
                      data-min="0"
-                     data-used="1000"
                      data-total="2000"
                      data-append="㎍/㎥"
                      data-width="10"
@@ -236,10 +245,9 @@
                 </div>
             </div>
             <div class="col-xl-2 col-sm-6">
-                <div class="card GaugeMeter"
-                     data-percent="0"
+                <div class="card GaugeMeter" id="light"
+
                      data-min="0"
-                     data-used="1000"
                      data-total="100000"
                      data-append="lx"
                      data-width="10"
@@ -357,14 +365,23 @@
 <script src="/js/mainPage/moistChart.js"></script>
 <script src="/js/mainPage/co2Chart.js"></script>
 <script src="/js/mainPage/tempChart.js"></script>
+
+
+<script src="/js/mainPage/logic/chart/lightChartUpdate.js"></script>
+<script src="/js/mainPage/logic/chart/tempChartUpdate.js"></script>
+<script src="/js/mainPage/logic/chart/co2ChartUpdate.js"></script>
+<script src="/js/mainPage/logic/chart/moistChartUpdate.js"></script>
+
 <script src="/js/mainPage/slideChartName.js"></script>
+
+<script src="/js/mainPage/logic/gauge/tempGauge.js"></script>
+<script src="/js/mainPage/logic/gauge/moistGauge.js"></script>
+<script src="/js/mainPage/logic/gauge/co2Gauge.js"></script>
+<script src="/js/mainPage/logic/gauge/lightGauge.js"></script>
 
 <script>
     document.addEventListener('DOMContentLoaded', function() {
-        initializeLightChart();
-        initializeMoistChart();
-        initializeCO2Chart();
-        initializeTempChart();
+
         changeSlideTitle();
     });
 </script>
@@ -377,11 +394,18 @@
         Scrollbar.init(document.querySelector('#sidenav-scrollbar'), options);
     }
 </script>
+
+
 <script>
     $(document).ready(function () {
         $(".GaugeMeter").gaugeMeter();
     });
 </script>
+
+
+
+
+
 <!-- Github buttons -->
 <script async defer src="https://buttons.github.io/buttons.js"></script>
 <!-- Control Center for Soft Dashboard: parallax effects, scripts for the example pages etc -->
