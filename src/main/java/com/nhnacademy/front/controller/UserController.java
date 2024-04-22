@@ -5,7 +5,7 @@ import com.nhnacademy.front.adaptor.UserAdapter;
 import com.nhnacademy.front.dto.UserDataResponse;
 import com.nhnacademy.front.dto.UserRegisterRequest;
 import com.nhnacademy.front.dto.UserUpdateRequest;
-import com.nhnacademy.front.utils.JsonResponseExceptionHandler;
+import com.nhnacademy.front.util.JsonResponseExceptionHandler;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.web.csrf.CsrfToken;
 import org.springframework.stereotype.Controller;
@@ -33,7 +33,6 @@ public class UserController {
      *
      * @param userRegisterRequest 사용자 등록 요청 정보
      * @param csrfToken           CSRF Token
-     * @exception RuntimeException TxT-user-management 의 AlreadyExistEmailException 을 받아온다.
      * @return redirect 할 URL 문자열
      */
     @PostMapping("/register")
@@ -50,13 +49,6 @@ public class UserController {
         return "redirect:/login";
     }
 
-    /**
-     * 마이페이지를 구성하는 Controller
-     *
-     * @param request 사용자 요청 정보
-     * @param model html 에서 thymeleaf 를 이용해서 쓸 model 설정
-     * @return redirect 할 URL 문자열
-     */
     @GetMapping("/user/profile")
     public String profile(HttpServletRequest request, Model model) {
         String accessToken = Arrays.stream(request.getCookies())
@@ -79,15 +71,6 @@ public class UserController {
         return "profile";
     }
 
-    /**
-     * 마이페이지 정보 수정을 위한 Controller
-     *
-     * @param request 사용자 요청 정보
-     * @param response 처리한 정보 응답
-     * @param model html 에서 thymeleaf 를 이용해서 쓸 model 설정
-     * @exception RuntimeException TxT-user-management 의 AlreadyExistEmailException 을 받아온다.
-     * @return redirect 할 URL 문자열
-     */
     @PostMapping("/user/profile")
     public String update(HttpServletRequest request, HttpServletResponse response, Model model) throws JsonProcessingException {
         try{
