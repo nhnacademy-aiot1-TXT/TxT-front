@@ -1,6 +1,6 @@
 function updatehumidity() {
     var xhr = new XMLHttpRequest();
-    var url = 'http://133.186.134.250:8300/api/sensor/humidity'; // Ensure the endpoint is correct and accessible
+    var url = 'http://133.186.151.22:8000/api/sensor/humidity'; // Ensure the endpoint is correct and accessible
 
     xhr.open("GET", url);
     xhr.onload = function() {
