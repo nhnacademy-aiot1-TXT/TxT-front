@@ -14,8 +14,11 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestAttribute;
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.util.Arrays;
+import java.util.Optional;
 
 /**
  * 사용자 관련 기능을 담당하는 Controller 클래스
@@ -57,11 +60,19 @@ public class UserController {
         UserDataResponse user = userAdapter.getUserData(accessToken);
         model.addAttribute("user", user);
 
+        Optional<Cookie> updateSuccessCookie = Arrays.stream(request.getCookies())
+                .filter(cookie -> "isUpdateSuccess".equals(cookie.getName()))
+                .findFirst();
+
+        if (updateSuccessCookie.isPresent()){
+            model.addAttribute("successMessage", "수정이 완료되었습니다.");
+        }
+
         return "profile";
     }
 
-    @PostMapping("/user/update")
-    public String update(HttpServletRequest request, Model model) throws JsonProcessingException {
+    @PostMapping("/user/profile")
+    public String update(HttpServletRequest request, HttpServletResponse response, Model model) throws JsonProcessingException {
         try{
             String accessToken = Arrays.stream(request.getCookies())
                     .filter(cookie -> "accessToken".equals(cookie.getName()))
@@ -77,12 +88,14 @@ public class UserController {
                     request.getParameter("email")),
                     accessToken);
 
-            model.addAttribute("successMessage", "수정이 완료되었습니다.");
+            Cookie cookie = new Cookie("isUpdateSuccess", "success");
+            cookie.setMaxAge(60);
+            response.addCookie(cookie);
 
         } catch (RuntimeException e){
             model.addAttribute("errorMessage", JsonResponseExceptionHandler.title(e));
             return "profile";
         }
-        return "profile";
+        return "redirect:/user/profile";
     }
 }
