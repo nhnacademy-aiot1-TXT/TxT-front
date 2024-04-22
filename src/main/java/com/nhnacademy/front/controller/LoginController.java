@@ -31,6 +31,7 @@ public class LoginController {
      * @param loginRequest 로그인 요청 정보
      * @param response     HTTP 응답 객체
      * @param csrfToken    CSRF 토큰
+     * @exception RuntimeException TxT-auth 의 RuntimeException 을 받아온다.
      * @return redirect 할 URL 문자열
      */
     @PostMapping("/login")
