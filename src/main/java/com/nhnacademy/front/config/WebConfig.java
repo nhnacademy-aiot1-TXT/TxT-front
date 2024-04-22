@@ -14,6 +14,9 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import java.time.Duration;
 
+/**
+ * Spring boot 의 전반적인 Web 설정을 위한 Configuration
+ */
 @Configuration
 @RequiredArgsConstructor
 public class WebConfig implements WebMvcConfigurer {
@@ -21,6 +24,11 @@ public class WebConfig implements WebMvcConfigurer {
     private final LoginCheckInterceptor loginCheckInterceptor;
     private final LoggedInUserAccessInterceptor loggedInUserAccessInterceptor;
 
+    /**
+     * Url 과 html View 를 연결하는 메서드.
+     *
+     * @param registry URL 경로나 패턴을 뷰 컨트롤러에 매핑하여 구성된 상태 코드와 뷰로 응답을 렌더링.
+     */
     @Override
     public void addViewControllers(ViewControllerRegistry registry) {
         registry.addViewController("/").setViewName("index");
@@ -28,6 +36,12 @@ public class WebConfig implements WebMvcConfigurer {
         registry.addViewController("/auth/register").setViewName("register");
     }
 
+    /**
+     * RestTemplate 을 생성하는 빈을 설정하는 메서드.
+     *
+     * @param restTemplateBuilder RestTemplate 를 구성하고 생성할 수 있는 빌더.
+     * @return RestTemplate 객체
+     */
     @Bean
     RestTemplate restTemplate(RestTemplateBuilder restTemplateBuilder) {
         return restTemplateBuilder
@@ -36,6 +50,11 @@ public class WebConfig implements WebMvcConfigurer {
                 .build();
     }
 
+    /**
+     * 인터셉터를 등록하는 메서드.
+     *
+     * @param registry URL 경로나 패턴을 뷰 컨트롤러에 매핑하여 구성된 상태 코드와 뷰로 응답을 렌더링.
+     */
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(addAuthorityToModelInterceptor);
