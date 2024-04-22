@@ -46,9 +46,22 @@ public interface UserAdapter {
     @GetMapping("/api/auth/reissue")
     AccessTokenResponse reissue(@RequestHeader("X-REFRESH-TOKEN") String refreshToken);
 
+    /**
+     * 마이페이지 요청
+     *
+     * @param accessToken 인증된 사용자(Authorization) 가 가지고 있는 엑세스 토큰
+     * @return UserDataResponse 객체, 마이페이지 구성을 위한 사용자 정보 DTO
+     */
     @GetMapping("/api/user/myPage")
     UserDataResponse getUserData(@RequestHeader("Authorization") String accessToken);
 
+    /**
+     * 마이페이지 내 정보 수정 요청
+     *
+     * @param userUpdateRequest 객체, 수정할 사용자 정보를 담고있는 DTO
+     * @param accessToken 인증된 사용자(Authorization) 가 가지고 있는 엑세스 토큰
+     * @return UserDataResponse 객체, 메인 페이지 구성을 위한 사용자 정보 DTO
+     */
     @PutMapping("/api/user/update")
     UserUpdateRequest updateUser(UserUpdateRequest userUpdateRequest, @RequestHeader("Authorization") String accessToken);
 
