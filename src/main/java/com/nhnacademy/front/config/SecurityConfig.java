@@ -33,6 +33,12 @@ public class SecurityConfig {
         return http.build();
     }
 
+    /**
+     * HTTP 요청의 방화벽 설정을 정의합니다.
+     * URL 인코딩된 이중 슬래시를 허용하는 StrictHttpFirewall을 반환합니다.
+     *
+     * @return StrictHttpFirewall 객체
+     */
     @Bean
     public HttpFirewall defaultHttpFirewall() {
         StrictHttpFirewall firewall = new StrictHttpFirewall();
