@@ -13,7 +13,7 @@ import java.util.concurrent.TimeUnit;
 @Component
 @RequiredArgsConstructor
 public class RedisUtil {
-    private final RedisTemplate<String, Object> redisBlackListTemplate;
+    private final RedisTemplate<String, Object> redisTemplate;
 
     /**
      * 블랙리스트에 항목을 추가하는 메서드
@@ -22,7 +22,7 @@ public class RedisUtil {
      * @param milliSeconds 값의 유효 시간(밀리초 단위)
      */
     public void setBlackList(String key, Object o, Long milliSeconds) {
-        redisBlackListTemplate.setValueSerializer(new Jackson2JsonRedisSerializer(o.getClass()));
-        redisBlackListTemplate.opsForValue().set(key, o, milliSeconds, TimeUnit.MILLISECONDS);
+        redisTemplate.setValueSerializer(new Jackson2JsonRedisSerializer(o.getClass()));
+        redisTemplate.opsForValue().set(key, o, milliSeconds, TimeUnit.MILLISECONDS);
     }
 }

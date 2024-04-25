@@ -60,7 +60,7 @@ public class WebConfig implements WebMvcConfigurer {
         registry.addInterceptor(addAuthorityToModelInterceptor);
         registry.addInterceptor(loginCheckInterceptor)
                 .addPathPatterns("/**","")
-                .excludePathPatterns("/auth/login", "/login", "/register", "/auth/register", "/oauth2/authorization/**", "/css/**", "/js/**", "/img/**");
+                .excludePathPatterns("/auth/login", "/login", "/register", "/auth/register", "/css/**", "/js/**", "/img/**");
         registry.addInterceptor(loggedInUserAccessInterceptor)
                 .addPathPatterns("/auth/login", "/auth/register");
     }

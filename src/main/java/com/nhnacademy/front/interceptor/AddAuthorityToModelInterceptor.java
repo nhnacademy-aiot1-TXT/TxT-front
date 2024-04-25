@@ -1,6 +1,6 @@
 package com.nhnacademy.front.interceptor;
 
-import org.json.JSONObject;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.servlet.HandlerInterceptor;
@@ -10,7 +10,6 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.Arrays;
-import java.util.Base64;
 import java.util.Objects;
 
 /**
@@ -46,8 +45,7 @@ public class AddAuthorityToModelInterceptor implements HandlerInterceptor {
             return;
         }
 
-        String payload = new String(Base64.getUrlDecoder().decode(cookie.getValue().split("\\.")[1]));
-        String authority = new JSONObject(payload).getString("authority");
+        String authority = String.valueOf(SecurityContextHolder.getContext().getAuthentication().getAuthorities().stream().findFirst().orElse(null));
         model.addAttribute("authority", authority);
     }
 }
