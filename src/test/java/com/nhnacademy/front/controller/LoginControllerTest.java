@@ -6,12 +6,15 @@ import com.nhnacademy.front.dto.AccessTokenResponse;
 import com.nhnacademy.front.dto.LoginRequest;
 import com.nhnacademy.front.dto.RefreshTokenResponse;
 import com.nhnacademy.front.dto.TokensResponse;
+import com.nhnacademy.front.utils.JwtUtil;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.springframework.mock.web.MockHttpServletResponse;
+import org.springframework.security.authentication.TestingAuthenticationToken;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.web.csrf.HttpSessionCsrfTokenRepository;
 import org.springframework.ui.ExtendedModelMap;
 import org.springframework.ui.Model;
@@ -28,6 +31,9 @@ class LoginControllerTest {
     @Mock
     private UserAdapter userAdapter;
 
+    @Mock
+    private JwtUtil jwtUtil;
+
     @InjectMocks
     private LoginController loginController;
 
@@ -43,6 +49,7 @@ class LoginControllerTest {
         loginRequest.setId("testUser");
         loginRequest.setPassword("testPassword");
         Model model = new ExtendedModelMap();
+        Authentication authentication = new TestingAuthenticationToken("user", "password");
 
         TokensResponse mockTokensResponse = new TokensResponse();
         AccessTokenResponse mockAccessTokenResponse = new AccessTokenResponse("testAccessToken", "test", 1);
@@ -51,6 +58,7 @@ class LoginControllerTest {
         mockTokensResponse.setRefreshToken(mockRefreshTokenResponse);
 
         when(userAdapter.doLogin(any(LoginRequest.class), anyString())).thenReturn(mockTokensResponse);
+        when(jwtUtil.getAuthentication(any(AccessTokenResponse.class))).thenReturn(authentication);
 
         MockHttpServletResponse response = new MockHttpServletResponse();
 
