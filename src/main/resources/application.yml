@@ -1,0 +1,13 @@
+spring:
+  redis:
+    host: 133.186.244.96
+    port: 6379
+    database: 10
+    password: '*N2vya7H@muDTwdNMR!'
+    security:
+      database: 18
+      password: '*N2vya7H@muDTwdNMR!'
+  session:
+    store-type: redis
+  profiles:
+    active: prod
