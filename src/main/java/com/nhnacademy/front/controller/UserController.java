@@ -5,6 +5,7 @@ import com.nhnacademy.front.adaptor.UserAdapter;
 import com.nhnacademy.front.dto.UserDataResponse;
 import com.nhnacademy.front.dto.UserRegisterRequest;
 import com.nhnacademy.front.dto.UserUpdateRequest;
+import com.nhnacademy.front.utils.AccessTokenUtil;
 import com.nhnacademy.front.utils.JsonResponseExceptionHandler;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.web.csrf.CsrfToken;
@@ -59,13 +60,7 @@ public class UserController {
      */
     @GetMapping("/user/profile")
     public String profile(HttpServletRequest request, Model model) {
-        String accessToken = Arrays.stream(request.getCookies())
-                .filter(cookie -> "accessToken".equals(cookie.getName()))
-                .findFirst()
-                .orElse(null)
-                .getValue();
-
-        UserDataResponse user = userAdapter.getUserData(accessToken);
+        UserDataResponse user = userAdapter.getUserData(AccessTokenUtil.findAccessTokenInRequest(request));
         model.addAttribute("user", user);
 
         Optional<Cookie> updateSuccessCookie = Arrays.stream(request.getCookies())
@@ -91,11 +86,7 @@ public class UserController {
     @PostMapping("/user/profile")
     public String update(HttpServletRequest request, HttpServletResponse response, Model model) throws JsonProcessingException {
         try{
-            String accessToken = Arrays.stream(request.getCookies())
-                    .filter(cookie -> "accessToken".equals(cookie.getName()))
-                    .findFirst()
-                    .orElse(null)
-                    .getValue();
+            String accessToken = AccessTokenUtil.findAccessTokenInRequest(request);
 
             UserDataResponse user = userAdapter.getUserData(accessToken);
             model.addAttribute("user", user);
@@ -106,7 +97,7 @@ public class UserController {
                     accessToken);
 
             Cookie cookie = new Cookie("isUpdateSuccess", "success");
-            cookie.setMaxAge(60);
+            cookie.setMaxAge(5);
             response.addCookie(cookie);
 
         } catch (RuntimeException e){
