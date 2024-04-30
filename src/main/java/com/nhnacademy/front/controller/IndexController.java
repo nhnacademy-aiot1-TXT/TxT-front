@@ -14,7 +14,7 @@ public class IndexController {
 
     @GetMapping("/")
     public String index(HttpServletRequest request, Model model) {
-        model.addAttribute("accessToken_temp", AccessTokenUtil.findAccessTokenInRequest(request));
+        model.addAttribute("accessTokenTemp", AccessTokenUtil.findAccessTokenInRequest(request));
 
         return "index";
     }
