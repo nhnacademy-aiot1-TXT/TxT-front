@@ -32,6 +32,8 @@
     <link href="/css/nucleo-svg.css" rel="stylesheet"/>
     <!-- CSS Files -->
     <link id="pagestyle" href="/css/argon-dashboard.css?v=2.0.4" rel="stylesheet"/>
+    <!-- 모델에 저장한 accessToken 가져오기 -->
+    <script th:inline="javascript">const accessToken = [[${accessTokenTemp}]];</script>
 </head>
 
 <body class="g-sidenav-show bg-gray-100">
@@ -182,13 +184,14 @@
         <div class="row mt-4 justify-content-center">
             <div class="col-xl-2 col-sm-6 mb-xl-0 mb-4">
                 <div class="card GaugeMeter" id="temperature"
-                     data-min="-35"
+                     data-min="-20"
                      data-total="40"
                      data-append="°C"
                      data-width="10"
                      data-size="250"
                      data-label="온도"
                      data-color="#5e72e4"
+                     data-animationstep="0"
                      data-text_size="0.15">
                 </div>
             </div>
@@ -201,6 +204,7 @@
                      data-size="250"
                      data-label="습도"
                      data-color="#5e72e4"
+                     data-animationstep="0"
                      data-text_size="0.15">
                 </div>
             </div>
@@ -213,6 +217,7 @@
                      data-size="250"
                      data-label="Co2"
                      data-color="#5e72e4"
+                     data-animationstep="0"
                      data-text_size="0.15">
                 </div>
             </div>
@@ -225,6 +230,7 @@
                      data-size="250"
                      data-label="voc"
                      data-color="#5e72e4"
+                     data-animationstep="0"
                      data-text_size="0.12">
                 </div>
             </div>
@@ -237,6 +243,7 @@
                      data-size="250"
                      data-label="조도"
                      data-color="#5e72e4"
+                     data-animationstep="0"
                      data-text_size="0.15">
                 </div>
             </div>
@@ -367,23 +374,22 @@
 $(document).ready(function () {
     // 첫번째로 로딩될 때
     changeSlideTitle();
-    updatePeopleCount([[${accessToken_temp}]]);
-    updateTemperature([[${accessToken_temp}]]);
-    updateHumidity([[${accessToken_temp}]]);
-    updateCo2([[${accessToken_temp}]]);
-    updateVoc([[${accessToken_temp}]]);
-    updateIllumination([[${accessToken_temp}]]);
-    $(".GaugeMeter").gaugeMeter();
+
+    updatePeopleCount();
+    updateTemperature();
+    updateHumidity();
+    updateCo2();
+    updateVoc();
+    updateIllumination();
 
     // 첫번째 로딩 후 5초마다
     setInterval(() => {
-        updatePeopleCount([[${accessToken_temp}]]);
-        updateTemperature([[${accessToken_temp}]]);
-        updateHumidity([[${accessToken_temp}]]);
-        updateCo2([[${accessToken_temp}]]);
-        updateVoc([[${accessToken_temp}]]);
-        updateIllumination([[${accessToken_temp}]]);
-        $(".GaugeMeter").gaugeMeter();
+        updatePeopleCount();
+        updateTemperature();
+        updateHumidity();
+        updateCo2();
+        updateVoc();
+        updateIllumination();
     }, 5000);
 });
 </script>

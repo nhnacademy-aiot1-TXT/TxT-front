@@ -1,4 +1,4 @@
-async function vocCountCall(accessToken) {
+async function vocCountCall() {
     const url = 'http://localhost:8000/api/sensor/voc'; // Ensure the endpoint is correct and accessible
 
     const option = {
@@ -11,11 +11,12 @@ async function vocCountCall(accessToken) {
     return await response.json();
 }
 
-async function updateVoc(accessToken) {
-    const data = await vocCountCall(accessToken);
+async function updateVoc() {
+    const data = await vocCountCall();
+    const value = data.value;
     console.log(data);
     const gaugeElement = document.getElementById('voc');
-    gaugeElement.setAttribute("data-used", data.value);
-    gaugeElement.setAttribute("data-text", data.value);
+    $(gaugeElement).data("used", value).data("text", value);
+    $(gaugeElement).gaugeMeter();
 }
 

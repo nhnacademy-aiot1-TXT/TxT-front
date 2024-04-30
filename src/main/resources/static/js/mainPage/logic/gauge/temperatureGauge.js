@@ -1,4 +1,4 @@
-async function temperatureCountCall(accessToken) {
+async function temperatureCountCall() {
     const url = 'http://localhost:8000/api/sensor/temperature'; // Ensure the endpoint is correct and accessible
 
     const option = {
@@ -11,11 +11,13 @@ async function temperatureCountCall(accessToken) {
     return await response.json();
 }
 
-async function updateTemperature(accessToken) {
-    const data = await temperatureCountCall(accessToken);
+async function updateTemperature() {
+    const data = await temperatureCountCall();
+    const value = data.value;
     console.log(data);
     const gaugeElement = document.getElementById('temperature');
-    gaugeElement.setAttribute("data-used", data.value);
-    gaugeElement.setAttribute("data-text", data.value);
+    $(gaugeElement).data("used", Math.round(value)).data("text", value);
+    $(gaugeElement).gaugeMeter();
 }
+
 

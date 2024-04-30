@@ -1,4 +1,4 @@
-async function humidityCountCall(accessToken) {
+async function humidityCountCall() {
     const url = 'http://localhost:8000/api/sensor/humidity'; // Ensure the endpoint is correct and accessible
 
     const option = {
@@ -11,11 +11,12 @@ async function humidityCountCall(accessToken) {
     return await response.json();
 }
 
-async function updateHumidity(accessToken) {
-    const data = await humidityCountCall(accessToken);
+async function updateHumidity() {
+    const data = await humidityCountCall();
+    const value = data.value;
     console.log(data);
     const gaugeElement = document.getElementById('humidity');
-    gaugeElement.setAttribute("data-used", data.value);
-    gaugeElement.setAttribute("data-text", data.value);
+    $(gaugeElement).data("used", Math.round(value)).data("text", value);
+    $(gaugeElement).gaugeMeter();
 }
 

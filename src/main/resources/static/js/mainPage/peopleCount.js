@@ -1,4 +1,4 @@
-async function peopleCountCall(accessToken) {
+async function peopleCountCall() {
     const url = "http://localhost:8000/api/sensor/people-count";
 
     const option = {
@@ -11,8 +11,8 @@ async function peopleCountCall(accessToken) {
     return await response.json();
 }
 
-async function updatePeopleCount(accessToken) {
-    const data = await peopleCountCall(accessToken);
+async function updatePeopleCount() {
+    const data = await peopleCountCall();
     console.log(data);
     const countElement = document.getElementById('currentCount');
     countElement.textContent = data.count;
