@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Temperature Log</title>
+</head>
+<body>
+<div class="container mt-5">
+    <h2>Temperature Log</h2>
+    <table class="table table-bordered">
+        <thead>
+        <tr>
+            <th>날짜</th>
+            <th>최고 온도 (°C)</th>
+            <th>최저 온도 (°C)</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="temperature : ${temperatures}">
+            <td th:text="${temperature.time}">날짜</td>
+            <td th:text="${temperature.maxTemperature}">최고 온도</td>
+            <td th:text="${temperature.minTemperature}">최저 온도</td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+</body>
+</html>
