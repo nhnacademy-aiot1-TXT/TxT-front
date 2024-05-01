@@ -40,8 +40,9 @@
      style="background-image: url('https://raw.githubusercontent.com/creativetimofficial/public-assets/master/argon-dashboard-pro/assets/img/profile-layout-header.jpg'); background-position-y: 50%;">
     <span class="mask bg-primary opacity-6"></span>
 </div>
+<aside th:replace="/fragments/sidebar">
 
-<div th:replace="~{/sidebar :: sidenav}"></div>
+</aside>
 
 <div class="main-content position-relative max-height-vh-100 h-100">
     <div th:replace="fragments/nav"></div>
