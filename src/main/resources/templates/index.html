@@ -38,58 +38,7 @@
 
 <body class="g-sidenav-show bg-gray-100">
 <div class="min-height-300 bg-primary position-absolute w-100"></div>
-<aside class="sidenav bg-white navbar navbar-vertical navbar-expand-xs border-0 border-radius-xl my-3 fixed-start ms-4 "
-       id="sidenav-main">
-    <div class="sidenav-header">
-        <i class="fas fa-times p-3 cursor-pointer text-secondary opacity-5 position-absolute end-0 top-0 d-none d-xl-none"
-           aria-hidden="true" id="iconSidenav"></i>
-        <a class="navbar-brand m-0" href="/">
-            <img src="/img/logo-ct-dark.png" class="navbar-brand-img h-100" alt="main_logo">
-            <span class="ms-1 font-weight-bold">TxT</span>
-        </a>
-    </div>
-    <hr class="horizontal dark mt-0">
-    <div class="collapse navbar-collapse  w-auto " id="sidenav-collapse-main">
-        <ul class="navbar-nav">
-            <li class="nav-item">
-                <a class="nav-link active" href="/">
-                    <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
-                        <i class="ni ni-tv-2 text-primary text-sm opacity-10"></i>
-                    </div>
-                    <span class="nav-link-text ms-1">대시보드</span>
-                </a>
-            </li>
-            <th:block th:if="${authority == 'ROLE_USER'}">
-                <li class="nav-item">
-                    <a class="nav-link " href="./pages/tables.html">
-                        <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
-                            <i class="ni ni-calendar-grid-58 text-warning text-sm opacity-10"></i>
-                        </div>
-                        <span class="nav-link-text ms-1">마이페이지</span>
-                    </a>
-                </li>
-            </th:block>
-            <li class="nav-item">
-                <a class="nav-link " href="./pages/billing.html">
-                    <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
-                        <i class="ni ni-credit-card text-success text-sm opacity-10"></i>
-                    </div>
-                    <span class="nav-link-text ms-1">게시판</span>
-                </a>
-            </li>
-            <th:block th:if="${authority != null}">
-                <li class="nav-item">
-                    <a class="nav-link " href="/user/profile">
-                        <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
-                            <i class="ni ni-single-02 text-dark text-sm opacity-10"></i>
-                        </div>
-                        <span class="nav-link-text ms-1">마이페이지</span>
-                    </a>
-                </li>
-            </th:block>
-        </ul>
-    </div>
-</aside>
+<aside th:replace="fragments/sidebar"></aside>
 
 <main class="main-content position-relative border-radius-lg ">
     <div th:replace="fragments/nav"></div>
@@ -224,7 +173,7 @@
             <div class="col-xl-2 col-sm-6 mb-xl-0 mb-4">
                 <div class="card GaugeMeter" id="voc"
                      data-min="0"
-                     data-total="2000"
+                     data-total="1000"
                      data-append="㎍/㎥"
                      data-width="10"
                      data-size="250"
@@ -237,7 +186,7 @@
             <div class="col-xl-2 col-sm-6">
                 <div class="card GaugeMeter" id="illumination"
                      data-min="0"
-                     data-total="100000"
+                     data-total="200"
                      data-append="lx"
                      data-width="10"
                      data-size="250"
@@ -342,6 +291,7 @@
     </div>
 </div>
 <!--   Core JS Files   -->
+<!-- 필수 플러그인 js 불러오기-->
 <script src="/js/core/popper.min.js"></script>
 <script src="/js/core/bootstrap.min.js"></script>
 <script src="/js/plugins/perfect-scrollbar.min.js"></script>
@@ -350,24 +300,25 @@
 <script src="/js/plugins/jquery-3.7.1.min.js"></script>
 <script src="/js/plugins/GaugeMeter.js"></script>
 
+<!-- chart 관련 js -->
 <script src="/js/mainPage/lightChart.js"></script>
 <script src="/js/mainPage/moistChart.js"></script>
 <script src="/js/mainPage/co2Chart.js"></script>
 <script src="/js/mainPage/tempChart.js"></script>
-
 <script src="/js/mainPage/logic/chart/lightChartUpdate.js"></script>
 <script src="/js/mainPage/logic/chart/tempChartUpdate.js"></script>
 <script src="/js/mainPage/logic/chart/co2ChartUpdate.js"></script>
 <script src="/js/mainPage/logic/chart/moistChartUpdate.js"></script>
-
 <script src="/js/mainPage/slideChartName.js"></script>
 
+<!-- gauge 관련 js -->
 <script src="/js/mainPage/logic/gauge/temperatureGauge.js"></script>
 <script src="/js/mainPage/logic/gauge/humidityGauge.js"></script>
 <script src="/js/mainPage/logic/gauge/co2Gauge.js"></script>
 <script src="/js/mainPage/logic/gauge/illuminationGauge.js"></script>
 <script src="/js/mainPage/logic/gauge/vocGauge.js"></script>
 
+<!-- 재실 인원 js -->
 <script src="/js/mainPage/peopleCount.js"></script>
 
 <script th:inline="javascript">
@@ -381,6 +332,7 @@ $(document).ready(function () {
     updateCo2();
     updateVoc();
     updateIllumination();
+
 
     // 첫번째 로딩 후 5초마다
     setInterval(() => {
