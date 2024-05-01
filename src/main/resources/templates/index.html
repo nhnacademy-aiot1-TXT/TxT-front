@@ -17,6 +17,7 @@
 <head>
     <meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests"/>
     <link rel="apple-touch-icon" sizes="76x76" href="/img/apple-icon.png">
     <link rel="icon" type="image/png" href="/img/favicon.png">
     <title>
@@ -34,6 +35,7 @@
     <link id="pagestyle" href="/css/argon-dashboard.css?v=2.0.4" rel="stylesheet"/>
     <!-- 모델에 저장한 accessToken 가져오기 -->
     <script th:inline="javascript">const accessToken = [[${accessTokenTemp}]];</script>
+
 </head>
 
 <body class="g-sidenav-show bg-gray-100">

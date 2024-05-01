@@ -11,9 +11,3 @@ spring:
     store-type: redis
   profiles:
     active: prod
-
-
-server:
-  tomcat:
-    remoteip:
-      protocol-header: x-forwarded-proto
