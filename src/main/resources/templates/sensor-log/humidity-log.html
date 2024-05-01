@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Humidity Log</title>
+</head>
+
+<aside th:replace="fragments/sidebar"></aside>
+
+<body>
+<div class="container mt-5">
+    <h2>Humidity Log</h2>
+    <table class="table table-bordered">
+        <thead>
+        <tr>
+            <th>날짜</th>
+            <th>최고 습도 (%)</th>
+            <th>최저 습도 (%)</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="humidity : ${humitityList}">
+            <td th:text="${humidity.time}">날짜</td>
+            <td th:text="${humidity.maxHumidity}">최고 습도</td>
+            <td th:text="${humidity.minHumidity}">최저 습도</td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+</body>
+</html>
