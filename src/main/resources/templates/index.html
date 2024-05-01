@@ -174,7 +174,7 @@
             <div class="col-xl-2 col-sm-6 mb-xl-0 mb-4">
                 <div class="card GaugeMeter" id="voc"
                      data-min="0"
-                     data-total="1000"
+                     data-total="2000"
                      data-append="㎍/㎥"
                      data-width="10"
                      data-size="250"
@@ -187,7 +187,7 @@
             <div class="col-xl-2 col-sm-6">
                 <div class="card GaugeMeter" id="illumination"
                      data-min="0"
-                     data-total="200"
+                     data-total="100000"
                      data-append="lx"
                      data-width="10"
                      data-size="250"
@@ -292,7 +292,6 @@
     </div>
 </div>
 <!--   Core JS Files   -->
-<!-- 필수 플러그인 js 불러오기-->
 <script src="/js/core/popper.min.js"></script>
 <script src="/js/core/bootstrap.min.js"></script>
 <script src="/js/plugins/perfect-scrollbar.min.js"></script>
@@ -301,25 +300,24 @@
 <script src="/js/plugins/jquery-3.7.1.min.js"></script>
 <script src="/js/plugins/GaugeMeter.js"></script>
 
-<!-- chart 관련 js -->
 <script src="/js/mainPage/lightChart.js"></script>
 <script src="/js/mainPage/moistChart.js"></script>
 <script src="/js/mainPage/co2Chart.js"></script>
 <script src="/js/mainPage/tempChart.js"></script>
+
 <script src="/js/mainPage/logic/chart/lightChartUpdate.js"></script>
 <script src="/js/mainPage/logic/chart/tempChartUpdate.js"></script>
 <script src="/js/mainPage/logic/chart/co2ChartUpdate.js"></script>
 <script src="/js/mainPage/logic/chart/moistChartUpdate.js"></script>
+
 <script src="/js/mainPage/slideChartName.js"></script>
 
-<!-- gauge 관련 js -->
 <script src="/js/mainPage/logic/gauge/temperatureGauge.js"></script>
 <script src="/js/mainPage/logic/gauge/humidityGauge.js"></script>
 <script src="/js/mainPage/logic/gauge/co2Gauge.js"></script>
 <script src="/js/mainPage/logic/gauge/illuminationGauge.js"></script>
 <script src="/js/mainPage/logic/gauge/vocGauge.js"></script>
 
-<!-- 재실 인원 js -->
 <script src="/js/mainPage/peopleCount.js"></script>
 
 <script th:inline="javascript">
@@ -333,7 +331,6 @@ $(document).ready(function () {
     updateCo2();
     updateVoc();
     updateIllumination();
-
 
     // 첫번째 로딩 후 5초마다
     setInterval(() => {
