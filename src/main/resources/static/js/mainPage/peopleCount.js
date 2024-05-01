@@ -1,5 +1,5 @@
 async function peopleCountCall() {
-    const url = "http://localhost:8000/api/sensor/people-count";
+    const url = "https://contxt.co.kr/api/sensor/people-count";
 
     const option = {
         method : "GET",

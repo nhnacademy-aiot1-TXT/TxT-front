@@ -1,5 +1,5 @@
 async function illuminationCountCall() {
-    const url = 'http://localhost:8000/api/sensor/illumination'; // Ensure the endpoint is correct and accessible
+    const url = 'https://contxt.co.kr/api/sensor/illumination'; // Ensure the endpoint is correct and accessible
 
     const option = {
         method : "GET",

@@ -1,5 +1,5 @@
 async function humidityCountCall() {
-    const url = 'http://localhost:8000/api/sensor/humidity'; // Ensure the endpoint is correct and accessible
+    const url = 'https://contxt.co.kr/api/sensor/humidity'; // Ensure the endpoint is correct and accessible
 
     const option = {
         method : "GET",
