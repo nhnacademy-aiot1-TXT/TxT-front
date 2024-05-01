@@ -11,3 +11,12 @@ spring:
     store-type: redis
   profiles:
     active: prod
+
+
+  spring:
+    devtools:
+      livereload:
+        enabled: true
+  freemarker:
+    cache: false
+
