@@ -1,5 +1,5 @@
-async function co2CountCall() {
-    const url = 'https://contxt.co.kr/api/sensor/co2'; // Ensure the endpoint is correct and accessible
+async function illuminationCountCall() {
+    const url = 'https://contxt.co.kr/api/sensor/illumination'; // Ensure the endpoint is correct and accessible
 
     const option = {
         method : "GET",
@@ -11,13 +11,12 @@ async function co2CountCall() {
     return await response.json();
 }
 
-async function updateCo2() {
-    const data = await co2CountCall();
+async function updateIllumination() {
+    const data = await illuminationCountCall();
     const value = data.value;
     console.log(data);
-    const gaugeElement = document.getElementById('co2');
+    const gaugeElement = document.getElementById('illumination');
     $(gaugeElement).data("used", value).data("text", value);
     $(gaugeElement).gaugeMeter();
-
 }
 
