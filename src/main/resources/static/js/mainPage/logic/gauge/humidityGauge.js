@@ -14,7 +14,6 @@ async function humidityCountCall() {
 async function updateHumidity() {
     const data = await humidityCountCall();
     const value = data.value;
-    console.log(data);
     const gaugeElement = document.getElementById('humidity');
     $(gaugeElement).data("used", Math.round(value)).data("text", value);
     $(gaugeElement).gaugeMeter();

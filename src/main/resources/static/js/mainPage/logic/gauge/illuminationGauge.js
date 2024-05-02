@@ -14,7 +14,6 @@ async function illuminationCountCall() {
 async function updateIllumination() {
     const data = await illuminationCountCall();
     const value = data.value;
-    console.log(data);
     const gaugeElement = document.getElementById('illumination');
     $(gaugeElement).data("used", value).data("text", value);
     $(gaugeElement).gaugeMeter();

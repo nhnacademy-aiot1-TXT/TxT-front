@@ -14,7 +14,6 @@ async function vocCountCall() {
 async function updateVoc() {
     const data = await vocCountCall();
     const value = data.value;
-    console.log(data);
     const gaugeElement = document.getElementById('voc');
     $(gaugeElement).data("used", value).data("text", value);
     $(gaugeElement).gaugeMeter();
