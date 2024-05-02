@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Humidity Log</title>
+    <link rel="apple-touch-icon" sizes="76x76" href="/img/apple-icon.png">
+    <link rel="icon" type="image/png" href="/img/favicon.png">
+    <!--     Fonts and icons     -->
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet"/>
+    <!-- Nucleo Icons -->
+    <link href="/css/nucleo-icons.css" rel="stylesheet"/>
+    <link href="/css/nucleo-svg.css" rel="stylesheet"/>
+    <!-- Font Awesome Icons -->
+    <script src="https://kit.fontawesome.com/42d5adcbca.js" crossorigin="anonymous"></script>
+    <link href="/css/nucleo-svg.css" rel="stylesheet"/>
+    <!-- CSS Files -->
+    <link id="pagestyle" href="/css/argon-dashboard.css?v=2.0.4" rel="stylesheet"/>
+</head>
+
+<body class="g-sidenav-show bg-gray-100">
+<div class="position-absolute w-100 min-height-300 top-0"
+     style="background-image: url('/img/log_humidity.jpg'); background-size: cover; background-position-y: 50%;">
+    <span class="mask bg-primary opacity-6"></span>
+</div>
+
+<aside th:replace="fragments/sidebar"></aside>
+
+<div class="main-content position-relative max-height-vh-100 h-100">
+    <div th:replace="fragments/nav"></div>
+
+    <div class="card shadow-lg mx-4 card-profile-bottom">
+        <div class="card-body p-3">
+            <h2>Humidity Log</h2>
+        </div>
+    </div>
+    <div class="container-fluid py-4">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card shadow-lg">
+                    <div class="card-header pb-0">
+                    </div>
+                    <div class="container-fluid py-4">
+                        <div class="row">
+                            <table class="table border-radius-lg bg-primary">
+                                <thead class="text-white">
+                                <tr>
+                                    <th>날짜</th>
+                                    <th>최고 습도 (%)</th>
+                                    <th>최저 습도 (%)</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr th:each="humidity : ${humitityList}">
+                                    <td th:text="${humidity.time}">날짜</td>
+                                    <td th:text="${humidity.maxHumidity}">최고 습도</td>
+                                    <td th:text="${humidity.minHumidity}">최저 습도</td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
