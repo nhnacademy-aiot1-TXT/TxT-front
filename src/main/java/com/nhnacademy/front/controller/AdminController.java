@@ -2,6 +2,8 @@ package com.nhnacademy.front.controller;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.nhnacademy.front.adaptor.SensorAdapter;
+import com.nhnacademy.front.dto.HumidityResponse;
 import com.nhnacademy.front.dto.UserDataResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -26,6 +28,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 public class AdminController {
 
     private final UserAdapter userAdapter;
+    private final SensorAdapter sensorAdapter;
 
     @GetMapping
     public String admin() {
@@ -72,13 +75,32 @@ public class AdminController {
         return "manage";
     }
 
-
+    // 상세센서 정보
 
     @GetMapping("/week")
     public String weeklyTemperature(HttpServletRequest request, Model model) {
 
-        return "week";
+
+        return "sensor-log/temperature-log";
     }
 
 
+    @GetMapping("humidity/week")
+    public String weeklyHumidity(HttpServletRequest request, Model model) {
+
+
+
+        String accessToken = Arrays.stream(request.getCookies())
+                .filter(cookie -> "accessToken".equals(cookie.getName()))
+                .findFirst()
+                .orElse(null)
+                .getValue();
+
+
+        List<HumidityResponse> humidityDaily = sensorAdapter.getWeeklyHumidity(accessToken);
+
+        model.addAttribute("humidityList", humidityDaily);
+
+        return "sensor-log/humidity-log";
+    }
 }

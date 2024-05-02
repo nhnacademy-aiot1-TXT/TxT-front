@@ -54,6 +54,26 @@
                         </a>
                     </li>
                 </th:block>
+                <th:block th:if="${authority != 'ROLE_USER'}">
+                    <li class="nav-item">
+                        <a class="nav-link " href="/admin/manage">
+                            <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
+                                <i class="ni ni-single-02 text-dark text-sm opacity-10"></i>
+                            </div>
+                            <span class="nav-link-text ms-1">유저관리</span>
+                        </a>
+                    </li>
+                </th:block>
+                <th:block th:if="${authority != 'ROLE_USER'}">
+                    <li class="nav-item">
+                        <a class="nav-link " href="/admin/dtsensor">
+                            <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
+                                <i class="ni ni-single-02 text-dark text-sm opacity-10"></i>
+                            </div>
+                            <span class="nav-link-text ms-1">상세 센서</span>
+                        </a>
+                    </li>
+                </th:block>
             </ul>
         </div>
     </aside>
