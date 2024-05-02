@@ -59,33 +59,7 @@
                         <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
                         <div class="card-body">
                             <div class="row">
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label for="Name" class="form-control-label">이름</label>
-                                        <input class="form-control" type="text" aria-label="Name" name="name" th:value="${user != null ? user.name : ''}">
-                                        <span class="ms-2 form-label text-danger" id="notificationId"></span>
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label for="Password" class="form-control-label">비밀번호</label>
-                                        <input class="form-control" type="password" aria-label="Password" name="password">
-                                        <span class="ms-2 form-label text-danger" id="notificationPw"></span>
-                                    </div>
-                                </div>
-                                <div class="col-md-6 d-flex align-items-sm-center">
-                                    <div class="form-group">
-                                        <p th:if="${errorMessage}" class="ms-2 col-form-label text-danger" th:text="${errorMessage}">Error Message</p>
-                                        <p th:if="${successMessage}" class="ms-2 col-form-label text-success" th:text="${successMessage}">Success Message</p>
-                                    </div>
-                                </div>
 
-                                <div>
-                                    여기가 메인페이지 입니다.
-                                    <p th:text="${users}"></p>
-                                    <p th:text="${currentPage}"></p>
-                                    <p th:text="${totalPages}"></p>
-                                </div>
 
                                 <div class="col-md-12">
                                     <table id="permitUser">

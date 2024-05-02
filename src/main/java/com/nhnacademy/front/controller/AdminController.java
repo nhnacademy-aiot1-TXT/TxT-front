@@ -77,7 +77,7 @@ public class AdminController {
 
     // 상세센서 정보
 
-    @GetMapping("/week")
+    @GetMapping("temperature/week")
     public String weeklyTemperature(HttpServletRequest request, Model model) {
 
 
