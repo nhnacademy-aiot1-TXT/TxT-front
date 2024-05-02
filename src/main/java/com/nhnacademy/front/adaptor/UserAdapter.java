@@ -1,11 +1,9 @@
 package com.nhnacademy.front.adaptor;
 
 import com.nhnacademy.front.dto.*;
+import com.nhnacademy.front.page.RestPage;
 import org.springframework.cloud.openfeign.FeignClient;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestHeader;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * User 관련 기능을 수행하는 FeignClient 인터페이스
@@ -64,5 +62,12 @@ public interface UserAdapter {
      */
     @PutMapping("/api/user/update")
     Void updateUser(UserUpdateRequest userUpdateRequest, @RequestHeader("Authorization") String accessToken);
+
+
+    @GetMapping("/api/user/admin/userList/sort/{statusId}")
+    RestPage<UserDataResponse> findSortedUsers(@RequestHeader("Authorization") String accessToken,
+                                               @PathVariable Long statusId,
+                                               @RequestParam("page") int page,
+                                               @RequestParam("size") int size);
 
 }
