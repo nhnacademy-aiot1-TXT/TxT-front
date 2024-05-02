@@ -14,7 +14,6 @@ async function temperatureCountCall() {
 async function updateTemperature() {
     const data = await temperatureCountCall();
     const value = data.value;
-    console.log(data);
     const gaugeElement = document.getElementById('temperature');
     $(gaugeElement).data("used", Math.round(value)).data("text", value);
     $(gaugeElement).gaugeMeter();

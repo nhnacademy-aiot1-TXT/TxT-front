@@ -14,7 +14,6 @@ async function co2CountCall() {
 async function updateCo2() {
     const data = await co2CountCall();
     const value = data.value;
-    console.log(data);
     const gaugeElement = document.getElementById('co2');
     $(gaugeElement).data("used", value).data("text", value);
     $(gaugeElement).gaugeMeter();
