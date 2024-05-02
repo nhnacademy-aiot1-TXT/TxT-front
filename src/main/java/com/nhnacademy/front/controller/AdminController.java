@@ -74,6 +74,11 @@ public class AdminController {
 
 
 
+    @GetMapping("/week")
+    public String weeklyTemperature(HttpServletRequest request, Model model) {
+
+        return "week";
+    }
 
 
 }
