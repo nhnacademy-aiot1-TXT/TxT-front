@@ -17,7 +17,7 @@ async function commonInit(name, date) {
     if (date === "day") {
         chart.data.labels = data.map(item => new Date(item.time).toLocaleTimeString("en-US", { timeZone: "UTC" }));
     } else {
-        chart.data.labels = data.map(item => new Date(item.time).toLocaleDateString("en-US"));
+        chart.data.labels = data.map(item => new Date(item.time).toLocaleDateString("en-US", { timeZone: "UTC" }));
     }
     chart.data.datasets[0].data = data.map(item => item[maxValue]);
     chart.data.datasets[1].data = data.map(item => item[minValue]);
