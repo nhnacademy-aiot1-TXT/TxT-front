@@ -2,11 +2,12 @@ spring:
   redis:
     host: 133.186.244.96
     port: 6379
-    database: 10
+    database: 18
     password: '*N2vya7H@muDTwdNMR!'
-    security:
-      database: 18
-      password: '*N2vya7H@muDTwdNMR!'
+    blackList:
+      database: 10
+    device:
+      database: 13
   session:
     store-type: redis
   profiles:
