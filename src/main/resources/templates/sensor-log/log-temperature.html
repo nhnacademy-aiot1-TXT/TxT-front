@@ -51,7 +51,7 @@
                                 </thead>
                                 <tbody>
                                 <tr th:each="temperature : ${temperatureList}">
-                                    <td th:text="${temperature.time}">날짜</td>
+                                    <td th:text="${#temporals.format(temperature.time, 'yyyy-MM-dd')}">날짜</td>
                                     <td th:text="${temperature.maxTemperature}">최고 온도</td>
                                     <td th:text="${temperature.minTemperature}">최저 온도</td>
                                 </tr>

@@ -51,7 +51,7 @@
                                 </thead>
                                 <tbody>
                                 <tr th:each="co2 : ${co2List}">
-                                    <td th:text="${co2.time}">날짜</td>
+                                    <td th:text="${#temporals.format(co2.time, 'yyyy-MM-dd')}">날짜</td>
                                     <td th:text="${co2.maxCo2}">최고 농도</td>
                                     <td th:text="${co2.minCo2}">최저 농도</td>
                                 </tr>
