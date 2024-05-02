@@ -101,6 +101,6 @@ public class AdminController {
 
         model.addAttribute("humidityList", humidityDaily);
 
-        return "sensor-log/humidity-log";
+        return "sensor-log/log-humidity";
     }
 }
