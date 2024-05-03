@@ -81,7 +81,7 @@ public class AdminController {
     public String weeklyTemperature(HttpServletRequest request, Model model) {
 
 
-        return "sensor-log/temperature-log";
+        return "sensor-log/log-temperature";
     }
 
 
