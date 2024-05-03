@@ -12,3 +12,9 @@ th, td {
 th {
     background-color: #f8e1b6;
 }
+
+#numbers li a.active {
+    opacity: 1;
+    background: #333333;
+    color: #ffffff;
+}

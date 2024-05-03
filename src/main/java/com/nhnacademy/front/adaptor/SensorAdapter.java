@@ -17,4 +17,10 @@ public interface SensorAdapter {
     @GetMapping("/api/sensor/humidity/week")
     List<HumidityResponse> getWeeklyHumidity(@RequestHeader("Authorization") String accessToken);
 
+    @GetMapping("/api/sensor/co2/week")
+    List<Co2Response> getWeeklyCo2(@RequestHeader("Authorization") String accessToken);
+
+    @GetMapping("/api/sensor/temperature/week")
+    List<TemperatureResponse> getWeeklyTemperatures(@RequestHeader("Authorization") String accessToken);
+
 }

@@ -1,7 +1,6 @@
 
-document.addEventListener('DOMContentLoaded', function () {
 
-    // const rowsPerPage = 3; // size
+
     //
     // const rows = document.querySelectorAll('#permitUser tbody tr')
     //
@@ -9,6 +8,7 @@ document.addEventListener('DOMContentLoaded', function () {
     //
     // const pageCount = Math.ceil(rowsCount/rowsPerPage);
 
+    const rowsPerPage = 3; // size
     const numbers = document.querySelector('#numbers');
 
 
@@ -27,16 +27,24 @@ document.addEventListener('DOMContentLoaded', function () {
     for(let i = 1; i <= totalPages ; i++) {
 
         // <li><a href="" > '+i+' </a></li>
-
         // numbers.innerHTML = numbers.innerHTML + `<li><a href=""> ${i} </a></li>`;
         //numbers.innerHTML +=`<li><a href=""> ${i} </a></li>`;
         numbers.innerHTML += `<li><a href="?page=${i - 1}&size=${rowsPerPage}"> ${i} </a></li>`;
-
-
     }
 
+    const numberBtn = numbers.querySelectorAll('a');
+    numberBtn.log(numberBtn);
+
+    numberBtn.forEach((item,idx) => {
+            item.addEventListener('click', ()=>{
+                for(let nb of numberBtn){
+                    nb.classlist.remove('active');
+                }
+
+            })
+    })
 
 
 
 
-});
+

@@ -3,7 +3,9 @@ package com.nhnacademy.front.controller;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.nhnacademy.front.adaptor.SensorAdapter;
+import com.nhnacademy.front.dto.Co2Response;
 import com.nhnacademy.front.dto.HumidityResponse;
+import com.nhnacademy.front.dto.TemperatureResponse;
 import com.nhnacademy.front.dto.UserDataResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -59,7 +61,7 @@ public class AdminController {
                 .orElse(null)
                 .getValue();
 
-        Page<UserDataResponse> users = userAdapter.findSortedUsers(accessToken, 4L, page, size);
+        Page<UserDataResponse> users = userAdapter.findSortedUsers(accessToken, 1L, page, size);
 
         List<UserDataResponse> usersList = users.getContent();
 
@@ -79,6 +81,18 @@ public class AdminController {
 
     @GetMapping("temperature/week")
     public String weeklyTemperature(HttpServletRequest request, Model model) {
+
+        String accessToken = Arrays.stream(request.getCookies())
+                .filter(cookie -> "accessToken".equals(cookie.getName()))
+                .findFirst()
+                .orElse(null)
+                .getValue();
+
+
+
+        List<TemperatureResponse> tempWeek = sensorAdapter.getWeeklyTemperatures(accessToken);
+        model.addAttribute("temperatureList", tempWeek);
+
 
 
         return "sensor-log/log-temperature";
@@ -103,4 +117,27 @@ public class AdminController {
 
         return "sensor-log/log-humidity";
     }
+
+    @GetMapping("co2/week")
+    public String weeklyCo2(HttpServletRequest request, Model model) {
+
+
+        String accessToken = Arrays.stream(request.getCookies())
+                .filter(cookie -> "accessToken".equals(cookie.getName()))
+                .findFirst()
+                .orElse(null)
+                .getValue();
+
+
+        List<Co2Response> Co2Week = sensorAdapter.getWeeklyCo2(accessToken);
+
+        model.addAttribute("co2List", Co2Week);
+
+
+        return "sensor-log/log-co2";
+    }
+
+
+
+
 }
