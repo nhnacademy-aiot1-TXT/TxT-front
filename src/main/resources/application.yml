@@ -10,6 +10,12 @@ spring:
       database: 13
   session:
     store-type: redis
+  rabbitmq:
+    username: user
+    password: user
+    host: 133.186.221.92
+    port: 5672
+    device-control-exchange: txt.device.control
   profiles:
     active: prod
 
