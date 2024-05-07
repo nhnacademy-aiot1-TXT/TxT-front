@@ -7,10 +7,15 @@ import com.nhnacademy.front.dto.DeviceSensorResponse;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @FeignClient(value = "common-api", url = "${gateway.url}", path = "/api/common")
 public interface DeviceSettingAdapter {
     @GetMapping("/device")
     DeviceResponse getDevice(@RequestHeader("Authorization") String accessToken, @RequestParam String name);
+
+    @GetMapping("/device-sensor/{deviceId}")
+    List<DeviceSensorResponse> getSensorList(@RequestHeader("Authorization") String accessToken, @PathVariable Long deviceId);
 
     @PutMapping("/device/{deviceId}")
     DeviceResponse updateDevice(@RequestHeader("Authorization") String accessToken, @PathVariable String deviceId, @RequestBody DeviceRequest deviceRequest);
