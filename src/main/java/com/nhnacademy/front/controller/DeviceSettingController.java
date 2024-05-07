@@ -29,10 +29,10 @@ public class DeviceSettingController {
     public String getDeviceSettingInfo(@PathVariable String deviceName, HttpServletRequest request, Model model) {
         String accessToken = AccessTokenUtil.findAccessTokenInRequest(request);
         DeviceResponse deviceResponse = deviceSettingAdapter.getDevice(accessToken, deviceName);
-        DeviceSensorResponse deviceSensorResponse = deviceSettingAdapter.getDeviceSensor(accessToken, deviceName, "voc");
+        DeviceSensorResponse deviceSensorResponse = deviceSettingAdapter.getSensorList(accessToken, deviceResponse.getDeviceId()).get(0);
         model.addAttribute("device", deviceResponse);
         model.addAttribute("deviceSensor", deviceSensorResponse);
-        return "aircleaner-setting";
+        return deviceName + "-setting";
     }
 
     @PostMapping("/{deviceName}")
