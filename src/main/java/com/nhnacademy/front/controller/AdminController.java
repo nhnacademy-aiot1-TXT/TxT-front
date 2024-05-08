@@ -73,6 +73,7 @@ public class AdminController {
         String usersJson = mapper.writeValueAsString(usersList);
 
 
+        model.addAttribute("users", users);
         model.addAttribute("usersJson", usersJson);
         model.addAttribute("currentPage", page);
         model.addAttribute("totalPages", users.getTotalPages());

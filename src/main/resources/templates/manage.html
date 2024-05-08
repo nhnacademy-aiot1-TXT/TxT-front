@@ -85,14 +85,57 @@
                             <div class="card-header pb-0">
                                 <div class="d-flex align-items-center">
                                     <p class="mb-0"></p>
-                                    <div class="ms-auto">
-                                        <nav>
-                                            <ul id="numbers" class="pagination">
+
+                                    <div th:if="${!users.isEmpty()}">
+                                        <nav
+                                                th:with="
+                                                pageNumber = ${users.pageable.pageNumber},
+                                                pageSize = ${users.pageable.pageSize},
+                                                totalPages = ${users.totalPages},
+                                                startPage = ${T(java.lang.Math).floor(pageNumber / pageSize) * pageSize + 1},
+                                                tempEndPage = ${startPage + pageSize - 1},
+                                                endPage = (${tempEndPage > totalPages ? totalPages : tempEndPage})"
+                                                aria-label="Page navigation"
+                                        >
+                                            <ul class="pagination ">
+
+                                                <li th:classappend="${pageNumber + 1 <= pageSize + 1} ? 'disabled'" class="page-item">
+                                                    <a class="page-link" th:href="@{/manage(page=1)}">
+                                                        <span>&laquo;</span>
+                                                        <span class="sr-only">First</span>
+                                                    </a>
+                                                </li>
+
+                                                <li th:classappend="${users.first} ? 'disabled'" class="page-item">
+                                                    <a class="page-link" th:href="${users.first} ? '#' : @{/manage(page=${#numbers.formatDecimal(startPage - pageSize, 0, -1)})}" aria-label="Previous">
+                                                        <!-- 개인적으로 int 로 변환하는 법을 몰라서 이렇게 길어졌습니다 -->
+                                                        <span aria-hidden="true">&lt;</span>
+                                                        <span class="sr-only">Previous</span>
+                                                    </a>
+                                                </li>
+
+                                                <li th:each="page: ${#numbers.sequence(startPage, endPage)}" th:classappend="${page == pageNumber + 1} ? 'active'" class="page-item">
+                                                    <a th:text="${page}" class="page-link" th:href="@{/manage(page=${page})}"></a>
+                                                </li>
+
+                                                <li th:classappend="${users.last} ? 'disabled'" class="page-item">
+                                                    <a class="page-link" th:href="${users.last} ? '#' : @{/manage(page=${#numbers.formatDecimal(startPage + pageSize, 0, -1)})}" aria-label="Next">
+                                                        <span aria-hidden="true">&gt;</span>
+                                                        <span class="sr-only">Next</span>
+                                                    </a>
+                                                </li>
+
+                                                <li th:classappend=" ${T(java.lang.Math).floor(totalPages/10)*10 <= startPage} ? 'disabled'" class="page-item">
+                                                    <a class="page-link" th:href="@{/manage(page=${totalPages})}">
+                                                        <span>&raquo;</span>
+                                                        <span class="sr-only">First</span>
+                                                    </a>
+                                                </li>
 
                                             </ul>
                                         </nav>
-
                                     </div>
+
                                     <button type="submit" class="btn btn-primary btn-sm ms-auto">승인</button>
 
                                     <!--                                조회에 대한 구현부 끝-->
