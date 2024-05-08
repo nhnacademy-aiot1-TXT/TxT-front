@@ -8,8 +8,8 @@
     //
     // const pageCount = Math.ceil(rowsCount/rowsPerPage);
 
-    const rowsPerPage = 3; // size
-    const numbers = document.querySelector('#numbers');
+    const rowsPerPage = 7; // size
+    const numbers2 = document.querySelector('#numbers');
 
 
 //페이지네이션 생성
@@ -23,17 +23,28 @@
     }
      */
 
+    //
+    numbers2.innerHTML += `<li  class="page-item"><a href="?page=${0}&size=${rowsPerPage}"> << </a></li>`;
 
     for(let i = 1; i <= totalPages ; i++) {
 
         // <li><a href="" > '+i+' </a></li>
         // numbers.innerHTML = numbers.innerHTML + `<li><a href=""> ${i} </a></li>`;
         //numbers.innerHTML +=`<li><a href=""> ${i} </a></li>`;
-        numbers.innerHTML += `<li><a href="?page=${i - 1}&size=${rowsPerPage}"> ${i} </a></li>`;
+        numbers2.innerHTML += `<li><a href="?page=${i - 1}&size=${rowsPerPage}"> ${i} </a></li>`;
     }
 
-    const numberBtn = numbers.querySelectorAll('a');
+    numbers2.innerHTML += `<li  class = "last"><a href="?page=${totalPages - 1 }&size=${rowsPerPage}"> >> </a></li>`;
+
+
+
+    const numberBtn = numbers2.querySelectorAll('a');
     numberBtn.log(numberBtn);
+
+
+
+
+
 
     numberBtn.forEach((item,idx) => {
             item.addEventListener('click', ()=>{

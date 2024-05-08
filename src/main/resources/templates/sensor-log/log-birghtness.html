@@ -45,15 +45,15 @@
                                 <thead class="text-white">
                                 <tr>
                                     <th>날짜</th>
-                                    <th>최고 온도 (°C)</th>
-                                    <th>최저 온도 (°C)</th>
+                                    <th>최고 밝기 (°C)</th>
+                                    <th>최저 밝기 (°C)</th>
                                 </tr>
                                 </thead>
                                 <tbody>
-                                <tr th:each="brightness : ${brightnessList}">
+                                <tr th:each="brightness : ${illuminationWeek}">
                                     <td th:text="${#temporals.format(brightness.time, 'yyyy-MM-dd')}" style="color: white;">날짜</td>
-                                    <td th:text="${brightness.maxbrightness}" style="color: white;">최고 온도</td>
-                                    <td th:text="${brightness.minbrightness}" style="color: white;">최저 온도</td>
+                                    <td th:text="${brightness.maxIllumination}" style="color: white;">최고 밝기</td>
+                                    <td th:text="${brightness.minIllumination}" style="color: white;">최저 밝기</td>
                                 </tr>
                                 </tbody>
                             </table>

@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.nhnacademy.front.adaptor.SensorAdapter;
 import com.nhnacademy.front.dto.Co2Response;
 import com.nhnacademy.front.dto.HumidityResponse;
+import com.nhnacademy.front.dto.IlluminationResponse.IlluminationResponse;
 import com.nhnacademy.front.dto.TemperatureResponse;
 import com.nhnacademy.front.dto.UserDataResponse;
 import lombok.RequiredArgsConstructor;
@@ -12,6 +13,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.HttpServletRequest;
@@ -53,6 +55,7 @@ public class AdminController {
 
     @GetMapping("/manage")
     public String manage(HttpServletRequest request, Model model,
+                         @RequestParam(value = "statusId", defaultValue = "1") int statusId,
                          @RequestParam(value = "page", defaultValue = "0") int page,
                          @RequestParam(value = "size", defaultValue = "5") int size) throws JsonProcessingException {
         String accessToken = Arrays.stream(request.getCookies())
@@ -61,7 +64,7 @@ public class AdminController {
                 .orElse(null)
                 .getValue();
 
-        Page<UserDataResponse> users = userAdapter.findSortedUsers(accessToken, 1L, page, size);
+        Page<UserDataResponse> users = userAdapter.findSortedUsers(accessToken, statusId, page, size);
 
         List<UserDataResponse> usersList = users.getContent();
 
@@ -96,6 +99,25 @@ public class AdminController {
 
 
         return "sensor-log/log-temperature";
+    }
+
+    @GetMapping("illumination/week")
+    public String weeklyIllumination(HttpServletRequest request, Model model) {
+
+        String accessToken = Arrays.stream(request.getCookies())
+                .filter(cookie -> "accessToken".equals(cookie.getName()))
+                .findFirst()
+                .orElse(null)
+                .getValue();
+
+
+
+        List<IlluminationResponse> illuminationWeek = sensorAdapter.getWeeklyIllumination(accessToken);
+        model.addAttribute("illuminationWeek", illuminationWeek);
+
+
+
+        return "sensor-log/log-birghtness";
     }
 
 

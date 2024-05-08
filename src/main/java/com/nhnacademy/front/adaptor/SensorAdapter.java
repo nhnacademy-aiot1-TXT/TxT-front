@@ -1,6 +1,7 @@
 package com.nhnacademy.front.adaptor;
 
 import com.nhnacademy.front.dto.*;
+import com.nhnacademy.front.dto.IlluminationResponse.IlluminationResponse;
 import com.nhnacademy.front.page.RestPage;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.*;
@@ -22,5 +23,9 @@ public interface SensorAdapter {
 
     @GetMapping("/api/sensor/temperature/week")
     List<TemperatureResponse> getWeeklyTemperatures(@RequestHeader("Authorization") String accessToken);
+
+    @GetMapping("/api/sensor/illumination/week")
+    List<IlluminationResponse> getWeeklyIllumination(@RequestHeader("Authorization") String accessToken);
+
 
 }

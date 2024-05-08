@@ -66,7 +66,7 @@ public interface UserAdapter {
 
     @GetMapping("/api/user/admin/userList/sort/{statusId}")
     RestPage<UserDataResponse> findSortedUsers(@RequestHeader("Authorization") String accessToken,
-                                               @PathVariable Long statusId,
+                                               @PathVariable int statusId,
                                                @RequestParam("page") int page,
                                                @RequestParam("size") int size);
 
