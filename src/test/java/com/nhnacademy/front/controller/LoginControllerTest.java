@@ -2,10 +2,7 @@ package com.nhnacademy.front.controller;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.nhnacademy.front.adaptor.UserAdapter;
-import com.nhnacademy.front.dto.AccessTokenResponse;
-import com.nhnacademy.front.dto.LoginRequest;
-import com.nhnacademy.front.dto.RefreshTokenResponse;
-import com.nhnacademy.front.dto.TokensResponse;
+import com.nhnacademy.front.dto.*;
 import com.nhnacademy.front.utils.JwtUtil;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -50,6 +47,8 @@ class LoginControllerTest {
         loginRequest.setPassword("testPassword");
         Model model = new ExtendedModelMap();
         Authentication authentication = new TestingAuthenticationToken("user", "password");
+        UserDataResponse userDataResponse = new UserDataResponse();
+        userDataResponse.setStatusName("ACTIVE");
 
         TokensResponse mockTokensResponse = new TokensResponse();
         AccessTokenResponse mockAccessTokenResponse = new AccessTokenResponse("testAccessToken", "test", 1);
@@ -57,6 +56,7 @@ class LoginControllerTest {
         mockTokensResponse.setAccessToken(mockAccessTokenResponse);
         mockTokensResponse.setRefreshToken(mockRefreshTokenResponse);
 
+        when(userAdapter.getUserData(anyString())).thenReturn(userDataResponse);
         when(userAdapter.doLogin(any(LoginRequest.class), anyString())).thenReturn(mockTokensResponse);
         when(jwtUtil.getAuthentication(any(AccessTokenResponse.class))).thenReturn(authentication);
 
