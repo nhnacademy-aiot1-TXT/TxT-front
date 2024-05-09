@@ -47,7 +47,7 @@ class UserControllerTest {
         String result = userController.register(userRegisterRequest, new HttpSessionCsrfTokenRepository().generateToken(null), model);
 
         // Then
-        assertEquals("redirect:/login", result);
+        assertEquals("redirect:/", result);
     }
 
     @Test
