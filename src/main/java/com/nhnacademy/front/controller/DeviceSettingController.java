@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.HttpServletRequest;
 import java.time.LocalTime;
+import java.util.List;
 
 @Controller
 @RequiredArgsConstructor
@@ -29,20 +30,20 @@ public class DeviceSettingController {
     public String getDeviceSettingInfo(@PathVariable String deviceName, HttpServletRequest request, Model model) {
         String accessToken = AccessTokenUtil.findAccessTokenInRequest(request);
         DeviceResponse deviceResponse = deviceSettingAdapter.getDevice(accessToken, deviceName);
-        DeviceSensorResponse deviceSensorResponse = deviceSettingAdapter.getSensorList(accessToken, deviceResponse.getDeviceId()).get(0);
+        List<DeviceSensorResponse> deviceSensorResponse = deviceSettingAdapter.getSensorList(accessToken, deviceResponse.getDeviceId());
+        if (!deviceSensorResponse.isEmpty()) {
+            model.addAttribute("deviceSensor", deviceSensorResponse.get(0));
+        }
         model.addAttribute("device", deviceResponse);
-        model.addAttribute("deviceSensor", deviceSensorResponse);
-        return deviceName + "-setting";
+        return "device-setting/setting-view";
     }
 
     @PostMapping("/{deviceName}")
-    public String updateDeviceSettingInfo(HttpServletRequest request, Model model, @PathVariable String deviceName, String deviceId, int hour, int minute) {
+    public String updateDeviceSettingInfo(HttpServletRequest request, @PathVariable String deviceName, String deviceId, int hour, int minute) {
         String accessToken = AccessTokenUtil.findAccessTokenInRequest(request);
         DeviceRequest deviceRequest = new DeviceRequest(deviceName, LocalTime.of(hour, minute));
-        DeviceSensorResponse deviceSensorResponse = deviceSettingAdapter.getDeviceSensor(accessToken, deviceName, "voc");
-        DeviceResponse deviceResponse = deviceSettingAdapter.updateDevice(accessToken, deviceId, deviceRequest);
-        model.addAttribute("deviceSensorResponse", deviceSensorResponse);
-        model.addAttribute("device", deviceResponse);
+        deviceSettingAdapter.updateDevice(accessToken, deviceId, deviceRequest);
+
         return "redirect:/device/settings/{deviceName}";
 
     }
