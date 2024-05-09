@@ -44,6 +44,12 @@ public class LoginController {
         try{
             TokensResponse tokens = userAdapter.doLogin(loginRequest, csrfToken.getToken());
 
+            if (!userAdapter.getUserData(tokens.getAccessToken().getAccessToken()).getStatusName().equals("ACTIVE")){
+                model.addAttribute("errorMessage", "관리자의 승인이 필요한 계정입니다.");
+                model.addAttribute("loginRequest", loginRequest);
+                return "login";
+            }
+
             AccessTokenResponse accessTokenResponse = tokens.getAccessToken();
             RefreshTokenResponse refreshTokenResponse = tokens.getRefreshToken();
 
