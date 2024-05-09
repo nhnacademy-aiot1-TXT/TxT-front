@@ -55,9 +55,9 @@ public class AdminController {
 
     @GetMapping("/manage")
     public String manage(HttpServletRequest request, Model model,
-                         @RequestParam(value = "statusId", defaultValue = "1") int statusId,
+                         @RequestParam(value = "statusId", defaultValue = "4") int statusId,
                          @RequestParam(value = "page", defaultValue = "0") int page,
-                         @RequestParam(value = "size", defaultValue = "3") int size) throws JsonProcessingException {
+                         @RequestParam(value = "size", defaultValue = "2") int size) throws JsonProcessingException {
         String accessToken = Arrays.stream(request.getCookies())
                 .filter(cookie -> "accessToken".equals(cookie.getName()))
                 .findFirst()
@@ -74,9 +74,9 @@ public class AdminController {
 
 
         model.addAttribute("users", users);
-        model.addAttribute("usersJson", usersJson);
-        model.addAttribute("currentPage", page);
-        model.addAttribute("totalPages", users.getTotalPages());
+//        model.addAttribute("usersJson", usersJson);
+//        model.addAttribute("currentPage", page);
+//        model.addAttribute("totalPages", users.getTotalPages());
 
         return "manage";
     }
