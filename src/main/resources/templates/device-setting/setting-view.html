@@ -46,16 +46,16 @@
         <div th:replace="fragments/device-tab"></div>
     </div>
 
-    <div th:if="${device.deviceName eq 'aircleaner'}">
+    <div th:if="${device != null and device.deviceName eq 'aircleaner'}">
         <th:block th:replace="device-setting/aircleaner-setting"/>
     </div>
-    <div th:if="${device.deviceName eq 'light'}">
+    <div th:if="${device != null and device.deviceName eq 'light'}">
         <th:block th:replace="device-setting/light-setting"/>
     </div>
-    <div th:if="${device.deviceName eq 'airconditioner'}">
+    <div th:if="${device != null and device.deviceName eq 'airconditioner'}">
         <th:block th:replace="device-setting/airconditioner-setting"/>
     </div>
-    <div th:if="${device.deviceName eq 'detection'}">
+    <div th:if="${device != null and device.deviceName eq 'detection'}">
         <th:block th:replace="device-setting/detection-setting"/>
     </div>
 </main>

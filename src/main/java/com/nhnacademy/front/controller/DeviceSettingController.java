@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import javax.servlet.http.HttpServletRequest;
 import java.time.LocalTime;
 import java.util.List;
+import java.util.Objects;
 
 @Controller
 @RequiredArgsConstructor
@@ -26,15 +27,19 @@ public class DeviceSettingController {
 
     private final DeviceSettingAdapter deviceSettingAdapter;
 
-    @GetMapping("/{deviceName}")
-    public String getDeviceSettingInfo(@PathVariable String deviceName, HttpServletRequest request, Model model) {
-        String accessToken = AccessTokenUtil.findAccessTokenInRequest(request);
-        DeviceResponse deviceResponse = deviceSettingAdapter.getDevice(accessToken, deviceName);
-        List<DeviceSensorResponse> deviceSensorResponse = deviceSettingAdapter.getSensorList(accessToken, deviceResponse.getDeviceId());
-        if (!deviceSensorResponse.isEmpty()) {
-            model.addAttribute("deviceSensor", deviceSensorResponse.get(0));
+    @GetMapping({"/{deviceName}", ""})
+    public String getDeviceSettingInfo(@PathVariable(required = false) String deviceName, HttpServletRequest request, Model model) {
+        if (Objects.nonNull(deviceName)) {
+            String accessToken = AccessTokenUtil.findAccessTokenInRequest(request);
+            DeviceResponse deviceResponse = deviceSettingAdapter.getDevice(accessToken, deviceName);
+            List<DeviceSensorResponse> deviceSensorResponse = deviceSettingAdapter.getSensorList(accessToken, deviceResponse.getDeviceId());
+            if (!deviceSensorResponse.isEmpty()) {
+                model.addAttribute("deviceSensor", deviceSensorResponse.get(0));
+            }
+            model.addAttribute("device", deviceResponse);
+        } else {
+            model.addAttribute("device", null);
         }
-        model.addAttribute("device", deviceResponse);
         return "device-setting/setting-view";
     }
 
