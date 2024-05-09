@@ -65,4 +65,7 @@ public interface UserAdapter {
     @PutMapping("/api/user/update")
     Void updateUser(UserUpdateRequest userUpdateRequest, @RequestHeader("Authorization") String accessToken);
 
+
+    @PostMapping("/api/user/deactivate")
+    Void deactivate(@RequestHeader("Authorization") String accessToken);
 }
