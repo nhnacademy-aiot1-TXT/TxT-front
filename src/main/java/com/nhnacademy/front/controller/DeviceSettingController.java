@@ -26,16 +26,23 @@ public class DeviceSettingController {
 
     @GetMapping({"/{deviceName}", ""})
     public String getDeviceSettingInfo(@PathVariable(required = false) String deviceName, HttpServletRequest request, Model model) {
+        String accessToken = AccessTokenUtil.findAccessTokenInRequest(request);
+        DeviceResponse deviceResponse;
+        List<DeviceSensorResponse> deviceSensorResponse;
         if (Objects.nonNull(deviceName)) {
-            String accessToken = AccessTokenUtil.findAccessTokenInRequest(request);
-            DeviceResponse deviceResponse = deviceSettingAdapter.getDevice(accessToken, deviceName);
-            List<DeviceSensorResponse> deviceSensorResponse = deviceSettingAdapter.getSensorList(accessToken, deviceResponse.getDeviceId());
+            deviceResponse = deviceSettingAdapter.getDevice(accessToken, deviceName);
+            deviceSensorResponse = deviceSettingAdapter.getSensorList(accessToken, deviceResponse.getDeviceId());
             if (!deviceSensorResponse.isEmpty()) {
                 model.addAttribute("deviceSensor", deviceSensorResponse.get(0));
             }
             model.addAttribute("device", deviceResponse);
         } else {
-            model.addAttribute("device", null);
+            deviceResponse = deviceSettingAdapter.getDevice(accessToken, "airconditioner");
+            deviceSensorResponse = deviceSettingAdapter.getSensorList(accessToken, deviceResponse.getDeviceId());
+            if (!deviceSensorResponse.isEmpty()) {
+                model.addAttribute("deviceSensor", deviceSensorResponse.get(0));
+            }
+            model.addAttribute("device", deviceResponse);
         }
         return "device-setting/setting-view";
     }
