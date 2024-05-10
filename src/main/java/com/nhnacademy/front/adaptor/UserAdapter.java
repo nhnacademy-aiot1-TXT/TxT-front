@@ -64,10 +64,23 @@ public interface UserAdapter {
     Void updateUser(UserUpdateRequest userUpdateRequest, @RequestHeader("Authorization") String accessToken);
 
 
-    @GetMapping("/api/user/admin/userList/sort/{statusId}")
+    @GetMapping("/api/user/admin/userList/sort/status/{statusId} ")
     RestPage<UserDataResponse> findSortedUsers(@RequestHeader("Authorization") String accessToken,
                                                @PathVariable int statusId,
                                                @RequestParam("page") int page,
                                                @RequestParam("size") int size);
 
+
+    @GetMapping("/api/user/admin/userList")
+    RestPage<UserDataResponse> findAllUsers(@RequestHeader("Authorization") String accessToken,
+                                            @RequestParam("page") int page,
+                                            @RequestParam("size") int size
+                                            );
+
+    @GetMapping("/api/user/admin/userList/sort/role/{roleId}")
+    RestPage<UserDataResponse> findSortedUserByRole(@RequestHeader("Authorization") String accessToken,
+                                                    @RequestParam("page") int page,
+                                                    @RequestParam("size") int size,
+                                                    @PathVariable int roleId
+                                                    );
 }

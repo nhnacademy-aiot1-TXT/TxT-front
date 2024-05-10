@@ -55,31 +55,55 @@ public class AdminController {
 
     @GetMapping("/manage")
     public String manage(HttpServletRequest request, Model model,
-                         @RequestParam(value = "statusId", defaultValue = "4") int statusId,
+                         @RequestParam(value = "statusId", defaultValue = "1") int statusId,
                          @RequestParam(value = "page", defaultValue = "0") int page,
-                         @RequestParam(value = "size", defaultValue = "2") int size) throws JsonProcessingException {
+                         @RequestParam(value = "size", defaultValue = "5") int size) throws JsonProcessingException {
+
+        Page<UserDataResponse> users;
+
         String accessToken = Arrays.stream(request.getCookies())
                 .filter(cookie -> "accessToken".equals(cookie.getName()))
                 .findFirst()
                 .orElse(null)
                 .getValue();
 
-        Page<UserDataResponse> users = userAdapter.findSortedUsers(accessToken, statusId, page, size);
-
-        List<UserDataResponse> usersList = users.getContent();
 
 
-        ObjectMapper mapper = new ObjectMapper();
-        String usersJson = mapper.writeValueAsString(usersList);
+
+        if(statusId == 99){
+            users = userAdapter.findAllUsers(accessToken, page, size);
+        }
+        else if (statusId == 100) {
+            users = userAdapter.findSortedUserByRole(accessToken, page, size, 1);
+        }
+        else{
+            users = userAdapter.findSortedUsers(accessToken, statusId, page, size);
+        }
+
+
+        System.out.println(users);
+
+//        List<UserDataResponse> usersList = users.getContent();
+//
+//
+//        ObjectMapper mapper = new ObjectMapper();
+//        String usersJson = mapper.writeValueAsString(usersList);
+
 
 
         model.addAttribute("users", users);
+        model.addAttribute("statSet", statusId);
+
+
+
 //        model.addAttribute("usersJson", usersJson);
 //        model.addAttribute("currentPage", page);
 //        model.addAttribute("totalPages", users.getTotalPages());
 
         return "manage";
     }
+
+
 
     // 상세센서 정보
 
