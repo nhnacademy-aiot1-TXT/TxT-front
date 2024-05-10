@@ -32,6 +32,8 @@
     <link href="/css/nucleo-svg.css" rel="stylesheet"/>
     <!-- CSS Files -->
     <link id="pagestyle" href="/css/argon-dashboard.css?v=2.0.4" rel="stylesheet"/>
+    <link href="/css/temperature-select-style.css" rel="stylesheet" type="text/css">
+
     <!-- 모델에 저장한 accessToken 가져오기 -->
     <script th:inline="javascript">const accessToken = [[${accessTokenTemp}]];</script>
 </head>
@@ -159,6 +161,7 @@
 <script src="/js/plugins/chartjs.min.js"></script>
 
 <script src="/js/mainPage/slideChartName.js"></script>
+<script src="/js/device-setting-page/temperature-select-script.js" type="module"></script>
 
 <script>
     var win = navigator.platform.indexOf('Win') > -1;
@@ -169,7 +172,6 @@
         Scrollbar.init(document.querySelector('#sidenav-scrollbar'), options);
     }
 </script>
-
 <!-- Github buttons -->
 <script async defer src="https://buttons.github.io/buttons.js"></script>
 <!-- Control Center for Soft Dashboard: parallax effects, scripts for the example pages etc -->
