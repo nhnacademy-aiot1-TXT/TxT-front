@@ -17,7 +17,7 @@ spring:
     port: 5672
     device-control-exchange: txt.device.control
   profiles:
-    active: dev
+    active: prod
 
   spring:
     devtools:
@@ -25,4 +25,13 @@ spring:
         enabled: true
   freemarker:
     cache: false
+management:
+  endpoints:
+    web:
+      exposure:
+        include: beans, conditions, configprops, env, health, httpexchanges, info, loggers, metrics, mappings, threaddump, shutdown
+      base-path: /front-server/manage
+  endpoint:
+    health:
+      show-details: always
 

@@ -63,8 +63,11 @@ public interface UserAdapter {
      * @return UserDataResponse 객체, 메인 페이지 구성을 위한 사용자 정보 DTO
      */
     @PutMapping("/api/user/update")
-    Void updateUser(UserUpdateRequest userUpdateRequest, @RequestHeader("Authorization") String accessToken);
+    void updateUser(UserUpdateRequest userUpdateRequest, @RequestHeader("Authorization") String accessToken);
 
+
+    @PostMapping("/api/user/deactivate")
+    void deactivate(@RequestHeader("Authorization") String accessToken);
 
     @GetMapping("/api/user/admin/userList/sort/status/{statusId} ")
     RestPage<UserDataResponse> findSortedUsers(@RequestHeader("Authorization") String accessToken,

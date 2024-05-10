@@ -2,6 +2,7 @@ package com.nhnacademy.front.controller;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.nhnacademy.front.adaptor.UserAdapter;
+import com.nhnacademy.front.dto.LoginRequest;
 import com.nhnacademy.front.dto.UserDataResponse;
 import com.nhnacademy.front.dto.UserRegisterRequest;
 import com.nhnacademy.front.dto.UserUpdateRequest;
@@ -21,6 +22,8 @@ import javax.servlet.http.Cookie;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.BDDMockito.given;
+import static org.mockito.BDDMockito.willThrow;
 import static org.mockito.Mockito.*;
 
 class UserControllerTest {
@@ -59,7 +62,7 @@ class UserControllerTest {
         Model model = new ExtendedModelMap();
         RuntimeException testException = new RuntimeException("{\"title\":\"Test Error Message\"}");
 
-        doThrow(testException).when(userAdapter).createUser(any(UserRegisterRequest.class), any(String.class));
+        willThrow(testException).given(userAdapter).createUser(any(UserRegisterRequest.class), any(String.class));
 
         // When
         String result = userController.register(userRegisterRequest, new HttpSessionCsrfTokenRepository().generateToken(null), model);
@@ -82,7 +85,7 @@ class UserControllerTest {
         mockUserDataResponse.setId("testUser");
         mockUserDataResponse.setEmail("test@example.com");
 
-        when(userAdapter.getUserData(anyString())).thenReturn(mockUserDataResponse);
+        given(userAdapter.getUserData(anyString())).willReturn(mockUserDataResponse);
 
         // When
         String result = userController.profile(request, model);
@@ -110,7 +113,7 @@ class UserControllerTest {
         mockUserDataResponse.setId("testUser");
         mockUserDataResponse.setEmail("test@example.com");
 
-        when(userAdapter.getUserData(anyString())).thenReturn(mockUserDataResponse);
+        given(userAdapter.getUserData(anyString())).willReturn(mockUserDataResponse);
 
         // When
         String result = userController.update(request, response, model);
@@ -138,8 +141,8 @@ class UserControllerTest {
         Cookie accessTokenCookie = new Cookie("accessToken", "testAccessToken");
         request.setCookies(accessTokenCookie);
 
-        when(userAdapter.getUserData(anyString())).thenReturn(new UserDataResponse());
-        doThrow(testException).when(userAdapter).updateUser(any(UserUpdateRequest.class), anyString());
+        given(userAdapter.getUserData(anyString())).willReturn(new UserDataResponse());
+        willThrow(testException).given(userAdapter).updateUser(any(UserUpdateRequest.class), anyString());
 
         // When
         String result = userController.update(request, response, model);
