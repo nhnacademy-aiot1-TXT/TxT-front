@@ -88,7 +88,7 @@ class LoginControllerTest {
         Model model = new ExtendedModelMap();
         RuntimeException testException = new RuntimeException("test Exception");
 
-        willThrow(testException).given(userAdapter).doLogin(any(LoginRequest.class), anyString());
+        given(userAdapter.doLogin(any(LoginRequest.class), anyString())).willThrow(testException);
 
         // When
         String result = loginController.login(loginRequest, response, new HttpSessionCsrfTokenRepository().generateToken(null), model);

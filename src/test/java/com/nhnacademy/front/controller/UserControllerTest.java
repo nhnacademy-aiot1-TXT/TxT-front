@@ -2,6 +2,7 @@ package com.nhnacademy.front.controller;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.nhnacademy.front.adaptor.UserAdapter;
+import com.nhnacademy.front.dto.LoginRequest;
 import com.nhnacademy.front.dto.UserDataResponse;
 import com.nhnacademy.front.dto.UserRegisterRequest;
 import com.nhnacademy.front.dto.UserUpdateRequest;
