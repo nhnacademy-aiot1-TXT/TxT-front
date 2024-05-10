@@ -29,21 +29,15 @@ public class DeviceSettingController {
         String accessToken = AccessTokenUtil.findAccessTokenInRequest(request);
         DeviceResponse deviceResponse;
         List<DeviceSensorResponse> deviceSensorResponse;
-        if (Objects.nonNull(deviceName)) {
-            deviceResponse = deviceSettingAdapter.getDevice(accessToken, deviceName);
-            deviceSensorResponse = deviceSettingAdapter.getSensorList(accessToken, deviceResponse.getDeviceId());
-            if (!deviceSensorResponse.isEmpty()) {
-                model.addAttribute("deviceSensor", deviceSensorResponse.get(0));
-            }
-            model.addAttribute("device", deviceResponse);
-        } else {
-            deviceResponse = deviceSettingAdapter.getDevice(accessToken, "airconditioner");
-            deviceSensorResponse = deviceSettingAdapter.getSensorList(accessToken, deviceResponse.getDeviceId());
-            if (!deviceSensorResponse.isEmpty()) {
-                model.addAttribute("deviceSensor", deviceSensorResponse.get(0));
-            }
-            model.addAttribute("device", deviceResponse);
+        if (Objects.isNull(deviceName)) {
+            deviceName = "airconditioner";
         }
+        deviceResponse = deviceSettingAdapter.getDevice(accessToken, deviceName);
+        deviceSensorResponse = deviceSettingAdapter.getSensorList(accessToken, deviceResponse.getDeviceId());
+        if (!deviceSensorResponse.isEmpty()) {
+            model.addAttribute("deviceSensor", deviceSensorResponse.get(0));
+        }
+        model.addAttribute("device", deviceResponse);
         return "device-setting/setting-view";
     }
 
