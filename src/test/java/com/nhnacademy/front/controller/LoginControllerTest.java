@@ -21,8 +21,8 @@ import javax.servlet.http.Cookie;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
-import static org.mockito.Mockito.doThrow;
-import static org.mockito.Mockito.when;
+import static org.mockito.BDDMockito.given;
+import static org.mockito.BDDMockito.willThrow;
 
 class LoginControllerTest {
     @Mock
@@ -47,8 +47,9 @@ class LoginControllerTest {
         loginRequest.setPassword("testPassword");
         Model model = new ExtendedModelMap();
         Authentication authentication = new TestingAuthenticationToken("user", "password");
-        UserDataResponse userDataResponse = new UserDataResponse();
-        userDataResponse.setStatusName("ACTIVE");
+
+        UserDataResponse mockUserDataResponse = new UserDataResponse();
+        mockUserDataResponse.setStatusName("ACTIVE");
 
         TokensResponse mockTokensResponse = new TokensResponse();
         AccessTokenResponse mockAccessTokenResponse = new AccessTokenResponse("testAccessToken", "test", 1);
@@ -56,9 +57,9 @@ class LoginControllerTest {
         mockTokensResponse.setAccessToken(mockAccessTokenResponse);
         mockTokensResponse.setRefreshToken(mockRefreshTokenResponse);
 
-        when(userAdapter.getUserData(anyString())).thenReturn(userDataResponse);
-        when(userAdapter.doLogin(any(LoginRequest.class), anyString())).thenReturn(mockTokensResponse);
-        when(jwtUtil.getAuthentication(any(AccessTokenResponse.class))).thenReturn(authentication);
+        given(userAdapter.getUserData(anyString())).willReturn(mockUserDataResponse);
+        given(userAdapter.doLogin(any(LoginRequest.class), anyString())).willReturn(mockTokensResponse);
+        given(jwtUtil.getAuthentication(any(AccessTokenResponse.class))).willReturn(authentication);
 
         MockHttpServletResponse response = new MockHttpServletResponse();
 
@@ -87,7 +88,7 @@ class LoginControllerTest {
         Model model = new ExtendedModelMap();
         RuntimeException testException = new RuntimeException("test Exception");
 
-        doThrow(testException).when(userAdapter).doLogin(any(LoginRequest.class), anyString());
+        willThrow(testException).given(userAdapter).doLogin(any(LoginRequest.class), anyString());
 
         // When
         String result = loginController.login(loginRequest, response, new HttpSessionCsrfTokenRepository().generateToken(null), model);
