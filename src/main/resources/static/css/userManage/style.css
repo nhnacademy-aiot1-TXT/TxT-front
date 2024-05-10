@@ -1,0 +1,57 @@
+/* styles.css */
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+th, td {
+    border: 1px solid black;
+    padding: 8px;
+    text-align: left;
+}
+th {
+    background-color: #f8e1b6;
+}
+
+#numbers li a.active {
+    opacity: 1;
+    background: #333333;
+    color: #ffffff;
+}
+
+.buttonTest2{
+    text-align: center;
+    width : 50%;
+}
+
+.pagination{
+    list-style: none;
+    display: inline-block;
+    padding: 0;
+    margin-top: 20px;
+}
+
+.pagination li {
+    display: inline;
+    text-align: center;
+}
+
+.pagination a {
+    float: left;
+    display: block;
+    font-size: 14px;
+    text-decoration: none;
+    padding: 5px 12px;
+    color : #95a0ad;
+    line-height: 1.5;
+}
+
+.first{
+    margin-right: 15px;
+    color: #0d6efd;
+}
+
+.last{
+    color: #2e9cdf;
+}
+

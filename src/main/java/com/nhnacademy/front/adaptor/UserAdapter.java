@@ -1,11 +1,11 @@
 package com.nhnacademy.front.adaptor;
 
 import com.nhnacademy.front.dto.*;
+import com.nhnacademy.front.page.RestPage;
 import org.springframework.cloud.openfeign.FeignClient;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestHeader;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 /**
  * User 관련 기능을 수행하는 FeignClient 인터페이스
@@ -66,6 +66,36 @@ public interface UserAdapter {
     void updateUser(UserUpdateRequest userUpdateRequest, @RequestHeader("Authorization") String accessToken);
 
 
+
+    @GetMapping("/api/user/admin/userList/sort/status/{statusId} ")
+    RestPage<UserDataResponse> findSortedUsers(@RequestHeader("Authorization") String accessToken,
+                                               @PathVariable int statusId,
+                                               @RequestParam("page") int page,
+                                               @RequestParam("size") int size);
+
+
+    @GetMapping("/api/user/admin/userList")
+    RestPage<UserDataResponse> findAllUsers(@RequestHeader("Authorization") String accessToken,
+                                            @RequestParam("page") int page,
+                                            @RequestParam("size") int size
+                                            );
+
+    @GetMapping("/api/user/admin/userList/sort/role/{roleId}")
+    RestPage<UserDataResponse> findSortedUserByRole(@RequestHeader("Authorization") String accessToken,
+                                                    @RequestParam("page") int page,
+                                                    @RequestParam("size") int size,
+                                                    @PathVariable int roleId
+                                                    );
+
+
+
+
+    @PostMapping("/api/user/admin/permit")
+    void permitUser(@RequestHeader("Authorization") String accessToken,
+                    @RequestBody List<PermitUserRequest> permitUserRequestList);
+
+
     @PostMapping("/api/user/deactivate")
     void deactivate(@RequestHeader("Authorization") String accessToken);
+
 }

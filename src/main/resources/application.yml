@@ -18,6 +18,7 @@ spring:
     device-control-exchange: txt.device.control
   profiles:
     active: prod
+
   spring:
     devtools:
       livereload:
