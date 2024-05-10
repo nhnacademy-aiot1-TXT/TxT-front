@@ -10,10 +10,7 @@ import com.nhnacademy.front.utils.AccessTokenUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import java.time.LocalTime;
@@ -54,9 +51,14 @@ public class DeviceSettingController {
     }
 
     @PostMapping("/{deviceName}/{sensorName}")
-    public String updateDeviceSensorSettingInfo(HttpServletRequest request, Model model, @PathVariable String deviceName, @PathVariable String sensorName, AircleanerMode mode) {
+    public String updateDeviceSensorSettingInfo(HttpServletRequest request, @PathVariable String deviceName, @PathVariable String sensorName, @RequestParam(required = false) AircleanerMode mode, @RequestParam(required = false) Float onValue, @RequestParam(required = false) Float offValue) {
         String accessToken = AccessTokenUtil.findAccessTokenInRequest(request);
-        DeviceSensorRequest deviceSensorRequest = new DeviceSensorRequest(deviceName, sensorName, mode.getOnValue(), mode.getOffValue());
+        DeviceSensorRequest deviceSensorRequest;
+        if (Objects.nonNull(mode)) {
+            deviceSensorRequest = new DeviceSensorRequest(deviceName, sensorName, mode.getOnValue(), mode.getOffValue());
+        } else {
+            deviceSensorRequest = new DeviceSensorRequest(deviceName, sensorName, onValue, offValue);
+        }
         DeviceSensorResponse deviceSensorResponse = deviceSettingAdapter.getDeviceSensor(accessToken, deviceName, sensorName);
         deviceSettingAdapter.updateDeviceSensor(accessToken, deviceSensorResponse.getDeviceId(), deviceSensorResponse.getSensorId(), deviceSensorRequest);
 
