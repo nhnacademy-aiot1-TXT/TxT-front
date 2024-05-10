@@ -5,6 +5,8 @@ import com.nhnacademy.front.page.RestPage;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 /**
  * User 관련 기능을 수행하는 FeignClient 인터페이스
  */
@@ -83,4 +85,12 @@ public interface UserAdapter {
                                                     @RequestParam("size") int size,
                                                     @PathVariable int roleId
                                                     );
+
+
+
+
+    @PostMapping("/api/user/admin/permit")
+    void permitUser(@RequestHeader("Authorization") String accessToken,
+                    @RequestBody List<PermitUserRequest> permitUserRequestList);
+
 }

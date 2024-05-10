@@ -3,25 +3,21 @@ package com.nhnacademy.front.controller;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.nhnacademy.front.adaptor.SensorAdapter;
-import com.nhnacademy.front.dto.Co2Response;
-import com.nhnacademy.front.dto.HumidityResponse;
+import com.nhnacademy.front.dto.*;
 import com.nhnacademy.front.dto.IlluminationResponse.IlluminationResponse;
-import com.nhnacademy.front.dto.TemperatureResponse;
-import com.nhnacademy.front.dto.UserDataResponse;
+import com.nhnacademy.front.utils.AccessTokenUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 import com.nhnacademy.front.adaptor.UserAdapter;
-import org.springframework.web.bind.annotation.RequestParam;
 
 /**
  * 어드민 권한만 접근할 수 있는 Controller
@@ -53,9 +49,10 @@ public class AdminController {
         return "detailedSensor";
     }
 
+
     @GetMapping("/manage")
     public String manage(HttpServletRequest request, Model model,
-                         @RequestParam(value = "statusId", defaultValue = "1") int statusId,
+                         @RequestParam(value = "statusId", defaultValue = "4") int statusId,
                          @RequestParam(value = "page", defaultValue = "0") int page,
                          @RequestParam(value = "size", defaultValue = "5") int size) throws JsonProcessingException {
 
@@ -68,15 +65,11 @@ public class AdminController {
                 .getValue();
 
 
-
-
-        if(statusId == 99){
+        if (statusId == 99) {
             users = userAdapter.findAllUsers(accessToken, page, size);
-        }
-        else if (statusId == 100) {
+        } else if (statusId == 100) {
             users = userAdapter.findSortedUserByRole(accessToken, page, size, 1);
-        }
-        else{
+        } else {
             users = userAdapter.findSortedUsers(accessToken, statusId, page, size);
         }
 
@@ -90,10 +83,8 @@ public class AdminController {
 //        String usersJson = mapper.writeValueAsString(usersList);
 
 
-
         model.addAttribute("users", users);
         model.addAttribute("statSet", statusId);
-
 
 
 //        model.addAttribute("usersJson", usersJson);
@@ -104,6 +95,29 @@ public class AdminController {
     }
 
 
+    //유저등록
+
+    @PostMapping("/manage/permit")
+    public String permitUser(HttpServletRequest request, Model model) {
+
+        List<PermitUserRequest> permitUserRequests = new ArrayList<>();
+
+        String accessToken = AccessTokenUtil.findAccessTokenInRequest(request);
+
+        String[] selectedUserIds = request.getParameterValues("userIds");
+
+        if (selectedUserIds != null) {
+            for (String userId : selectedUserIds) {
+                System.out.println("Selected User ID: " + userId);
+                PermitUserRequest permitUserRequest = new PermitUserRequest(); // 각 반복마다 새 객체 생성
+                permitUserRequest.setId(userId); // 유저 ID 설정
+                permitUserRequests.add(permitUserRequest); // 리스트에 추가
+            }
+            userAdapter.permitUser(accessToken, permitUserRequests); // 사용자 허용 메서드 호출
+        }
+
+        return "redirect:/admin/manage";
+    }
 
     // 상세센서 정보
 
@@ -117,10 +131,8 @@ public class AdminController {
                 .getValue();
 
 
-
         List<TemperatureResponse> tempWeek = sensorAdapter.getWeeklyTemperatures(accessToken);
         model.addAttribute("temperatureList", tempWeek);
-
 
 
         return "sensor-log/log-temperature";
@@ -136,10 +148,8 @@ public class AdminController {
                 .getValue();
 
 
-
         List<IlluminationResponse> illuminationWeek = sensorAdapter.getWeeklyIllumination(accessToken);
         model.addAttribute("illuminationWeek", illuminationWeek);
-
 
 
         return "sensor-log/log-birghtness";
@@ -148,7 +158,6 @@ public class AdminController {
 
     @GetMapping("humidity/week")
     public String weeklyHumidity(HttpServletRequest request, Model model) {
-
 
 
         String accessToken = Arrays.stream(request.getCookies())
@@ -183,8 +192,6 @@ public class AdminController {
 
         return "sensor-log/log-co2";
     }
-
-
 
 
 }
