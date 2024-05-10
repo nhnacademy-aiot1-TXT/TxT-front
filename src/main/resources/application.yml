@@ -18,11 +18,19 @@ spring:
     device-control-exchange: txt.device.control
   profiles:
     active: prod
-
   spring:
     devtools:
       livereload:
         enabled: true
   freemarker:
     cache: false
+management:
+  endpoints:
+    web:
+      exposure:
+        include: beans, conditions, configprops, env, health, httpexchanges, info, loggers, metrics, mappings, threaddump, shutdown
+      base-path: /front-server/manage
+  endpoint:
+    health:
+      show-details: always
 
