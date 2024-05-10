@@ -106,4 +106,16 @@ public class UserController {
         }
         return "redirect:/user/profile";
     }
+
+    @PostMapping("/user/profile/deactivate")
+    public String deactivate(HttpServletRequest request, Model model) throws JsonProcessingException {
+        try{
+            String accessToken = AccessTokenUtil.findAccessTokenInRequest(request);
+            userAdapter.deactivate(accessToken);
+        } catch (RuntimeException e){
+            model.addAttribute("errorMessage", JsonResponseExceptionHandler.title(e));
+            return "profile";
+        }
+        return "redirect:/logout";
+    }
 }
