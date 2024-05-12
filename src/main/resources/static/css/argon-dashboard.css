@@ -5190,6 +5190,7 @@ fieldset:disabled .btn {
   flex: 1 1 auto;
   padding: var(--bs-card-spacer-y) var(--bs-card-spacer-x);
   color: var(--bs-card-color);
+  overflow-x: auto;
 }
 
 .card-title {
@@ -22282,7 +22283,7 @@ hr.horizontal.gray-light {
 }
 
 .card.card-profile-bottom {
-  margin-top: 15rem;
+  margin-top: 16rem;
 }
 
 .navbar {
