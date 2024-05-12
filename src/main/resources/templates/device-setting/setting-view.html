@@ -44,7 +44,7 @@
 <main class="main-content position-relative border-radius-lg">
     <div th:replace="fragments/nav"></div>
 
-    <div class="card shadow-lg mx-4 card-profile-bottom">
+    <div class="card shadow-lg mx-4 mt-6">
         <div th:replace="fragments/device-tab"></div>
     </div>
 
@@ -57,7 +57,7 @@
     <div th:if="${device != null and device.deviceName eq 'airconditioner'}">
         <th:block th:replace="device-setting/airconditioner-setting"/>
     </div>
-    <div th:if="${device != null and device.deviceName eq 'detection'}">
+    <div th:if="${detect != null}">
         <th:block th:replace="device-setting/detection-setting"/>
     </div>
 </main>
