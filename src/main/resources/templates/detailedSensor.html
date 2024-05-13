@@ -33,96 +33,27 @@
     <!-- CSS Files -->
     <link id="pagestyle" href="/css/argon-dashboard.css?v=2.0.4" rel="stylesheet"/>
 
-
 </head>
 
 <body class="g-sidenav-show bg-gray-100">
-<div class="min-height-300 bg-primary position-absolute w-100"></div>
-<aside class="sidenav bg-white navbar navbar-vertical navbar-expand-xs border-0 border-radius-xl my-3 fixed-start ms-4 "
-       id="sidenav-main">
-    <div class="sidenav-header">
-        <i class="fas fa-times p-3 cursor-pointer text-secondary opacity-5 position-absolute end-0 top-0 d-none d-xl-none"
-           aria-hidden="true" id="iconSidenav"></i>
-        <a class="navbar-brand m-0" href="/">
-            <img src="/img/logo-ct-dark.png" class="navbar-brand-img h-100" alt="main_logo">
-            <span class="ms-1 font-weight-bold">TxT</span>
-        </a>
-    </div>
-    <hr class="horizontal dark mt-0">
-    <div class="collapse navbar-collapse  w-auto " id="sidenav-collapse-main">
-        <ul class="navbar-nav">
-            <li class="nav-item">
-                <a class="nav-link active" href="/">
-                    <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
-                        <i class="ni ni-tv-2 text-primary text-sm opacity-10"></i>
-                    </div>
-                    <span class="nav-link-text ms-1">대시보드</span>
-                </a>
-            </li>
-            <th:block th:if="${authority == 'ROLE_USER'}">
-                <li class="nav-item">
-                    <a class="nav-link " href="./pages/tables.html">
-                        <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
-                            <i class="ni ni-calendar-grid-58 text-warning text-sm opacity-10"></i>
-                        </div>
-                        <span class="nav-link-text ms-1">마이페이지</span>
-                    </a>
-                </li>
-            </th:block>
-            <li class="nav-item">
-                <a class="nav-link " href="./pages/billing.html">
-                    <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
-                        <i class="ni ni-credit-card text-success text-sm opacity-10"></i>
-                    </div>
-                    <span class="nav-link-text ms-1">게시판</span>
-                </a>
-            </li>
-            <th:block th:if="${authority != null}">
-                <li class="nav-item">
-                    <a class="nav-link " href="/user/profile">
-                        <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
-                            <i class="ni ni-single-02 text-dark text-sm opacity-10"></i>
-                        </div>
-                        <span class="nav-link-text ms-1">마이페이지</span>
-                    </a>
-                </li>
-            </th:block>
-            <th:block th:if="${authority == 'ROLE_ADMIN'}">
-                <li class="nav-item">
-                    <a class="nav-link " href="/admin/manage">
-                        <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
-                            <i class="ni ni-single-02 text-dark text-sm opacity-10"></i>
-                        </div>
-                        <span class="nav-link-text ms-1">유저관리</span>
-                    </a>
-                </li>
-            </th:block>
-            <th:block th:if="${authority == 'ROLE_ADMIN'}">
-                <li class="nav-item">
-                    <a class="nav-link " href="/admin/dtsensor">
-                        <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
-                            <i class="ni ni-single-02 text-dark text-sm opacity-10"></i>
-                        </div>
-                        <span class="nav-link-text ms-1">상세센서</span>
-                    </a>
-                </li>
-            </th:block>
-        </ul>
-    </div>
-</aside>
+
+<div class="position-absolute w-100 h-100 top-0"
+     style="background-image: url('/img/bg-detailSensor.jpg'); background-size: cover; background-position-y: 50%;">
+</div>
+
+<aside th:replace="fragments/sidebar"></aside>
 
 <main class="main-content position-relative border-radius-lg ">
     <div th:replace="fragments/nav"></div>
+
     <div class="container-fluid py-4">
-        <div class="row">
-            님 안녕하세요
+        <div class="row text-capitalize">
+            <h4>Detail Sensor Info</h4>
         </div>
-<!--        윗부분 시작 -->
         <div class="row mt-4">
-<!--            온도-->
+            <!--            온도-->
             <div class="col-lg-6 mb-lg-0 mb-4">
                 <div class="card z-index-2 h-100">
-
                     <div class="card-header pb-0 pt-3 bg-transparent">
                         <h6 class="text-capitalize">Temperature</h6>
                         <p class="text-sm mb-0">
@@ -130,45 +61,37 @@
                             <span class="font-weight-bold">4% more</span> in 2021
                         </p>
                     </div>
-
-
                     <div class="card-body p-3">
                         <a class="nav-link " href="temperature/week">
                             <div class="chart">
-                                 <canvas id="chart-line" class="chart-canvas" height="300"></canvas>
+                                <canvas id="chart-line" class="chart-canvas" height="300"></canvas>
                             </div>
                         </a>
                     </div>
                 </div>
             </div>
-            <!-- 조도 -->
+            <!--             조도 -->
             <div class="col-lg-6 mb-lg-0 mb-4">
                 <div class="card z-index-2 h-100">
-
-                        <div class="card-header pb-0 pt-3 bg-transparent">
-                            <h6 class="text-capitalize">Brightness</h6>
-                            <p class="text-sm mb-0">
-                                <i class="fa fa-arrow-up text-success"></i>
-                                <span class="font-weight-bold">4% more</span> in 2021
-                            </p>
-                        </div>
-
-
+                    <div class="card-header pb-0 pt-3 bg-transparent">
+                        <h6 class="text-capitalize">Brightness</h6>
+                        <p class="text-sm mb-0">
+                            <i class="fa fa-arrow-up text-success"></i>
+                            <span class="font-weight-bold">4% more</span> in 2021
+                        </p>
+                    </div>
                     <div class="card-body p-3">
                         <a class="nav-link " href="illumination/week">
                             <div class="chart">
                                 <canvas id="chart-line5" class="chart-canvas" height="300"></canvas>
                             </div>
                         </a>
-
                     </div>
                 </div>
             </div>
         </div>
-<!--윗부분 끝 -->
         <div class="row mt-4">
-            <!--            아랫 부분 시작-->
-
+            <!--            습도-->
             <div class="col-lg-6 mb-lg-0 mb-4">
                 <div class="card z-index-2 h-100">
                     <a class="nav-link " href="humidity/week">
@@ -180,22 +103,18 @@
                             </p>
                         </div>
                     </a>
-
                     <div class="card-body p-3">
-
                         <a class="nav-link " href="humidity/week">
-                        <div class="chart">
-                            <canvas id="chart-line2" class="chart-canvas" height="300"></canvas>
-                        </div>
+                            <div class="chart">
+                                <canvas id="chart-line2" class="chart-canvas" height="300"></canvas>
+                            </div>
                         </a>
-
                     </div>
                 </div>
             </div>
-
+            <!--            Co2-->
             <div class="col-lg-6 mb-lg-0 mb-4">
                 <div class="card z-index-2 h-100">
-
                     <div class="card-header pb-0 pt-3 bg-transparent">
                         <h6 class="text-capitalize">Co2</h6>
                         <p class="text-sm mb-0">
@@ -203,23 +122,20 @@
                             <span class="font-weight-bold">4% more</span> in 2021
                         </p>
                     </div>
-
                     <div class="card-body p-3">
                         <a class="nav-link " href="co2/week">
-                        <div class="chart">
-                            <canvas id="chart-line3" class="chart-canvas" height="300"></canvas>
-                        </div>
+                            <div class="chart">
+                                <canvas id="chart-line3" class="chart-canvas" height="300"></canvas>
+                            </div>
                         </a>
                     </div>
                 </div>
             </div>
         </div>
-
-
-        <!--            아랫 부분 끝-->
-    </div>
     </div>
 </main>
+
+
 <div class="fixed-plugin">
     <a class="fixed-plugin-button text-dark position-fixed px-3 py-2">
         <i class="fa fa-cog py-2"> </i>
@@ -341,7 +257,6 @@
 
 <script>
     document.addEventListener('DOMContentLoaded', function () {
-
         changeSlideTitle();
     });
 </script>
