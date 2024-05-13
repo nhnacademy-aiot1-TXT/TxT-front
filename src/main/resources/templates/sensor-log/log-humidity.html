@@ -29,35 +29,64 @@
     <div th:replace="fragments/nav"></div>
 
     <div class="card shadow-lg mx-4 card-profile-bottom">
-        <div class="card-body p-3">
-            <h2>Humidity Log</h2>
-        </div>
+        <div th:replace="fragments/log-tab"></div>
     </div>
+
     <div class="container-fluid py-4">
+
         <div class="row">
-            <div class="col-md-12">
+            <!-- First Column -->
+            <div class="col-md-6">
                 <div class="card shadow-lg">
-                    <div class="card-header pb-0">
+                    <div class="card-header pb-0"></div>
+                    <div class="card-body p-3">
+                        <h3>Humidity Log</h3>
+                        <table class="table align-items-center mb-2 ">
+                            <thead class="text-white">
+                            <tr>
+                                <th class="text-uppercase text-secondary p font-weight-bolder opacity-7">날짜</th>
+                                <th class="text-uppercase text-secondary p font-weight-bolder opacity-7">최고 습도
+                                    (%)
+                                </th>
+                                <th class="text-uppercase text-secondary p font-weight-bolder opacity-7">최저 습도
+                                    (%)
+                                </th>
+                            </tr>
+                            </thead>
+                            <tbody class="mb-0 text-xm">
+                            <tr th:each="humidity : ${humidityList}">
+                                <td th:text="${#temporals.format(humidity.time, 'yyyy-MM-dd')}">날짜</td>
+                                <td th:text="${humidity.maxHumidity}">최고 습도</td>
+                                <td th:text="${humidity.minHumidity}">최저 습도</td>
+                            </tr>
+                            </tbody>
+                        </table>
                     </div>
-                    <div class="container-fluid py-4">
-                        <div class="row">
-                            <table class="table border-radius-lg bg-primary">
-                                <thead class="text-white">
-                                <tr>
-                                    <th>날짜</th>
-                                    <th>최고 습도 (%)</th>
-                                    <th>최저 습도 (%)</th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                <tr th:each="humidity : ${humidityList}">
-                                    <td th:text="${#temporals.format(humidity.time, 'yyyy-MM-dd')}">날짜</td>
-                                    <td th:text="${humidity.maxHumidity}">최고 습도</td>
-                                    <td th:text="${humidity.minHumidity}">최저 습도</td>
-                                </tr>
-                                </tbody>
-                            </table>
-                        </div>
+                </div>
+            </div>
+
+            <!-- Second Column -->
+            <div class="col-md-6">
+                <div class="card shadow-lg">
+                    <div class="card-header pb-0"></div>
+                    <div class="card-body p-3">
+                        <h3>Data Graph</h3>
+                        <table class="table border-radius-lg bg-primary">
+                            <thead class="text-white">
+                            <tr>
+                                <th>Parameter</th>
+                                <th>Value 1 (%)</th>
+                                <th>Value 2 (%)</th>
+                            </tr>
+                            </thead>
+                            <tbody class="text-white">
+                            <tr th:each="data : ${dataList}">
+                                <td th:text="${#temporals.format(data.time, 'yyyy-MM-dd')}">Date</td>
+                                <td th:text="${data.value1}">Value 1</td>
+                                <td th:text="${data.value2}">Value 2</td>
+                            </tr>
+                            </tbody>
+                        </table>
                     </div>
                 </div>
             </div>
