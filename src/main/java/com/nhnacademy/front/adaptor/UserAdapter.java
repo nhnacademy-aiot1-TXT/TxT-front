@@ -96,4 +96,13 @@ public interface UserAdapter {
     void permitUser(@RequestHeader("Authorization") String accessToken,
                     @RequestBody List<PermitUserRequest> permitUserRequestList);
 
+    @PostMapping("/api/user/admin/promotion")
+    void promoteUserToAdmin(@RequestHeader("Authorization") String accessToken,
+                            @RequestBody PermitUserRequest permitUserRequest);
+
+    @PostMapping("/api/user/admin/reject/delete")
+    void rejectDeleteUser(@RequestHeader("Authorization") String accessToken,
+                          @RequestBody List<PermitUserRequest> permitUserRequestList);
+
+
 }
