@@ -29,63 +29,35 @@
     <div th:replace="fragments/nav"></div>
 
     <div class="card shadow-lg mx-4 card-profile-bottom">
-        <div th:replace="fragments/log-tab"></div>
+        <div class="card-body p-3">
+            <h2>Temperature Log</h2>
+        </div>
     </div>
-
     <div class="container-fluid py-4">
         <div class="row">
-            <!-- First Column -->
-            <div class="col-md-6">
+            <div class="col-md-12">
                 <div class="card shadow-lg">
-                    <div class="card-header pb-0"></div>
-                    <div class="card-body p-3">
-                        <h3>Temperature Log</h3>
-                        <table class="table align-items-center mb-0">
-                            <thead class="text-white">
-                            <tr>
-                                <th class="text-uppercase text-secondary text-sm font-weight-bolder opacity-7">날짜</th>
-                                <th class="text-uppercase text-secondary text-sm font-weight-bolder opacity-7">최고 온도
-                                    (°C)
-                                </th>
-                                <th class="text-uppercase text-secondary text-sm font-weight-bolder opacity-7">최저 온도
-                                    (°C)
-                                </th>
-                            </tr>
-                            </thead>
-                            <tbody class="mb-0 text-xm">
-                            <tr th:each="temperature : ${temperatureList}">
-                                <td th:text="${#temporals.format(temperature.time, 'yyyy-MM-dd')}">날짜</td>
-                                <td th:text="${temperature.maxTemperature}">최고 온도</td>
-                                <td th:text="${temperature.minTemperature}">최저 온도</td>
-                            </tr>
-                            </tbody>
-                        </table>
+                    <div class="card-header pb-0">
                     </div>
-                </div>
-            </div>
-
-            <!-- Second Column -->
-            <div class="col-md-6">
-                <div class="card shadow-lg">
-                    <div class="card-header pb-0"></div>
-                    <div class="card-body p-3">
-                        <h3>Data Graph</h3>
-                        <table class="table border-radius-lg bg-primary">
-                            <thead class="text-white">
-                            <tr>
-                                <th>Parameter</th>
-                                <th>Value 1 (%)</th>
-                                <th>Value 2 (%)</th>
-                            </tr>
-                            </thead>
-                            <tbody class="text-white">
-                            <tr th:each="data : ${dataList}">
-                                <td th:text="${#temporals.format(data.time, 'yyyy-MM-dd')}">Date</td>
-                                <td th:text="${data.value1}">Value 1</td>
-                                <td th:text="${data.value2}">Value 2</td>
-                            </tr>
-                            </tbody>
-                        </table>
+                    <div class="container-fluid py-4">
+                        <div class="row">
+                            <table class="table border-radius-lg bg-primary">
+                                <thead class="text-white">
+                                <tr>
+                                    <th>날짜</th>
+                                    <th>최고 온도 (°C)</th>
+                                    <th>최저 온도 (°C)</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr th:each="temperature : ${temperatureList}">
+                                    <td th:text="${#temporals.format(temperature.time, 'yyyy-MM-dd')}" style="color: white;">날짜</td>
+                                    <td th:text="${temperature.maxTemperature}" style="color: white;">최고 온도</td>
+                                    <td th:text="${temperature.minTemperature}" style="color: white;">최저 온도</td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                 </div>
             </div>
