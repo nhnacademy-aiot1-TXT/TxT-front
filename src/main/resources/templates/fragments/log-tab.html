@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <!-- CSS Files -->
+    <link id="pagestyle" href="/css/argon-dashboard.css?v=2.0.4" rel="stylesheet"/>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" type="text/css" href="/css/userManage/style.css">
+</head>
+<body>
+<div class="nav-wrapper position-relative end-0">
+    <div class="nav nav-pills nav-fill p-2">
+        <div class="nav-item">
+            <a class="nav-link mb-0 px-1 py-1" href="/admin/temperature/week"
+               th:class="${temperatureList != null ? 'my-btn my-btn-purple2 ' : 'my-btn text-dark'}">
+                온도
+            </a>
+        </div>
+        <div class="nav-item">
+            <a class="nav-link mb-0 px-1 py-1" href="/admin/illumination/week"
+               th:class="${illuminationWeek != null ? 'my-btn my-btn-purple2' : 'my-btn text-dark'}">
+                조명
+            </a>
+        </div>
+        <div class="nav-item">
+            <a class="nav-link mb-0 px-1 py-1" href="/admin/humidity/week"
+               th:class="${humidityList != null ? 'my-btn my-btn-purple2' : 'my-btn text-dark'}">
+                습도
+            </a>
+        </div>
+        <div class="nav-item">
+            <a class="nav-link mb-0 px-1 py-1" href="/admin/co2/week"
+               th:class="${co2List != null ? 'my-btn my-btn-purple2' : 'my-btn text-dark'}">
+                Co2
+            </a>
+        </div>
+    </div>
+</div>
+</body>
+</html>
