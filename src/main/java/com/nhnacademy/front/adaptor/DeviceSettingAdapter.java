@@ -1,9 +1,6 @@
 package com.nhnacademy.front.adaptor;
 
-import com.nhnacademy.front.dto.DeviceRequest;
-import com.nhnacademy.front.dto.DeviceResponse;
-import com.nhnacademy.front.dto.DeviceSensorRequest;
-import com.nhnacademy.front.dto.DeviceSensorResponse;
+import com.nhnacademy.front.dto.*;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.*;
 
@@ -25,4 +22,10 @@ public interface DeviceSettingAdapter {
 
     @PutMapping("/device-sensor/{deviceId}/{sensorId}")
     DeviceSensorResponse updateDeviceSensor(@RequestHeader("Authorization") String accessToken, @PathVariable Long deviceId, @PathVariable Long sensorId, @RequestBody DeviceSensorRequest deviceSensorRequest);
+
+    @GetMapping("/time-interval")
+    TimeIntervalResponse getTimeInterval(@RequestHeader("Authorization") String accessToken, @RequestParam String sensorName);
+
+    @PutMapping("/time-interval/{timeIntervalId}")
+    TimeIntervalResponse updateTimeInterval(@RequestHeader("Authorization") String accessToken, @PathVariable Long timeIntervalId, @RequestBody TimeIntervalRequest timeIntervalRequest);
 }

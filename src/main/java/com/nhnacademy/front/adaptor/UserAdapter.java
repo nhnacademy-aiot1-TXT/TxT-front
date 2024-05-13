@@ -66,8 +66,7 @@ public interface UserAdapter {
     void updateUser(UserUpdateRequest userUpdateRequest, @RequestHeader("Authorization") String accessToken);
 
 
-    @PostMapping("/api/user/deactivate")
-    void deactivate(@RequestHeader("Authorization") String accessToken);
+
 
     @GetMapping("/api/user/admin/userList/sort/status/{statusId} ")
     RestPage<UserDataResponse> findSortedUsers(@RequestHeader("Authorization") String accessToken,
@@ -95,6 +94,10 @@ public interface UserAdapter {
     @PostMapping("/api/user/admin/permit")
     void permitUser(@RequestHeader("Authorization") String accessToken,
                     @RequestBody List<PermitUserRequest> permitUserRequestList);
+
+
+    @PostMapping("/api/user/deactivate")
+    void deactivate(@RequestHeader("Authorization") String accessToken);
 
     @PostMapping("/api/user/admin/promotion")
     void promoteUserToAdmin(@RequestHeader("Authorization") String accessToken,
