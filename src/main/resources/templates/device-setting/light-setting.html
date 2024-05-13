@@ -18,17 +18,19 @@
                         <div class="row mt-5">
                             <div class="mb-3 col-md-6">
                                 <input id="hour" type="text" class="form-control" name="hour"
-                                       th:placeholder="${device.getCycle().getHour()}">
+                                       th:placeholder="${device.getCycle().getHour()}"
+                                       th:value="${device.getCycle().getHour()}">
                                 <label for="hour">HOUR</label>
                             </div>
                             <div class="mb-3 col-md-6">
                                 <input id="minute" type="text" class="form-control" name="minute"
-                                       th:placeholder="${device.getCycle().getMinute()}">
+                                       th:placeholder="${device.getCycle().getMinute()}"
+                                       th:value="${device.getCycle().getMinute()}">
                                 <label for="minute">MINUTE</label>
                             </div>
                         </div>
-                        <div class="text-center mt-5">
-                            <button type="submit" class="btn bg-gradient-primary w-100 my-4 mb-2">Setting</button>
+                        <div class="text-center mt-4">
+                            <button type="submit" class="btn bg-gradient-primary w-50 my-4 mb-2">Setting</button>
                         </div>
                     </form>
                 </div>
