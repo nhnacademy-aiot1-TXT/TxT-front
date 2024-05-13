@@ -1,8 +1,8 @@
 package com.nhnacademy.front.controller;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.nhnacademy.front.adaptor.SensorAdapter;
+import com.nhnacademy.front.adaptor.UserAdapter;
 import com.nhnacademy.front.dto.*;
 import com.nhnacademy.front.dto.IlluminationResponse.IlluminationResponse;
 import com.nhnacademy.front.utils.AccessTokenUtil;
@@ -10,14 +10,15 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-
-import com.nhnacademy.front.adaptor.UserAdapter;
 
 /**
  * 어드민 권한만 접근할 수 있는 Controller
@@ -45,6 +46,7 @@ public class AdminController {
 
         UserDataResponse user = userAdapter.getUserData(accessToken);
         model.addAttribute("user", user);
+        model.addAttribute("accessToken", AccessTokenUtil.findAccessTokenInRequest(request));
 
         return "detailedSensor";
     }
