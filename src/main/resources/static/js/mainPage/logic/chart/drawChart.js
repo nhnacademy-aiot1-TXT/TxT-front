@@ -1,9 +1,16 @@
 function drawChart(ctx) {
 
-    let GradientStroke = ctx.createLinearGradient(0, 230, 0, 50);
-    GradientStroke.addColorStop(1, 'rgba(255, 99, 132, 0.2)');
-    GradientStroke.addColorStop(0.2, 'rgba(255, 99, 132, 0.0)');
-    GradientStroke.addColorStop(0, 'rgba(255, 99, 132, 0)');
+    let gradientStroke1 = ctx.createLinearGradient(0, 230, 0, 50);
+
+    gradientStroke1.addColorStop(1, 'rgba(94,114,228,0.4)');
+    gradientStroke1.addColorStop(0.2, 'rgba(72,72,176,0.0)');
+    gradientStroke1.addColorStop(0, 'rgba(94,114,228,0)');
+
+    let gradientStroke2 = ctx.createLinearGradient(0, 230, 0, 50);
+
+    gradientStroke2.addColorStop(1, 'rgba(20,23,39,0.4)');
+    gradientStroke2.addColorStop(0.2, 'rgba(72,72,176,0.0)');
+    gradientStroke2.addColorStop(0, 'rgba(20,23,39,0)');
 
     return new Chart(ctx, {
         type: "line",
@@ -14,8 +21,8 @@ function drawChart(ctx) {
                 tension: 0.4,
                 borderWidth: 0,
                 pointRadius: 0,
-                borderColor: "#e248cd",
-                backgroundColor: "rgba(255, 99, 132, 0.2)",
+                borderColor: "#5e72e4",
+                backgroundColor: gradientStroke1,
                 borderWidth: 3,
                 fill: true,
                 maxBarThickness: 6,
@@ -25,8 +32,8 @@ function drawChart(ctx) {
                 tension: 0.4,
                 borderWidth: 0,
                 pointRadius: 0,
-                borderColor: "#5e72e4",
-                backgroundColor: "rgba(99, 104, 255, 0.3)",
+                borderColor: "#172b4d",
+                backgroundColor: gradientStroke2,
                 borderWidth: 3,
                 fill: true,
                 maxBarThickness: 6,
