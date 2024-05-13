@@ -79,7 +79,8 @@
                                     <table id="permitUser" class="table table-responsive-xl">
                                         <thead>
                                         <tr>
-                                            <th colspan="3" style="font-size: 19px;" class="font-weight-bold" th:switch="${statSet}">
+                                            <th colspan="3" style="font-size: 19px;" class="font-weight-bold"
+                                                th:switch="${statSet}">
                                                 <span th:case="3" th:text="|탈퇴 회원 리스트|"></span>
                                                 <span th:case="4" th:text="|회원가입 승인 대기 리스트|"></span>
                                                 <span th:case="99" th:text="|전체 유저 리스트|"></span>
@@ -97,7 +98,8 @@
                                         <tr th:each="user : ${users}" class="alert" role="alert">
                                             <td>
                                                 <label class="checkbox-wrap checkbox-primary">
-                                                    <input type="checkbox" th:id="${'checkbox' + user.id}" th:value="${user.id}" name="userIds"/>
+                                                    <input type="checkbox" th:id="${'checkbox' + user.id}"
+                                                           th:value="${user.id}" name="userIds"/>
                                                     <span class="checkmark"></span>
                                                 </label>
                                             </td>
@@ -173,23 +175,26 @@
                                             </ul>
                                         </nav>
                                     </div>
-                                    <a href="#!" class="label theme-bg2 text-white f-12">Reject</a>
-                                    <button type="submit" class="my-btn my-btn-green btn-sm ms-auto" th:if="${statSet} == 3">
+                                    <button type="submit" class="my-btn my-btn-green btn-sm ms-auto"
+                                            th:if="${statSet} == 3">
                                         탈퇴 복구
                                     </button>
-                                    <button type="submit" class="my-btn my-btn-green btn-sm ms-auto" th:if="${statSet} == 4">
+                                    <button type="submit" class="my-btn my-btn-green btn-sm ms-auto"
+                                            th:if="${statSet} == 4">
                                         승인
                                     </button>
-                                    <button type="submit" class="my-btn my-btn-green btn-sm ms-auto" th:if="${statSet} == 99">
+                                    <button type="submit" class="my-btn my-btn-green btn-sm ms-auto"
+                                            th:if="${statSet} == 99">
                                         관리자 권한 부여
                                     </button>
-                                    <div  class="ms-auto" th:if="${statSet} == 100">
+                                    <div class="ms-auto" th:if="${statSet} == 100">
 
                                     </div>
 
                                     <!--                                조회에 대한 구현부 끝-->
                                 </div>
                             </div>
+                        </div>
                     </form>
                 </div>
             </div>
