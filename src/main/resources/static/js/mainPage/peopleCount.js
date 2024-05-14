@@ -13,7 +13,6 @@ async function peopleCountCall() {
 
 async function updatePeopleCount() {
     const data = await peopleCountCall();
-    console.log(data);
     const countElement = document.getElementById('currentCount');
     countElement.textContent = data.count;
 }

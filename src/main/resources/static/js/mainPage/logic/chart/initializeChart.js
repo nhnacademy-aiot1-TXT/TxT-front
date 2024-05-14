@@ -1,20 +1,19 @@
-async function initializeCO2Chart() {
+async function initializeDayChart() {
     commonInit("co2","day");
-    commonInit("co2", "week");
-    commonInit("co2", "month");
-}
-async function initializeHumidityChart() {
     commonInit("humidity","day");
-    commonInit("humidity", "week");
-    commonInit("humidity", "month");
-}
-async function initializeTempChart() {
     commonInit("temperature", "day");
-    commonInit("temperature", "week");
-    commonInit("temperature", "month");
-}
-async function initializeIlluminationChart() {
     commonInit("illumination", "day");
+
+}
+async function initializeWeekChart() {
+    commonInit("co2", "week");
+    commonInit("humidity", "week");
+    commonInit("temperature", "week");
     commonInit("illumination", "week");
+}
+async function initializeMonthChart() {
+    commonInit("co2", "month");
+    commonInit("humidity", "month");
+    commonInit("temperature", "month");
     commonInit("illumination", "month");
 }

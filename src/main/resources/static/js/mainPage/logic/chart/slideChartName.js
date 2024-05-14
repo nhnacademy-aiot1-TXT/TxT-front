@@ -1,34 +1,28 @@
 function changeSlideTitle() {
-    let temperatureTitles = ['온도(일)', '온도(주)', '온도(월)'];
-    let humidityTitles = ['습도(일)', '습도(주)', '습도(월)'];
-    let illuminationTitles = ['조도(일)', '조도(주)', '조도(월)'];
-    let co2Titles = ['Co2(일)', 'Co2(주)', 'Co2(월)'];
+    let dayTitles = ['온도(일)', '습도(일)', '조도(일)', 'Co2(일)'];
+    let weekTitles = ['온도(주)','습도(주)','조도(주)' ,'Co2(주)'];
+    let monthTitles = ['온도(월)','습도(월)' ,'조도(월)', 'Co2(월)'];
 
-    let temperatureCarousel = document.querySelector('#temperatureCarouselCaptions');
-    let humidityCarousel = document.querySelector('#humidityCarouselCaptions');
-    let illuminationCarousel = document.querySelector('#illuminationCarouselCaptions');
-    let co2Carousel = document.querySelector('#co2CarouselCaptions');
+    let dayCarousel = document.querySelector('#dayCarouselCaptions');
+    let weekCarousel = document.querySelector('#weekCarouselCaptions');
+    let monthCarousel = document.querySelector('#monthCarouselCaptions');
 
     // Carousel 요소가 존재하는지 확인
-    if (!temperatureCarousel || !humidityCarousel || !illuminationCarousel || !co2Carousel) {
+    if (!dayCarousel || !weekCarousel || !monthCarousel) {
         console.error('Carousel element not found');
         return;
     }
 
-    temperatureCarousel.addEventListener('slide.bs.carousel', function (event) {
+    dayCarousel.addEventListener('slide.bs.carousel', function (event) {
         let nextSlideIndex = event.to; // 다음 슬라이드의 인덱스
-        document.getElementById('temperature-title').innerText = temperatureTitles[nextSlideIndex % temperatureTitles.length];
+        document.getElementById('day-title').innerText = dayTitles[nextSlideIndex % dayTitles.length];
     });
-    humidityCarousel.addEventListener('slide.bs.carousel', function (event) {
-        let nextSlideIndex = event.to; // 다음 슬라이드의 인덱스
-        document.getElementById('humidity-title').innerText = humidityTitles[nextSlideIndex % humidityTitles.length];
+    weekCarousel.addEventListener('slide.bs.carousel', function (event) {
+        let nextSlideIndex = event.to;
+        document.getElementById('week-title').innerText = weekTitles[nextSlideIndex % weekTitles.length];
     });
-    illuminationCarousel.addEventListener('slide.bs.carousel', function (event) {
-        let nextSlideIndex = event.to; // 다음 슬라이드의 인덱스
-        document.getElementById('illumination-title').innerText = illuminationTitles[nextSlideIndex % illuminationTitles.length];
-    });
-    co2Carousel.addEventListener('slide.bs.carousel', function (event) {
-        let nextSlideIndex = event.to; // 다음 슬라이드의 인덱스
-        document.getElementById('co2-title').innerText = co2Titles[nextSlideIndex % co2Titles.length];
+    monthCarousel.addEventListener('slide.bs.carousel', function (event) {
+        let nextSlideIndex = event.to;
+        document.getElementById('month-title').innerText = monthTitles[nextSlideIndex % monthTitles.length];
     });
 }
