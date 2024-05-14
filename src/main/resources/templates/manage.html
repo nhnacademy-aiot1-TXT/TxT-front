@@ -38,6 +38,7 @@
                 <div class="card">
                     <form role="form" th:action="${actionUrl}" method="post">
                         <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+                        <input type="hidden" id="redirectUrl" name="redirectUrl"/>
                         <div class="card-body scroll_x_bar">
                             <div class="row ">
                                 <div class="col-md-12">
@@ -181,6 +182,12 @@
     const usersData = /*[[${usersJson}]]*/ '[]';
     const totalPages = /*[[${totalPages}]]*/ '0';
     /*]]>*/
+</script>
+<!-- post 후 원래 위치했던 url 에 가기 위한 script -->
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        document.getElementById('redirectUrl').value = window.location.href;
+    });
 </script>
 <!-- 필수 플러그인 js 불러오기-->
 <script src="/js/core/popper.min.js"></script>

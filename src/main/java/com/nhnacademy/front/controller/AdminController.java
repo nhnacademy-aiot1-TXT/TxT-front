@@ -79,14 +79,13 @@ public class AdminController {
 
     //유저등록
     @PostMapping("/manage/permit")
-    public String permitUser(HttpServletRequest request) {
+    public String permitUser(HttpServletRequest request, @RequestParam("redirectUrl") String redirectUrl) {
         List<PermitUserRequest> permitUserRequests = new ArrayList<>();
         String accessToken = AccessTokenUtil.findAccessTokenInRequest(request);
         String[] selectedUserIds = request.getParameterValues("userIds");
 
         if (selectedUserIds != null) {
             for (String userId : selectedUserIds) {
-                System.out.println("Selected User ID: " + userId);
                 PermitUserRequest permitUserRequest = new PermitUserRequest(); // 각 반복마다 새 객체 생성
                 permitUserRequest.setId(userId); // 유저 ID 설정
                 permitUserRequests.add(permitUserRequest); // 리스트에 추가
@@ -94,18 +93,17 @@ public class AdminController {
             userAdapter.permitUser(accessToken, permitUserRequests); // 사용자 허용 메서드 호출
         }
 
-        return "redirect:/admin/manage";
+        return "redirect:" + redirectUrl.substring(redirectUrl.indexOf("/admin"));
     }
 
     @PostMapping("/manage/promotion")
-    public String promotionUser(HttpServletRequest request) {
+    public String promotionUser(HttpServletRequest request, @RequestParam("redirectUrl") String redirectUrl) {
         List<PermitUserRequest> permitUserRequests = new ArrayList<>();
         String accessToken = AccessTokenUtil.findAccessTokenInRequest(request);
         String[] selectedUserIds = request.getParameterValues("userIds");
 
         if (selectedUserIds != null) {
             for (String userId : selectedUserIds) {
-                System.out.println("Selected User ID: " + userId);
                 PermitUserRequest permitUserRequest = new PermitUserRequest();
                 permitUserRequest.setId(userId);
                 permitUserRequests.add(permitUserRequest);
@@ -113,7 +111,7 @@ public class AdminController {
             userAdapter.promotionUser(accessToken, permitUserRequests);
         }
 
-        return "redirect:/admin/manage";
+        return "redirect:" + redirectUrl.substring(redirectUrl.indexOf("/admin"));
     }
 
     // 상세센서 정보
