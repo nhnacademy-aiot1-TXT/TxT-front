@@ -12,7 +12,7 @@ async function gaugeCountCall(sensorName) {
     const data = await response.json();
     const value = data.value;
     const gaugeElement = document.getElementById(sensorName);
-    $(gaugeElement).data("used", value).data("text", value);
+    $(gaugeElement).data("used", Math.round(value)).data("text", value);
     $(gaugeElement).gaugeMeter();
 }
 
