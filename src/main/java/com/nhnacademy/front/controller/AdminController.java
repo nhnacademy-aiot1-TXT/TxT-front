@@ -47,14 +47,13 @@ public class AdminController {
 
     @GetMapping("/manage")
     public String manage(HttpServletRequest request, Model model,
-                         @RequestParam(value = "statSet", defaultValue = "userList") String statSet,
+                         @RequestParam(value = "statusParam", defaultValue = "userList") String statusParam,
                          @RequestParam(value = "page", defaultValue = "0") int page,
                          @RequestParam(value = "size", defaultValue = "5") int size) {
         Page<UserDataResponse> users;
         String accessToken = AccessTokenUtil.findAccessTokenInRequest(request);
-        System.out.println(statSet);
 
-        switch (statSet) {
+        switch (statusParam) {
             case "pendingUser":
                 users = userAdapter.findSortedUsers(accessToken, 4, page, size);
                 model.addAttribute("actionUrl", "/admin/manage/permit");
@@ -73,7 +72,7 @@ public class AdminController {
         }
 
         model.addAttribute("users", users);
-        model.addAttribute("statSet", statSet);
+        model.addAttribute("statusSet", statusParam);
 
         return "manage";
     }
