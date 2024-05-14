@@ -13,28 +13,31 @@
     <div class="nav nav-pills nav-fill p-2">
         <div class="nav-item">
             <a class="nav-link mb-0 px-1 py-1 my-btn" type="submit"
-               th:href="@{manage(statusId = 4, page = 0)}"
-               th:class="${statSet != null and statSet == 4 ? 'my-btn my-btn-purple btn-signup-approve' : 'my-btn text-dark btn-signup-approve'}">
+               th:href="@{manage(statusParam = 'pendingUser', page = 0)}"
+               th:class="${statusSet != null and statusSet == 'pendingUser' ? 'my-btn my-btn-purple btn-signup-approve' : 'my-btn text-dark btn-signup-approve'}">
                 회원가입 승인
             </a>
         </div>
         <div class="nav-item">
-            <a class="nav-link mb-0 px-1 py-1" type="submit" th:href="@{manage(statusId = 3, page = 0)}"
-               th:class="${statSet != null and statSet == 3 ? 'my-btn my-btn-purple ms-auto btn-signup-approve' : 'my-btn text-dark btn-signup-approve'}">
+            <a class="nav-link mb-0 px-1 py-1" type="submit"
+               th:href="@{manage(statusParam = 'deactivateUser', page = 0)}"
+               th:class="${statusSet != null and statusSet == 'deactivateUser' ? 'my-btn my-btn-purple ms-auto btn-signup-approve' : 'my-btn text-dark btn-signup-approve'}">
                 탈퇴회원 관리
             </a>
 
         </div>
         <div class="nav-item">
-            <a class="nav-link mb-0 px-1 py-1" type="submit" th:href="@{manage(statusId = 99, page = 0)}"
-               th:class="${statSet != null and statSet == 99 ? 'my-btn my-btn-purple ms-auto btn-signup-approve' : 'my-btn text-dark btn-signup-approve'}">
+            <a class="nav-link mb-0 px-1 py-1" type="submit"
+               th:href="@{manage(statusParam = 'userList', page = 0)}"
+               th:class="${statusSet != null and statusSet == 'userList' ? 'my-btn my-btn-purple ms-auto btn-signup-approve' : 'my-btn text-dark btn-signup-approve'}">
                 유저 리스트
             </a>
 
         </div>
         <div class="nav-item">
-            <a class="nav-link mb-0 px-1 py-1" type="submit" th:href="@{manage(statusId = 100, page = 0)}"
-               th:class="${statSet != null and statSet == 100 ? 'my-btn my-btn-purple btn-sm ms-auto' : 'my-btn text-dark btn-signup-approve'}">
+            <a class="nav-link mb-0 px-1 py-1" type="submit"
+               th:href="@{manage(statusParam = 'adminList', page = 0)}"
+               th:class="${statusSet != null and statusSet == 'adminList' ? 'my-btn my-btn-purple btn-sm ms-auto' : 'my-btn text-dark btn-signup-approve'}">
                 관리자 리스트
             </a>
         </div>
