@@ -1,5 +1,5 @@
 async function gaugeCountCall(sensorName) {
-    const url = 'http://localhost:8000/api/sensor/' + sensorName;
+    const url = 'https://contxt.co.kr/api/sensor/' + sensorName;
 
     const option = {
         method : "GET",
