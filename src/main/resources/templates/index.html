@@ -41,250 +41,214 @@
 
 <main class="main-content position-relative border-radius-lg ">
     <div th:replace="fragments/nav"></div>
-    <div class="container-fluid py-4">
-        <div class="row">
-            <div class="col-xl-6 col-sm-6 mb-xl-0 mb-4">
-                <div class="card"
-                     style="background-image: url('/img/sunny.jpg'); background-size: cover; background-position: top;">
-                    <div class="card-body p-3 mb-xl-4 mt-xl-4 d-flex align-items-center justify-content-center">
-                        <p class="display-5 mb-0 text-dark text-uppercase font-weight-bold">
-                            오늘의 날씨 :
-                            <span class="text-warning display-5 font-weight-bolder">
-                                화창
-                            </span>
-                        </p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-xl-6 col-sm-6 mb-xl-0 mb-4">
-                <div class="card">
-                    <div class="card-body p-3 mb-xl-4 mt-xl-4">
-                        <p class="display-5 mb-0 text-uppercase text-dark font-weight-bold text-center align-self-center">
-                            현재 재실자 수 :
-                            <span id="currentCount" class="text-primary display-5 font-weight-bolder">
-                            </span>
-                        </p>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="row mt-4">
-            <div class="col-lg-6 mb-lg-0 mb-4">
-                <div class="card card-carousel overflow-hidden h-100 p-0">
-                    <!-- 제목 -->
-                    <!-- 첫 제목은 첫 슬라이드로 설정하기 -->
-                    <div class="card-header pb-0 pt-3">
-                        <div class="col">
-                            <h6 id="temperature-title" class="text-capitalize">온도(일)</h6>
-                        </div>
-                    </div>
-                    <!--슬라이드 바-->
-                    <div id="temperatureCarouselCaptions" class="carousel slide h-100" data-bs-ride="carousel">
-                        <div class="carousel-inner border-radius-lg h-100">
-                            <div class="carousel-item h-100 active">
-                                <canvas id="day-temperature" class="chart-canvas" height="300"></canvas>
-                            </div>
-                            <div class="carousel-item h-100 ">
-                                <canvas id="week-temperature" class="chart-canvas" height="300"></canvas>
-                            </div>
-                            <div class="carousel-item h-100">
-                                <canvas id="month-temperature" class="chart-canvas" height="300"></canvas>
-                            </div>
-                        </div>
-                        <!--버튼-->
-                        <button class="carousel-control-prev w-5 me-3" type="button"
-                                data-bs-target="#temperatureCarouselCaptions" data-bs-slide="prev">
-                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                            <span class="visually-hidden">Previous</span>
-                        </button>
-                        <button class="carousel-control-next w-5 me-3" type="button"
-                                data-bs-target="#temperatureCarouselCaptions" data-bs-slide="next">
-                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                            <span class="visually-hidden">Next</span>
-                        </button>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-6 mb-lg-0 mb-4">
-                <div class="card card-carousel overflow-hidden h-100 p-0">
-                    <!-- 제목 -->
-                    <!-- 첫 제목은 첫 슬라이드로 설정하기 -->
-                    <div class="card-header pb-0 pt-3">
-                        <div class="col">
-                            <h6 id="humidity-title" class="text-capitalize">습도(일)</h6>
-                        </div>
-                    </div>
-                    <!--슬라이드 바-->
-                    <div id="humidityCarouselCaptions" class="carousel slide h-100" data-bs-ride="carousel">
-                        <div class="carousel-inner border-radius-lg h-100">
-                            <div class="carousel-item h-100 active">
-                                <canvas id="day-humidity" class="chart-canvas" height="300"></canvas>
-                            </div>
-                            <div class="carousel-item h-100 ">
-                                <canvas id="week-humidity" class="chart-canvas" height="300"></canvas>
-                            </div>
-                            <div class="carousel-item h-100">
-                                <canvas id="month-humidity" class="chart-canvas" height="300"></canvas>
-                            </div>
-                        </div>
-                        <!--버튼-->
-                        <button class="carousel-control-prev w-5 me-3" type="button"
-                                data-bs-target="#humidityCarouselCaptions" data-bs-slide="prev">
-                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                            <span class="visually-hidden">Previous</span>
-                        </button>
-                        <button class="carousel-control-next w-5 me-3" type="button"
-                                data-bs-target="#humidityCarouselCaptions" data-bs-slide="next">
-                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                            <span class="visually-hidden">Next</span>
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="row mt-4">
-            <div class="col-lg-6 mb-lg-0 mb-4">
-                <div class="card card-carousel overflow-hidden h-100 p-0">
-                    <!-- 제목 -->
-                    <!-- 첫 제목은 첫 슬라이드로 설정하기 -->
-                    <div class="card-header pb-0 pt-3">
-                        <div class="col">
-                            <h6 id="illumination-title" class="text-capitalize">조도(일)</h6>
-                        </div>
-                    </div>
-                    <!--슬라이드 바-->
-                    <div id="illuminationCarouselCaptions" class="carousel slide h-100" data-bs-ride="carousel">
-                        <div class="carousel-inner border-radius-lg h-100">
-                            <div class="carousel-item h-100 active">
-                                <canvas id="day-illumination" class="chart-canvas" height="300"></canvas>
-                            </div>
-                            <div class="carousel-item h-100 ">
-                                <canvas id="week-illumination" class="chart-canvas" height="300"></canvas>
-                            </div>
-                            <div class="carousel-item h-100">
-                                <canvas id="month-illumination" class="chart-canvas" height="300"></canvas>
-                            </div>
-                        </div>
-                        <!--버튼-->
-                        <button class="carousel-control-prev w-5 me-3" type="button"
-                                data-bs-target="#illuminationCarouselCaptions" data-bs-slide="prev">
-                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                            <span class="visually-hidden">Previous</span>
-                        </button>
-                        <button class="carousel-control-next w-5 me-3" type="button"
-                                data-bs-target="#illuminationCarouselCaptions" data-bs-slide="next">
-                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                            <span class="visually-hidden">Next</span>
-                        </button>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-6 mb-lg-0 mb-4">
-                <div class="card card-carousel overflow-hidden h-100 p-0">
-                    <!-- 제목 -->
-                    <!-- 첫 제목은 첫 슬라이드로 설정하기 -->
-                    <div class="card-header pb-0 pt-3">
-                        <div class="col">
-                            <h6 id="co2-title" class="text-capitalize">Co2(일)</h6>
-                        </div>
-                    </div>
-                    <!--슬라이드 바-->
-                    <div id="co2CarouselCaptions" class="carousel slide h-100" data-bs-ride="carousel">
-                        <div class="carousel-inner border-radius-lg h-100">
-                            <div class="carousel-item h-100 active">
-                                <canvas id="day-co2" class="chart-canvas" height="300"></canvas>
-                            </div>
-                            <div class="carousel-item h-100 ">
-                                <canvas id="week-co2" class="chart-canvas" height="300"></canvas>
-                            </div>
-                            <div class="carousel-item h-100">
-                                <canvas id="month-co2" class="chart-canvas" height="300"></canvas>
-                            </div>
-                        </div>
-                        <!--버튼-->
-                        <button class="carousel-control-prev w-5 me-3" type="button"
-                                data-bs-target="#co2CarouselCaptions" data-bs-slide="prev">
-                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                            <span class="visually-hidden">Previous</span>
-                        </button>
-                        <button class="carousel-control-next w-5 me-3" type="button"
-                                data-bs-target="#co2CarouselCaptions" data-bs-slide="next">
-                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                            <span class="visually-hidden">Next</span>
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
 
-    <div class="row mt-4 justify-content-center">
-        <div class="col-xl-2 col-sm-6 mb-xl-0 mb-4">
-            <div class="card GaugeMeter" id="temperature"
-                 data-min="-20"
-                 data-total="40"
-                 data-append="°C"
-                 data-width="10"
-                 data-size="250"
-                 data-label="온도"
-                 data-color="#5e72e4"
-                 data-animationstep="0"
-                 data-text_size="0.15">
+    <div class="container-fluid h-100 py-4 justify-content-center">
+        <div class="row justify-content-center">
+            <div class="col-10">
+                <div class="row mb-4" style="height: 500px;">
+                    <div class="col-lg-4">
+                        <div class="card mb-2" style="height: 130px" >
+                            <div class="card-body p-3 mb-xl-4 mt-xl-4">
+                                <div class="row">
+                                    <div class="col-12 text-center">
+                                        <img src="/img/user.png" width="60px" height="60px" class="align-top me-lg-3">
+                                        <span id="currentCount" class="text-primary display-5 font-weight-bolder"></span>
+                                        <span class="text-dark fs-6 font-weight-bolder">명</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card p-3 d-flex align-items-center justify-content-center" style= "height: 370px">
+                            <div class="mb-3">
+                                <img id="weatherImage">
+                            </div>
+                            <div class="text-bold text-4xl text-dark">
+                                <span id="weatherTemperature" class="text-6xl"></span>°C
+                            </div>
+                            <div id = "weatherSky" class="text-2xl text-dark"></div>
+                        </div>
+                    </div>
+                    <div class="col-lg-8">
+                        <div class="card card-carousel overflow-hidden h-100 p-0">
+                            <!-- 제목 -->
+                            <!-- 첫 제목은 첫 슬라이드로 설정하기 -->
+                            <div class="card-header pb-0 pt-3">
+                                <div class="col">
+                                    <h6 id="day-title" class="text-capitalize">온도(일)</h6>
+                                </div>
+                            </div>
+                            <!--슬라이드 바-->
+                            <div id="dayCarouselCaptions" class="carousel slide h-100" data-bs-ride="carousel">
+                                <div class="carousel-inner border-radius-lg h-100">
+                                    <div class="carousel-item h-100 active">
+                                        <canvas id="day-temperature" class="chart-canvas" height="300"></canvas>
+                                    </div>
+                                    <div class="carousel-item h-100 ">
+                                        <canvas id="day-humidity" class="chart-canvas" height="300"></canvas>
+                                    </div>
+                                    <div class="carousel-item h-100">
+                                        <canvas id="day-illumination" class="chart-canvas" height="300"></canvas>
+                                    </div>
+                                    <div class="carousel-item h-100">
+                                        <canvas id="day-co2" class="chart-canvas" height="300"></canvas>
+                                    </div>
+                                </div>
+                                <!--버튼-->
+                                <button class="carousel-control-prev w-5 me-3" type="button"
+                                        data-bs-target="#dayCarouselCaptions" data-bs-slide="prev">
+                                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                    <span class="visually-hidden">Previous</span>
+                                </button>
+                                <button class="carousel-control-next w-5 me-3" type="button"
+                                        data-bs-target="#dayCarouselCaptions" data-bs-slide="next">
+                                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                    <span class="visually-hidden">Next</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row mb-3 height-500">
+                    <div class="col-lg-6 mb-3">
+                        <div class="card card-carousel overflow-hidden h-100 p-0">
+                        <!-- 제목 -->
+                        <!-- 첫 제목은 첫 슬라이드로 설정하기 -->
+                        <div class="card-header pb-0 pt-3">
+                            <div class="col">
+                                <h6 id="week-title" class="text-capitalize">온도(주)</h6>
+                            </div>
+                        </div>
+                        <!--슬라이드 바-->
+                        <div id="weekCarouselCaptions" class="carousel slide h-100" data-bs-ride="carousel">
+                            <div class="carousel-inner border-radius-lg h-100">
+                                <div class="carousel-item h-100 active">
+                                    <canvas id="week-temperature" class="chart-canvas" height="300"></canvas>
+                                </div>
+                                <div class="carousel-item h-100 ">
+                                    <canvas id="week-humidity" class="chart-canvas" height="300"></canvas>
+                                </div>
+                                <div class="carousel-item h-100">
+                                    <canvas id="week-illumination" class="chart-canvas" height="300"></canvas>
+                                </div>
+                                <div class="carousel-item h-100">
+                                    <canvas id="week-co2" class="chart-canvas" height="300"></canvas>
+                                </div>
+                            </div>
+                            <!--버튼-->
+                            <button class="carousel-control-prev w-5 me-3" type="button"
+                                    data-bs-target="#weekCarouselCaptions" data-bs-slide="prev">
+                                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                <span class="visually-hidden">Previous</span>
+                            </button>
+                            <button class="carousel-control-next w-5 me-3" type="button"
+                                    data-bs-target="#weekCarouselCaptions" data-bs-slide="next">
+                                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                <span class="visually-hidden">Next</span>
+                            </button>
+                        </div>
+                    </div>
+                    </div>
+                    <div class="col-lg-6 mb-3">
+                        <div class="card card-carousel overflow-hidden h-100 p-0">
+                        <!-- 제목 -->
+                        <!-- 첫 제목은 첫 슬라이드로 설정하기 -->
+                        <div class="card-header pb-0 pt-3">
+                            <div class="col">
+                                <h6 id="month-title" class="text-capitalize">온도(일)</h6>
+                            </div>
+                        </div>
+                        <!--슬라이드 바-->
+                        <div id="monthCarouselCaptions" class="carousel slide h-100" data-bs-ride="carousel">
+                            <div class="carousel-inner border-radius-lg h-100">
+                                <div class="carousel-item h-100 active">
+                                    <canvas id="month-temperature" class="chart-canvas" height="300"></canvas>
+                                </div>
+                                <div class="carousel-item h-100 ">
+                                    <canvas id="month-humidity" class="chart-canvas" height="300"></canvas>
+                                </div>
+                                <div class="carousel-item h-100">
+                                    <canvas id="month-illumination" class="chart-canvas" height="300"></canvas>
+                                </div>
+                                <div class="carousel-item h-100">
+                                    <canvas id="month-co2" class="chart-canvas" height="300"></canvas>
+                                </div>
+                            </div>
+                            <!--버튼-->
+                            <button class="carousel-control-prev w-5 me-3" type="button"
+                                    data-bs-target="#monthCarouselCaptions" data-bs-slide="prev">
+                                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                <span class="visually-hidden">Previous</span>
+                            </button>
+                            <button class="carousel-control-next w-5 me-3" type="button"
+                                    data-bs-target="#monthCarouselCaptions" data-bs-slide="next">
+                                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                <span class="visually-hidden">Next</span>
+                            </button>
+                        </div>
+                    </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-2">
+                <div class="justify-content-center">
+                    <div class="card GaugeMeter" id="temperature"
+                         data-min="-20"
+                         data-total="40"
+                         data-append="°C"
+                         data-width="10"
+                         data-size="186"
+                         data-label="온도"
+                         data-color="#5e72e4"
+                         data-animationstep="0"
+                         data-text_size="0.15">
+                    </div>
+                    <div class="card GaugeMeter" id="humidity"
+                         data-min="0"
+                         data-total="100"
+                         data-append="%"
+                         data-width="10"
+                         data-size="186"
+                         data-label="습도"
+                         data-color="#5e72e4"
+                         data-animationstep="0"
+                         data-text_size="0.15">
+                    </div>
+                    <div class="card GaugeMeter" id="co2"
+                         data-min="0"
+                         data-total="4000"
+                         data-append="ppm"
+                         data-width="10"
+                         data-size="186"
+                         data-label="Co2"
+                         data-color="#5e72e4"
+                         data-animationstep="0"
+                         data-text_size="0.15">
+                    </div>
+                    <div class="card GaugeMeter" id="voc"
+                         data-min="0"
+                         data-total="1000"
+                         data-append="㎍/㎥"
+                         data-width="10"
+                         data-size="186"
+                         data-label="voc"
+                         data-color="#5e72e4"
+                         data-animationstep="0"
+                         data-text_size="0.12">
+                    </div>
+                    <div class="card GaugeMeter" id="illumination"
+                         data-min="0"
+                         data-total="200"
+                         data-append="lx"
+                         data-width="10"
+                         data-size="187"
+                         data-label="조도"
+                         data-color="#5e72e4"
+                         data-animationstep="0"
+                         data-text_size="0.15">
+                    </div>
+                </div>
             </div>
         </div>
-        <div class="col-xl-2 col-sm-6 mb-xl-0 mb-4">
-            <div class="card GaugeMeter" id="humidity"
-                 data-min="0"
-                 data-total="100"
-                 data-append="%"
-                 data-width="10"
-                 data-size="250"
-                 data-label="습도"
-                 data-color="#5e72e4"
-                 data-animationstep="0"
-                 data-text_size="0.15">
-            </div>
-        </div>
-        <div class="col-xl-2 col-sm-6 mb-xl-0 mb-4">
-            <div class="card GaugeMeter" id="co2"
-                 data-min="0"
-                 data-total="4000"
-                 data-append="ppm"
-                 data-width="10"
-                 data-size="250"
-                 data-label="Co2"
-                 data-color="#5e72e4"
-                 data-animationstep="0"
-                 data-text_size="0.15">
-            </div>
-        </div>
-        <div class="col-xl-2 col-sm-6 mb-xl-0 mb-4">
-            <div class="card GaugeMeter" id="voc"
-                 data-min="0"
-                 data-total="1000"
-                 data-append="㎍/㎥"
-                 data-width="10"
-                 data-size="250"
-                 data-label="voc"
-                 data-color="#5e72e4"
-                 data-animationstep="0"
-                 data-text_size="0.12">
-            </div>
-        </div>
-        <div class="col-xl-2 col-sm-6">
-            <div class="card GaugeMeter" id="illumination"
-                 data-min="0"
-                 data-total="200"
-                 data-append="lx"
-                 data-width="10"
-                 data-size="250"
-                 data-label="조도"
-                 data-color="#5e72e4"
-                 data-animationstep="0"
-                 data-text_size="0.15">
-            </div>
-        </div>
-    </div>
     </div>
 </main>
 <div class="fixed-plugin">
@@ -395,43 +359,35 @@
 <script src="/js/mainPage/logic/chart/commonInit.js"></script>
 
 <!-- gauge 관련 js -->
-<script src="/js/mainPage/logic/gauge/temperatureGauge.js"></script>
-<script src="/js/mainPage/logic/gauge/humidityGauge.js"></script>
-<script src="/js/mainPage/logic/gauge/co2Gauge.js"></script>
-<script src="/js/mainPage/logic/gauge/illuminationGauge.js"></script>
-<script src="/js/mainPage/logic/gauge/vocGauge.js"></script>
+<script src="/js/mainPage/gauge.js"></script>
 
 <!-- 재실 인원 js -->
 <script src="/js/mainPage/peopleCount.js"></script>
+
+<!-- 날씨 common api js-->
+<script src="/js/mainPage/weather.js"></script>
 
 <script th:inline="javascript">
     $(document).ready(function () {
         // 첫번째로 로딩될 때
         // 차트
         changeSlideTitle();
-        initializeHumidityChart();
-        initializeTempChart();
-        initializeCO2Chart();
-        initializeIlluminationChart();
+        initializeDayChart();
+        initializeWeekChart();
+        initializeMonthChart();
 
         //재실 인원
         updatePeopleCount();
 
+        //날씨
+        weather();
+
         //게이지
-        updateTemperature();
-        updateHumidity();
-        updateCo2();
-        updateVoc();
-        updateIllumination();
+        gaugeUpdate();
 
         // 첫번째 로딩 후 5초마다
         setInterval(() => {
-            updateHumidity();
-            updatePeopleCount();
-            updateTemperature();
-            updateCo2();
-            updateVoc();
-            updateIllumination();
+            gaugeUpdate();
         }, 5000);
     });
 </script>
