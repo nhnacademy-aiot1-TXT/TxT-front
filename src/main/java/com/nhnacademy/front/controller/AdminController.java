@@ -1,6 +1,5 @@
 package com.nhnacademy.front.controller;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.nhnacademy.front.adaptor.SensorAdapter;
 import com.nhnacademy.front.adaptor.UserAdapter;
 import com.nhnacademy.front.dto.*;
@@ -17,7 +16,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -38,74 +36,53 @@ public class AdminController {
 
     @GetMapping("/dtsensor")
     public String profile(HttpServletRequest request, Model model) {
-        String accessToken = Arrays.stream(request.getCookies())
-                .filter(cookie -> "accessToken".equals(cookie.getName()))
-                .findFirst()
-                .orElse(null)
-                .getValue();
-
+        String accessToken = AccessTokenUtil.findAccessTokenInRequest(request);
         UserDataResponse user = userAdapter.getUserData(accessToken);
+
         model.addAttribute("user", user);
         model.addAttribute("accessToken", AccessTokenUtil.findAccessTokenInRequest(request));
 
         return "detailedSensor";
     }
 
-
     @GetMapping("/manage")
     public String manage(HttpServletRequest request, Model model,
-                         @RequestParam(value = "statusId", defaultValue = "4") int statusId,
+                         @RequestParam(value = "statSet", defaultValue = "userList") String statSet,
                          @RequestParam(value = "page", defaultValue = "0") int page,
-                         @RequestParam(value = "size", defaultValue = "5") int size) throws JsonProcessingException {
-
+                         @RequestParam(value = "size", defaultValue = "5") int size) {
         Page<UserDataResponse> users;
+        String accessToken = AccessTokenUtil.findAccessTokenInRequest(request);
+        System.out.println(statSet);
 
-        String accessToken = Arrays.stream(request.getCookies())
-                .filter(cookie -> "accessToken".equals(cookie.getName()))
-                .findFirst()
-                .orElse(null)
-                .getValue();
-
-
-        if (statusId == 99) {
-            users = userAdapter.findAllUsers(accessToken, page, size);
-        } else if (statusId == 100) {
-            users = userAdapter.findSortedUserByRole(accessToken, page, size, 1);
-        } else {
-            users = userAdapter.findSortedUsers(accessToken, statusId, page, size);
+        switch (statSet) {
+            case "pendingUser":
+                users = userAdapter.findSortedUsers(accessToken, 4, page, size);
+                model.addAttribute("actionUrl", "/admin/manage/permit");
+                break;
+            case "deactivateUser":
+                users = userAdapter.findSortedUsers(accessToken, 3, page, size);
+                model.addAttribute("actionUrl", "/admin/manage/permit");
+                break;
+            case "adminList":
+                users = userAdapter.findSortedUserByRole(accessToken, page, size, 1);
+                break;
+            default:
+                users = userAdapter.findAllUsers(accessToken, page, size);
+                model.addAttribute("actionUrl", "/admin/manage/promotion");
+                break;
         }
 
-
-        System.out.println(users);
-
-//        List<UserDataResponse> usersList = users.getContent();
-//
-//
-//        ObjectMapper mapper = new ObjectMapper();
-//        String usersJson = mapper.writeValueAsString(usersList);
-
-
         model.addAttribute("users", users);
-        model.addAttribute("statSet", statusId);
-
-
-//        model.addAttribute("usersJson", usersJson);
-//        model.addAttribute("currentPage", page);
-//        model.addAttribute("totalPages", users.getTotalPages());
+        model.addAttribute("statSet", statSet);
 
         return "manage";
     }
 
-
     //유저등록
-
     @PostMapping("/manage/permit")
-    public String permitUser(HttpServletRequest request, Model model) {
-
+    public String permitUser(HttpServletRequest request) {
         List<PermitUserRequest> permitUserRequests = new ArrayList<>();
-
         String accessToken = AccessTokenUtil.findAccessTokenInRequest(request);
-
         String[] selectedUserIds = request.getParameterValues("userIds");
 
         if (selectedUserIds != null) {
@@ -121,56 +98,51 @@ public class AdminController {
         return "redirect:/admin/manage";
     }
 
-    // 상세센서 정보
+    @PostMapping("/manage/promotion")
+    public String promotionUser(HttpServletRequest request) {
+        List<PermitUserRequest> permitUserRequests = new ArrayList<>();
+        String accessToken = AccessTokenUtil.findAccessTokenInRequest(request);
+        String[] selectedUserIds = request.getParameterValues("userIds");
 
+        if (selectedUserIds != null) {
+            for (String userId : selectedUserIds) {
+                System.out.println("Selected User ID: " + userId);
+                PermitUserRequest permitUserRequest = new PermitUserRequest();
+                permitUserRequest.setId(userId);
+                permitUserRequests.add(permitUserRequest);
+            }
+            userAdapter.promotionUser(accessToken, permitUserRequests);
+        }
+
+        return "redirect:/admin/manage";
+    }
+
+    // 상세센서 정보
     @GetMapping("temperature/week")
     public String weeklyTemperature(HttpServletRequest request, Model model) {
-
-        String accessToken = Arrays.stream(request.getCookies())
-                .filter(cookie -> "accessToken".equals(cookie.getName()))
-                .findFirst()
-                .orElse(null)
-                .getValue();
-
+        String accessToken = AccessTokenUtil.findAccessTokenInRequest(request);
 
         List<TemperatureResponse> tempWeek = sensorAdapter.getWeeklyTemperatures(accessToken);
         model.addAttribute("temperatureList", tempWeek);
-
 
         return "sensor-log/log-temperature";
     }
 
     @GetMapping("illumination/week")
     public String weeklyIllumination(HttpServletRequest request, Model model) {
-
-        String accessToken = Arrays.stream(request.getCookies())
-                .filter(cookie -> "accessToken".equals(cookie.getName()))
-                .findFirst()
-                .orElse(null)
-                .getValue();
-
+        String accessToken = AccessTokenUtil.findAccessTokenInRequest(request);
 
         List<IlluminationResponse> illuminationWeek = sensorAdapter.getWeeklyIllumination(accessToken);
         model.addAttribute("illuminationWeek", illuminationWeek);
 
-
         return "sensor-log/log-birghtness";
     }
 
-
     @GetMapping("humidity/week")
     public String weeklyHumidity(HttpServletRequest request, Model model) {
-
-
-        String accessToken = Arrays.stream(request.getCookies())
-                .filter(cookie -> "accessToken".equals(cookie.getName()))
-                .findFirst()
-                .orElse(null)
-                .getValue();
-
+        String accessToken = AccessTokenUtil.findAccessTokenInRequest(request);
 
         List<HumidityResponse> humidityDaily = sensorAdapter.getWeeklyHumidity(accessToken);
-
         model.addAttribute("humidityList", humidityDaily);
 
         return "sensor-log/log-humidity";
@@ -178,22 +150,11 @@ public class AdminController {
 
     @GetMapping("co2/week")
     public String weeklyCo2(HttpServletRequest request, Model model) {
-
-
-        String accessToken = Arrays.stream(request.getCookies())
-                .filter(cookie -> "accessToken".equals(cookie.getName()))
-                .findFirst()
-                .orElse(null)
-                .getValue();
-
+        String accessToken = AccessTokenUtil.findAccessTokenInRequest(request);
 
         List<Co2Response> Co2Week = sensorAdapter.getWeeklyCo2(accessToken);
-
         model.addAttribute("co2List", Co2Week);
-
 
         return "sensor-log/log-co2";
     }
-
-
 }

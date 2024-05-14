@@ -65,7 +65,16 @@ public interface UserAdapter {
     @PutMapping("/api/user/update")
     void updateUser(UserUpdateRequest userUpdateRequest, @RequestHeader("Authorization") String accessToken);
 
+    @PostMapping("/api/user/admin/permit")
+    void permitUser(@RequestHeader("Authorization") String accessToken,
+                    @RequestBody List<PermitUserRequest> permitUserRequestList);
 
+    @PostMapping("/api/user/admin/promotion")
+    void promotionUser(@RequestHeader("Authorization") String accessToken,
+                    @RequestBody List<PermitUserRequest> permitUserRequestList);
+
+    @PostMapping("/api/user/deactivate")
+    void deactivate(@RequestHeader("Authorization") String accessToken);
 
     @GetMapping("/api/user/admin/userList/sort/status/{statusId} ")
     RestPage<UserDataResponse> findSortedUsers(@RequestHeader("Authorization") String accessToken,
@@ -73,29 +82,16 @@ public interface UserAdapter {
                                                @RequestParam("page") int page,
                                                @RequestParam("size") int size);
 
-
     @GetMapping("/api/user/admin/userList")
     RestPage<UserDataResponse> findAllUsers(@RequestHeader("Authorization") String accessToken,
                                             @RequestParam("page") int page,
-                                            @RequestParam("size") int size
-                                            );
+                                            @RequestParam("size") int size);
 
     @GetMapping("/api/user/admin/userList/sort/role/{roleId}")
     RestPage<UserDataResponse> findSortedUserByRole(@RequestHeader("Authorization") String accessToken,
                                                     @RequestParam("page") int page,
                                                     @RequestParam("size") int size,
-                                                    @PathVariable int roleId
-                                                    );
+                                                    @PathVariable int roleId);
 
-
-
-
-    @PostMapping("/api/user/admin/permit")
-    void permitUser(@RequestHeader("Authorization") String accessToken,
-                    @RequestBody List<PermitUserRequest> permitUserRequestList);
-
-
-    @PostMapping("/api/user/deactivate")
-    void deactivate(@RequestHeader("Authorization") String accessToken);
 
 }
