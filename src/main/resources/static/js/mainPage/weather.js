@@ -1,5 +1,5 @@
 async function weatherCall() {
-    const url = "http://localhost:8000/api/common/weather";
+    const url = "https://contxt.co.kr/api/common/weather";
 
     const option = {
         method : "GET",
