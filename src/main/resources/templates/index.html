@@ -33,7 +33,6 @@
     <link id="pagestyle" href="/css/argon-dashboard.css?v=2.0.4" rel="stylesheet"/>
     <!-- 모델에 저장한 accessToken 가져오기 -->
     <script th:inline="javascript">const accessToken = [[${accessTokenTemp}]];</script>
-
 </head>
 
 <body class="g-sidenav-show bg-gray-100">
@@ -45,9 +44,14 @@
             <div class="col-10">
                 <div class="dropdown">
                     <button class="btn bg-gradient-primary dropdown-toggle" type="button" id="placeDropdownButton"
-                            data-bs-toggle="dropdown" aria-expanded="false">
+                            data-bs-toggle="dropdown" aria-expanded="false" th:text="${currentPlace}">
                     </button>
                     <ul id="placeDropdownMenuButton" class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                        <li th:each="place : ${placeList}">
+                            <a class="dropdown-item" th:text="${place.getPlaceName()}"
+                               th:href="@{/(currentPlace = ${place.getPlaceName()})}">
+                            </a>
+                        </li>
                     </ul>
                 </div>
             </div>
@@ -58,7 +62,7 @@
             <div class="col-10">
                 <div class="row mb-4" style="height: 500px;">
                     <div class="col-lg-4">
-                        <div th:if="${place != 'class_b'}" class="card mb-2" style="height: 130px">
+                        <div th:if="${currentPlace != 'class_b'}" class="card mb-2" style="height: 130px">
                             <div class="card-body p-3 mb-xl-4 mt-xl-4">
                                 <div class="row">
                                     <div class="col-12 text-center">
@@ -71,7 +75,7 @@
                             </div>
                         </div>
                         <div class="card p-3 d-flex align-items-center justify-content-center"
-                             th:style="${place != 'class_b' ? 'height: 370px;' : 'height: 500px;'}">
+                             th:style="${currentPlace != 'class_b' ? 'height: 370px;' : 'height: 500px;'}">
                             <div class="mb-3">
                                 <img id="weatherImage">
                             </div>
@@ -380,32 +384,14 @@
 <script src="/js/mainPage/weather.js"></script>
 
 <script th:inline="javascript">
-    const domain = "https://contxt.co.kr";
-    const place = [[${place}]];
-    const placeList = [[${placeList}]];
+    const domain = "http://localhost:8000";
+    const currentPlace = [[${currentPlace}]];
 
     // 첫번째로 로딩될 때
     $(document).ready(function () {
-        // api/common/place 로 드롭박스 메뉴에 장소 채워넣기
-        placeList.forEach((e) => {
-            let placeMenuButton = document.getElementById("placeDropdownMenuButton");
-
-            let li = document.createElement("LI");
-            let a = document.createElement("A");
-            a.setAttribute("class", "dropdown-item");
-            a.setAttribute("href", "/?place=" + e.placeName);
-            a.innerText = e.placeName;
-
-            li.appendChild(a);
-            placeMenuButton.appendChild(li);
-        });
-
-        // 지금 선택한 드롭박스 이름 바꾸기
-        document.getElementById("placeDropdownButton").innerText = place;
-
         // 차트
         changeSlideTitle();
-        applyChart(domain, place);
+        applyChart(domain, currentPlace);
 
         //재실 인원
         updatePeopleCount(domain);
@@ -414,13 +400,13 @@
         weather(domain);
 
         //게이지
-        gaugeUpdate(domain, place);
+        gaugeUpdate(domain, currentPlace);
 
         // 첫번째 로딩 후 5초마다
         // class_b 면 재실 안받음
         setInterval(() => {
-            gaugeUpdate(domain, place);
-            if ('class_b' !== place) {
+            gaugeUpdate(domain, currentPlace);
+            if ('class_b' !== currentPlace) {
                 updatePeopleCount(domain);
             }
         }, 5000);

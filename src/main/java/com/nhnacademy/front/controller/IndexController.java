@@ -19,11 +19,11 @@ public class IndexController {
 
     @GetMapping("/")
     public String index(HttpServletRequest request,
-                        @RequestParam(value = "place", defaultValue = "class_a") String place,
+                        @RequestParam(value = "currentPlace", defaultValue = "class_a") String currentPlace,
                         Model model) {
 
         model.addAttribute("accessTokenTemp", AccessTokenUtil.findAccessTokenInRequest(request));
-        model.addAttribute("place", place);
+        model.addAttribute("currentPlace", currentPlace);
         model.addAttribute("placeList", deviceSettingAdapter.getPlaceList(AccessTokenUtil.findAccessTokenInRequest(request)));
 
         return "index";
