@@ -1,5 +1,5 @@
-async function weatherCall() {
-    const url = "https://contxt.co.kr/api/common/weather";
+async function weatherCall(domain) {
+    const url = domain + "/api/common/weather";
 
     const option = {
         method : "GET",
@@ -11,8 +11,8 @@ async function weatherCall() {
     return await response.json();
 }
 
-async function weather() {
-    const data = await weatherCall();
+async function weather(domain) {
+    const data = await weatherCall(domain);
     const weatherSky = document.getElementById('weatherSky');
     const weatherTemperature = document.getElementById('weatherTemperature');
     const weatherImage = document.getElementById('weatherImage');

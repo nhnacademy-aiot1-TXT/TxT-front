@@ -38,16 +38,26 @@
 
 <body class="g-sidenav-show bg-gray-100">
 <aside th:replace="fragments/sidebar"></aside>
-
 <main class="main-content position-relative border-radius-lg ">
     <div th:replace="fragments/nav"></div>
-
     <div class="container-fluid h-100 py-4 justify-content-center">
+        <div class="row justify-content-center">
+            <div class="col-10">
+                <div class="dropdown">
+                    <button class="btn bg-gradient-primary dropdown-toggle" type="button" id="placeDropdownButton" data-bs-toggle="dropdown" aria-expanded="false">
+                    </button>
+                    <ul id="placeDropdownMenuButton" class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                    </ul>
+                </div>
+            </div>
+            <div class="col-1"></div>
+        </div>
+
         <div class="row justify-content-center">
             <div class="col-10">
                 <div class="row mb-4" style="height: 500px;">
                     <div class="col-lg-4">
-                        <div class="card mb-2" style="height: 130px" >
+                        <div th:if="${place != 'class_b'}" class="card mb-2" style="height: 130px" >
                             <div class="card-body p-3 mb-xl-4 mt-xl-4">
                                 <div class="row">
                                     <div class="col-12 text-center">
@@ -58,7 +68,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="card p-3 d-flex align-items-center justify-content-center" style= "height: 370px">
+                        <div class="card p-3 d-flex align-items-center justify-content-center" th:style="${place != 'class_b' ? 'height: 370px;' : 'height: 500px;'}">
                             <div class="mb-3">
                                 <img id="weatherImage">
                             </div>
@@ -154,7 +164,7 @@
                         <!-- 첫 제목은 첫 슬라이드로 설정하기 -->
                         <div class="card-header pb-0 pt-3">
                             <div class="col">
-                                <h6 id="month-title" class="text-capitalize">온도(일)</h6>
+                                <h6 id="month-title" class="text-capitalize">온도(월)</h6>
                             </div>
                         </div>
                         <!--슬라이드 바-->
@@ -353,10 +363,9 @@
 <script src="/js/plugins/GaugeMeter.js"></script>
 
 <!-- chart 관련 js -->
-<script src="/js/mainPage/logic/chart/initializeChart.js"></script>
-<script src="/js/mainPage/logic/chart/slideChartName.js"></script>
-<script src="/js/mainPage/logic/chart/drawChart.js"></script>
-<script src="/js/mainPage/logic/chart/commonInit.js"></script>
+<script src="/js/mainPage/chartName.js"></script>
+<script src="/js/mainPage/chatDraw.js"></script>
+<script src="/js/mainPage/chartInit.js"></script>
 
 <!-- gauge 관련 js -->
 <script src="/js/mainPage/gauge.js"></script>
@@ -368,26 +377,44 @@
 <script src="/js/mainPage/weather.js"></script>
 
 <script th:inline="javascript">
+    const domain = "https://contxt.co.kr";
+
+    // 첫번째로 로딩될 때
     $(document).ready(function () {
-        // 첫번째로 로딩될 때
+        // api/common/place 로 드롭박스 메뉴에 장소 채워넣기
+        // <li><a className="dropdown-item" th:href="@{/(place = 'class_a')}">class_a</a></li>
+        [[${placeList}]].forEach((e) => {
+            let placeMenuButton = document.getElementById("placeDropdownMenuButton");
+
+            let li = document.createElement("LI");
+            let a = document.createElement("A");
+            a.setAttribute("class", "dropdown-item");
+            a.setAttribute("href", "/?place=" + e.placeName);
+            a.innerText = e.placeName;
+
+            li.appendChild(a);
+            placeMenuButton.appendChild(li);
+        });
+
+        // 지금 선택한 드롭박스 이름 바꾸기
+        document.getElementById("placeDropdownButton").innerText = [[${place}]];
+
         // 차트
         changeSlideTitle();
-        initializeDayChart();
-        initializeWeekChart();
-        initializeMonthChart();
+        applyChart(domain, [[${place}]]);
 
         //재실 인원
-        updatePeopleCount();
+        updatePeopleCount(domain);
 
         //날씨
-        weather();
+        weather(domain);
 
         //게이지
-        gaugeUpdate();
+        gaugeUpdate(domain, [[${place}]]);
 
         // 첫번째 로딩 후 5초마다
         setInterval(() => {
-            gaugeUpdate();
+            gaugeUpdate(domain, [[${place}]]);
         }, 5000);
     });
 </script>

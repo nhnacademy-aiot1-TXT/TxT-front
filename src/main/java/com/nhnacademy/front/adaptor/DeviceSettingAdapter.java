@@ -28,4 +28,7 @@ public interface DeviceSettingAdapter {
 
     @PutMapping("/time-interval/{timeIntervalId}")
     TimeIntervalResponse updateTimeInterval(@RequestHeader("Authorization") String accessToken, @PathVariable Long timeIntervalId, @RequestBody TimeIntervalRequest timeIntervalRequest);
+
+    @GetMapping("/place")
+    List<PlaceResponse> getPlaceList(@RequestHeader("Authorization") String accessToken);
 }

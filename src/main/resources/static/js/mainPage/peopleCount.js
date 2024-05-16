@@ -1,5 +1,5 @@
-async function peopleCountCall() {
-    const url = "https://contxt.co.kr/api/sensor/people-count";
+async function peopleCountCall(domain) {
+    const url = domain + "/api/sensor/people-count";
 
     const option = {
         method : "GET",
@@ -11,8 +11,8 @@ async function peopleCountCall() {
     return await response.json();
 }
 
-async function updatePeopleCount() {
-    const data = await peopleCountCall();
+async function updatePeopleCount(domain) {
+    const data = await peopleCountCall(domain);
     const countElement = document.getElementById('currentCount');
     countElement.textContent = data.count;
 }

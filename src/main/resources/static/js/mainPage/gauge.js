@@ -1,5 +1,5 @@
-async function gaugeCountCall(sensorName) {
-    const url = 'https://contxt.co.kr/api/sensor/' + sensorName;
+async function gaugeCountCall(domain, sensorName, place) {
+    const url = domain + '/api/sensor/' + sensorName + '/?place=' + place;
 
     const option = {
         method : "GET",
@@ -15,11 +15,10 @@ async function gaugeCountCall(sensorName) {
     $(gaugeElement).data("used", Math.round(value)).data("text", value);
     $(gaugeElement).gaugeMeter();
 }
-
-function gaugeUpdate() {
-    gaugeCountCall('co2');
-    gaugeCountCall('humidity');
-    gaugeCountCall('illumination');
-    gaugeCountCall('temperature');
-    gaugeCountCall('voc');
+function gaugeUpdate(domain, place) {
+    gaugeCountCall(domain,'co2', place);
+    gaugeCountCall(domain,'humidity', place);
+    gaugeCountCall(domain,'illumination', place);
+    gaugeCountCall(domain,'temperature', place);
+    gaugeCountCall(domain,'voc', place);
 }
