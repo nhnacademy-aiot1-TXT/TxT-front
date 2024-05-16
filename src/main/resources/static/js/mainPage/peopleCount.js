@@ -2,12 +2,12 @@ async function peopleCountCall(domain) {
     const url = domain + "/api/sensor/people-count";
 
     const option = {
-        method : "GET",
-        headers : {
-            Authorization : accessToken
+        method: "GET",
+        headers: {
+            Authorization: accessToken
         }
     }
-    const response= await fetch(url, option);
+    const response = await fetch(url, option);
     return await response.json();
 }
 

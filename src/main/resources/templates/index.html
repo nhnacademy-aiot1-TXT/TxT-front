@@ -44,7 +44,8 @@
         <div class="row justify-content-center">
             <div class="col-10">
                 <div class="dropdown">
-                    <button class="btn bg-gradient-primary dropdown-toggle" type="button" id="placeDropdownButton" data-bs-toggle="dropdown" aria-expanded="false">
+                    <button class="btn bg-gradient-primary dropdown-toggle" type="button" id="placeDropdownButton"
+                            data-bs-toggle="dropdown" aria-expanded="false">
                     </button>
                     <ul id="placeDropdownMenuButton" class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                     </ul>
@@ -57,25 +58,27 @@
             <div class="col-10">
                 <div class="row mb-4" style="height: 500px;">
                     <div class="col-lg-4">
-                        <div th:if="${place != 'class_b'}" class="card mb-2" style="height: 130px" >
+                        <div th:if="${place != 'class_b'}" class="card mb-2" style="height: 130px">
                             <div class="card-body p-3 mb-xl-4 mt-xl-4">
                                 <div class="row">
                                     <div class="col-12 text-center">
                                         <img src="/img/user.png" width="60px" height="60px" class="align-top me-lg-3">
-                                        <span id="currentCount" class="text-primary display-5 font-weight-bolder"></span>
+                                        <span id="currentCount"
+                                              class="text-primary display-5 font-weight-bolder"></span>
                                         <span class="text-dark fs-6 font-weight-bolder">명</span>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <div class="card p-3 d-flex align-items-center justify-content-center" th:style="${place != 'class_b' ? 'height: 370px;' : 'height: 500px;'}">
+                        <div class="card p-3 d-flex align-items-center justify-content-center"
+                             th:style="${place != 'class_b' ? 'height: 370px;' : 'height: 500px;'}">
                             <div class="mb-3">
                                 <img id="weatherImage">
                             </div>
                             <div class="text-bold text-4xl text-dark">
                                 <span id="weatherTemperature" class="text-6xl"></span>°C
                             </div>
-                            <div id = "weatherSky" class="text-2xl text-dark"></div>
+                            <div id="weatherSky" class="text-2xl text-dark"></div>
                         </div>
                     </div>
                     <div class="col-lg-8">
@@ -121,81 +124,81 @@
                 <div class="row mb-3 height-500">
                     <div class="col-lg-6 mb-3">
                         <div class="card card-carousel overflow-hidden h-100 p-0">
-                        <!-- 제목 -->
-                        <!-- 첫 제목은 첫 슬라이드로 설정하기 -->
-                        <div class="card-header pb-0 pt-3">
-                            <div class="col">
-                                <h6 id="week-title" class="text-capitalize">온도(주)</h6>
-                            </div>
-                        </div>
-                        <!--슬라이드 바-->
-                        <div id="weekCarouselCaptions" class="carousel slide h-100" data-bs-ride="carousel">
-                            <div class="carousel-inner border-radius-lg h-100">
-                                <div class="carousel-item h-100 active">
-                                    <canvas id="week-temperature" class="chart-canvas" height="300"></canvas>
-                                </div>
-                                <div class="carousel-item h-100 ">
-                                    <canvas id="week-humidity" class="chart-canvas" height="300"></canvas>
-                                </div>
-                                <div class="carousel-item h-100">
-                                    <canvas id="week-illumination" class="chart-canvas" height="300"></canvas>
-                                </div>
-                                <div class="carousel-item h-100">
-                                    <canvas id="week-co2" class="chart-canvas" height="300"></canvas>
+                            <!-- 제목 -->
+                            <!-- 첫 제목은 첫 슬라이드로 설정하기 -->
+                            <div class="card-header pb-0 pt-3">
+                                <div class="col">
+                                    <h6 id="week-title" class="text-capitalize">온도(주)</h6>
                                 </div>
                             </div>
-                            <!--버튼-->
-                            <button class="carousel-control-prev w-5 me-3" type="button"
-                                    data-bs-target="#weekCarouselCaptions" data-bs-slide="prev">
-                                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                                <span class="visually-hidden">Previous</span>
-                            </button>
-                            <button class="carousel-control-next w-5 me-3" type="button"
-                                    data-bs-target="#weekCarouselCaptions" data-bs-slide="next">
-                                <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                                <span class="visually-hidden">Next</span>
-                            </button>
+                            <!--슬라이드 바-->
+                            <div id="weekCarouselCaptions" class="carousel slide h-100" data-bs-ride="carousel">
+                                <div class="carousel-inner border-radius-lg h-100">
+                                    <div class="carousel-item h-100 active">
+                                        <canvas id="week-temperature" class="chart-canvas" height="300"></canvas>
+                                    </div>
+                                    <div class="carousel-item h-100 ">
+                                        <canvas id="week-humidity" class="chart-canvas" height="300"></canvas>
+                                    </div>
+                                    <div class="carousel-item h-100">
+                                        <canvas id="week-illumination" class="chart-canvas" height="300"></canvas>
+                                    </div>
+                                    <div class="carousel-item h-100">
+                                        <canvas id="week-co2" class="chart-canvas" height="300"></canvas>
+                                    </div>
+                                </div>
+                                <!--버튼-->
+                                <button class="carousel-control-prev w-5 me-3" type="button"
+                                        data-bs-target="#weekCarouselCaptions" data-bs-slide="prev">
+                                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                    <span class="visually-hidden">Previous</span>
+                                </button>
+                                <button class="carousel-control-next w-5 me-3" type="button"
+                                        data-bs-target="#weekCarouselCaptions" data-bs-slide="next">
+                                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                    <span class="visually-hidden">Next</span>
+                                </button>
+                            </div>
                         </div>
-                    </div>
                     </div>
                     <div class="col-lg-6 mb-3">
                         <div class="card card-carousel overflow-hidden h-100 p-0">
-                        <!-- 제목 -->
-                        <!-- 첫 제목은 첫 슬라이드로 설정하기 -->
-                        <div class="card-header pb-0 pt-3">
-                            <div class="col">
-                                <h6 id="month-title" class="text-capitalize">온도(월)</h6>
-                            </div>
-                        </div>
-                        <!--슬라이드 바-->
-                        <div id="monthCarouselCaptions" class="carousel slide h-100" data-bs-ride="carousel">
-                            <div class="carousel-inner border-radius-lg h-100">
-                                <div class="carousel-item h-100 active">
-                                    <canvas id="month-temperature" class="chart-canvas" height="300"></canvas>
-                                </div>
-                                <div class="carousel-item h-100 ">
-                                    <canvas id="month-humidity" class="chart-canvas" height="300"></canvas>
-                                </div>
-                                <div class="carousel-item h-100">
-                                    <canvas id="month-illumination" class="chart-canvas" height="300"></canvas>
-                                </div>
-                                <div class="carousel-item h-100">
-                                    <canvas id="month-co2" class="chart-canvas" height="300"></canvas>
+                            <!-- 제목 -->
+                            <!-- 첫 제목은 첫 슬라이드로 설정하기 -->
+                            <div class="card-header pb-0 pt-3">
+                                <div class="col">
+                                    <h6 id="month-title" class="text-capitalize">온도(월)</h6>
                                 </div>
                             </div>
-                            <!--버튼-->
-                            <button class="carousel-control-prev w-5 me-3" type="button"
-                                    data-bs-target="#monthCarouselCaptions" data-bs-slide="prev">
-                                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                                <span class="visually-hidden">Previous</span>
-                            </button>
-                            <button class="carousel-control-next w-5 me-3" type="button"
-                                    data-bs-target="#monthCarouselCaptions" data-bs-slide="next">
-                                <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                                <span class="visually-hidden">Next</span>
-                            </button>
+                            <!--슬라이드 바-->
+                            <div id="monthCarouselCaptions" class="carousel slide h-100" data-bs-ride="carousel">
+                                <div class="carousel-inner border-radius-lg h-100">
+                                    <div class="carousel-item h-100 active">
+                                        <canvas id="month-temperature" class="chart-canvas" height="300"></canvas>
+                                    </div>
+                                    <div class="carousel-item h-100 ">
+                                        <canvas id="month-humidity" class="chart-canvas" height="300"></canvas>
+                                    </div>
+                                    <div class="carousel-item h-100">
+                                        <canvas id="month-illumination" class="chart-canvas" height="300"></canvas>
+                                    </div>
+                                    <div class="carousel-item h-100">
+                                        <canvas id="month-co2" class="chart-canvas" height="300"></canvas>
+                                    </div>
+                                </div>
+                                <!--버튼-->
+                                <button class="carousel-control-prev w-5 me-3" type="button"
+                                        data-bs-target="#monthCarouselCaptions" data-bs-slide="prev">
+                                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                    <span class="visually-hidden">Previous</span>
+                                </button>
+                                <button class="carousel-control-next w-5 me-3" type="button"
+                                        data-bs-target="#monthCarouselCaptions" data-bs-slide="next">
+                                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                    <span class="visually-hidden">Next</span>
+                                </button>
+                            </div>
                         </div>
-                    </div>
                     </div>
                 </div>
             </div>
@@ -377,9 +380,9 @@
 <script src="/js/mainPage/weather.js"></script>
 
 <script th:inline="javascript">
-    const domain = "https://contxt.co.kr";
+    const domain = "http://localhost:8000";
     const place = [[${place}]];
-    const placeList=  [[${placeList}]];
+    const placeList = [[${placeList}]];
 
     // 첫번째로 로딩될 때
     $(document).ready(function () {
@@ -417,8 +420,8 @@
         // class_b 면 재실 안받음
         setInterval(() => {
             gaugeUpdate(domain, place);
-            if('class_b' !== place){
-            updatePeopleCount(domain);
+            if ('class_b' !== place) {
+                updatePeopleCount(domain);
             }
         }, 5000);
     })

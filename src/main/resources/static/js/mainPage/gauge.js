@@ -2,8 +2,8 @@ async function gaugeCountCall(domain, sensorName, place) {
     const url = domain + '/api/sensor/' + sensorName + '/?place=' + place;
 
     const option = {
-        method : "GET",
-        headers : {
+        method: "GET",
+        headers: {
             Authorization: accessToken
         }
     }
@@ -15,10 +15,11 @@ async function gaugeCountCall(domain, sensorName, place) {
     $(gaugeElement).data("used", Math.round(value)).data("text", value);
     $(gaugeElement).gaugeMeter();
 }
+
 function gaugeUpdate(domain, place) {
-    gaugeCountCall(domain,'co2', place);
-    gaugeCountCall(domain,'humidity', place);
-    gaugeCountCall(domain,'illumination', place);
-    gaugeCountCall(domain,'temperature', place);
-    gaugeCountCall(domain,'voc', place);
+    gaugeCountCall(domain, 'co2', place);
+    gaugeCountCall(domain, 'humidity', place);
+    gaugeCountCall(domain, 'illumination', place);
+    gaugeCountCall(domain, 'temperature', place);
+    gaugeCountCall(domain, 'voc', place);
 }
