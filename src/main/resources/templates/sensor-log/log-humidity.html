@@ -3,8 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Humidity Log</title>
-    <link rel="apple-touch-icon" sizes="76x76" href="/img/apple-icon.png">
-    <link rel="icon" type="image/png" href="/img/favicon.png">
+    <link rel="icon" type="image/png" href="/img/TxT-Title-Image.jpeg">
     <!--     Fonts and icons     -->
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet"/>
     <!-- Nucleo Icons -->
@@ -12,8 +11,8 @@
     <link href="/css/nucleo-svg.css" rel="stylesheet"/>
     <!-- Font Awesome Icons -->
     <script src="https://kit.fontawesome.com/42d5adcbca.js" crossorigin="anonymous"></script>
-    <link href="/css/nucleo-svg.css" rel="stylesheet"/>
     <!-- CSS Files -->
+    <link rel="stylesheet" type="text/css" href="/css/userManage/style.css">
     <link id="pagestyle" href="/css/argon-dashboard.css?v=2.0.4" rel="stylesheet"/>
 </head>
 
@@ -28,41 +27,79 @@
 <div class="main-content position-relative max-height-vh-100 h-100">
     <div th:replace="fragments/nav"></div>
 
-    <div class="card shadow-lg mx-4 card-profile-bottom">
-        <div class="card-body p-3">
-            <h2>Humidity Log</h2>
-        </div>
+    <div class="card shadow-lg mx-4 mt-12">
+        <div th:replace="fragments/log-tab"></div>
     </div>
+
     <div class="container-fluid py-4">
+
         <div class="row">
-            <div class="col-md-12">
+            <!-- First Column -->
+            <div class="col-md-6">
                 <div class="card shadow-lg">
-                    <div class="card-header pb-0">
+                    <div class="card-header pb-0"></div>
+                    <div class="card-body scroll_x_bar p-3">
+                        <h3>Humidity Log</h3>
+                        <table class="table align-items-center mb-2 ">
+                            <thead class="text-white">
+                            <tr>
+                                <th class="text-uppercase text-secondary p font-weight-bolder opacity-7">날짜</th>
+                                <th class="text-uppercase text-secondary p font-weight-bolder opacity-7">최고 습도
+                                    (%)
+                                </th>
+                                <th class="text-uppercase text-secondary p font-weight-bolder opacity-7">최저 습도
+                                    (%)
+                                </th>
+                            </tr>
+                            </thead>
+                            <tbody class="mb-0 text-xm">
+                            <tr th:each="humidity : ${humidityList}">
+                                <td th:text="${#temporals.format(humidity.time, 'yyyy-MM-dd')}">날짜</td>
+                                <td th:text="${humidity.maxHumidity}">최고 습도</td>
+                                <td th:text="${humidity.minHumidity}">최저 습도</td>
+                            </tr>
+                            </tbody>
+                        </table>
                     </div>
-                    <div class="container-fluid py-4">
-                        <div class="row">
-                            <table class="table border-radius-lg bg-primary">
-                                <thead class="text-white">
-                                <tr>
-                                    <th>날짜</th>
-                                    <th>최고 습도 (%)</th>
-                                    <th>최저 습도 (%)</th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                <tr th:each="humidity : ${humidityList}">
-                                    <td th:text="${#temporals.format(humidity.time, 'yyyy-MM-dd')}">날짜</td>
-                                    <td th:text="${humidity.maxHumidity}">최고 습도</td>
-                                    <td th:text="${humidity.minHumidity}">최저 습도</td>
-                                </tr>
-                                </tbody>
-                            </table>
-                        </div>
+                </div>
+            </div>
+
+            <!-- Second Column -->
+            <div class="col-md-6">
+                <div class="card shadow-lg">
+                    <div class="card-header pb-0"></div>
+                    <div class="card-body scroll_x_bar p-3">
+                        <h3>Data Graph</h3>
+                        <table class="table border-radius-lg bg-primary">
+                            <thead class="text-white">
+                            <tr>
+                                <th>Parameter</th>
+                                <th>Value 1 (%)</th>
+                                <th>Value 2 (%)</th>
+                            </tr>
+                            </thead>
+                            <tbody class="text-white">
+                            <tr th:each="data : ${dataList}">
+                                <td th:text="${#temporals.format(data.time, 'yyyy-MM-dd')}">Date</td>
+                                <td th:text="${data.value1}">Value 1</td>
+                                <td th:text="${data.value2}">Value 2</td>
+                            </tr>
+                            </tbody>
+                        </table>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
+<!--   Core JS Files   -->
+<script src="/js/core/popper.min.js"></script>
+<script src="/js/core/bootstrap.min.js"></script>
+<script src="/js/plugins/perfect-scrollbar.min.js"></script>
+<script src="/js/plugins/smooth-scrollbar.min.js"></script>
+<!-- Github buttons -->
+<script async defer src="https://buttons.github.io/buttons.js"></script>
+<!-- Control Center for Soft Dashboard: parallax effects, scripts for the example pages etc -->
+<script src="/js/argon-dashboard.min.js?v=2.0.4"></script>
 </body>
 </html>

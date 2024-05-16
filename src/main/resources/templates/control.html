@@ -19,74 +19,77 @@
     <link href="/css/nucleo-svg.css" rel="stylesheet"/>
     <!-- CSS Files -->
     <link id="pagestyle" href="/css/argon-dashboard.css?v=2.0.4" rel="stylesheet"/>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
 </head>
 <body class="g-sidenav-show bg-gray-100">
-<div class="min-height-300 bg-primary position-absolute w-100"></div>
 <aside th:replace="fragments/sidebar"></aside>
-<main class="main-content position-relative border-radius-lg ">
+<div class="main-content card position-relative" id="main-body">
     <div th:replace="fragments/nav"></div>
-    <div class="mt-10 ms-4 me-4">
-        <div class="row">
-            <div class="col-md-6 mb-1">
-                <div class="card bg-cover "
-                     style="background-image: url('https://demos.creative-tim.com/argon-dashboard-pro-bs4/assets/img/img-3.jpg')">
-                    <div class="card-body z-index-2 py-5">
-                        <h2 class="text-white">Light</h2>
+    <div class="z-index-0" id="background-img" style="background-image: url('/img/campus.jpg'); padding-top: revert">
+        <div class="card-body z-index-1 position-relative">
+            <h1 class="text text-center z-index-1" id="text-title" style="color: black; font-size: 60px; margin-top: 170px; text-shadow: -1px 1px whitesmoke, 0px 2px whitesmoke, 2px 0px whitesmoke, 1px -1px whitesmoke;">ClassA</h1>
+            <div class="row" style="margin-top: 250px; margin-left: 3%; margin-right: 3%; padding-bottom: 80px;">
+                <div class="card bg-cover min-height-150 col-2 z-index-2" id="card-bulb" style="background-color: rgba(248,248,255,0.8); min-width: 100px; margin-right: 4%; margin-left: 4%; margin-top: 3%;">
+                    <div class="card-body z-index-2" style="margin-top: 10px;">
+                            <span class="material-symbols-outlined" style="font-size:70px; color:midnightblue;">
+                                lightbulb
+                            </span>
+                        <h2 class="text" style="color: royalblue; font-size: 30px;">Light</h2>
                         <div class="form-check form-switch">
                             <input class="form-check-input light" type="checkbox" id="light"
                                    th:checked="${light}" th:disabled="${mode}">
-                            <label class="form-check-label" for="light">Checked switch</label>
+                            <label class="form-check-label" for="light">LIGHT SWITCH</label>
                         </div>
                     </div>
-                    <div class="mask bg-gradient-primary border-radius-lg"></div>
+                    <div class="border-radius-lg"></div>
                 </div>
-            </div>
-            <div class="col-md-6 mb-1">
-                <div class="card bg-cover "
-                     style="background-image: url('https://demos.creative-tim.com/argon-dashboard-pro-bs4/assets/img/img-3.jpg')">
-                    <div class="card-body z-index-2 py-5">
-                        <h2 class="text-white">Air Conditioner</h2>
+                <div class="card bg-cover min-height-150 col-2 z-index-2 " id="card-air" style="background-color: rgba(248,248,255,0.8); min-width: 200px; margin-right: 4%; margin-left: 4%; margin-top: 3%;">
+                    <div class="card-body z-index-2" style="margin-top: 10px;">
+                        <span class="material-symbols-outlined" style="font-size:70px; color:darkblue;">
+                            air
+                        </span>
+                        <h2 class="text" style="color: royalblue; font-size: 30px;">Air Conditioner</h2>
                         <div class="form-check form-switch">
                             <input class="form-check-input light" type="checkbox" id="airconditioner"
                                    th:checked="${airconditioner}" th:disabled="${mode}">
-                            <label class="form-check-label light" for="airconditioner">Checked switch</label>
+                            <label class="form-check-label light" for="airconditioner">AC SWITCH</label>
                         </div>
                     </div>
-                    <div class="mask bg-gradient-primary border-radius-lg"></div>
+                    <div class="border-radius-lg"></div>
                 </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-6 mb-1">
-                <div class="card bg-cover "
-                     style="background-image: url('https://demos.creative-tim.com/argon-dashboard-pro-bs4/assets/img/img-3.jpg')">
-                    <div class="card-body z-index-2 py-5">
-                        <h2 class="text-white">Air Cleaner</h2>
+                <div class="card bg-cover min-height-150 col-2 z-index-2 " id="card-purifier" style="background-color: rgb(255,255,255,0.8); min-width: 200px; margin-right: 4%; margin-left: 4%; margin-top: 3%;"> <!-- rgba(248,248,255,0.5); box-shadow: 10px 10px 10px midnightblue; -->
+                    <div class="card-body z-index-2" style="margin-top: 10px;">
+                        <span class="material-symbols-outlined" style="font-size:70px; color:darkblue;">
+                            air_purifier
+                        </span>
+                        <h2 class="text" style="color: royalblue; font-size: 30px;">Air Cleaner</h2>
                         <div class="form-check form-switch">
                             <input class="form-check-input" type="checkbox" id="aircleaner"
                                    th:checked="${aircleaner}" th:disabled="${mode}">
-                            <label class="form-check-label" for="aircleaner">Checked switch</label>
+                            <label class="form-check-label" for="aircleaner">Air Purifier SWITCH</label>
                         </div>
                     </div>
-                    <div class="mask bg-gradient-primary border-radius-lg"></div>
+                    <div class="border-radius-lg"></div>
                 </div>
-            </div>
-            <div class="col-md-6 mb-1">
-                <div class="card bg-cover "
-                     style="background-image: url('https://demos.creative-tim.com/argon-dashboard-pro-bs4/assets/img/img-3.jpg')">
-                    <div class="card-body z-index-2 py-5">
-                        <h2 class="text-white">AI Mode</h2>
+                <div class="card bg-cover min-height-150 col-2 z-index-2 " id="card-ai" style="background-color: rgb(255,255,255,0.8); min-width: 200px; margin-right: 4%; margin-left: 4%; margin-top: 3%;">
+                    <div class="card-body z-index-2" style="margin-top: 10px;">
+                        <span class="material-symbols-outlined" style="font-size:70px; color:darkblue;">
+                            settings_applications
+                        </span>
+                        <h2 class="text" style="color: royalblue; font-size: 30px;">AI Mode</h2>
                         <div class="form-check form-switch">
                             <input class="form-check-input" type="checkbox" id="mode"
                                    th:checked="${mode}">
-                            <label class="form-check-label" for="mode">Checked switch</label>
+                            <label class="form-check-label" for="mode">AI switch</label>
                         </div>
                     </div>
-                    <div class="mask bg-gradient-primary border-radius-lg"></div>
+                    <div class="border-radius-lg"></div>
                 </div>
             </div>
         </div>
+        <div class="mask" style="background-color: rgba(255,255,255,0.5)"></div>  <!--bg-gradient-faded-light-->
     </div>
-</main>
+    </main>
+</div>
 </body>
 </html>

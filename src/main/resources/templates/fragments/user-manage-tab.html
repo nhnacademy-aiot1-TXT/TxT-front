@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <!-- CSS Files -->
+    <link id="pagestyle" href="/css/argon-dashboard.css?v=2.0.4" rel="stylesheet"/>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" type="text/css" href="/css/userManage/style.css">
+</head>
+<body>
+<div class="nav-wrapper position-relative end-0">
+    <div class="nav nav-pills nav-fill p-2">
+        <div class="nav-item">
+            <a class="nav-link mb-0 px-1 py-1 my-btn" type="submit"
+               th:href="@{manage(statusParam = 'pendingUser', page = 0)}"
+               th:class="${statusSet != null and statusSet == 'pendingUser' ? 'my-btn my-btn-purple btn-signup-approve' : 'my-btn text-dark btn-signup-approve'}">
+                회원가입 승인
+            </a>
+        </div>
+        <div class="nav-item">
+            <a class="nav-link mb-0 px-1 py-1" type="submit"
+               th:href="@{manage(statusParam = 'deactivateUser', page = 0)}"
+               th:class="${statusSet != null and statusSet == 'deactivateUser' ? 'my-btn my-btn-purple ms-auto btn-signup-approve' : 'my-btn text-dark btn-signup-approve'}">
+                탈퇴회원 관리
+            </a>
+
+        </div>
+        <div class="nav-item">
+            <a class="nav-link mb-0 px-1 py-1" type="submit"
+               th:href="@{manage(statusParam = 'userList', page = 0)}"
+               th:class="${statusSet != null and statusSet == 'userList' ? 'my-btn my-btn-purple ms-auto btn-signup-approve' : 'my-btn text-dark btn-signup-approve'}">
+                유저 리스트
+            </a>
+
+        </div>
+        <div class="nav-item">
+            <a class="nav-link mb-0 px-1 py-1" type="submit"
+               th:href="@{manage(statusParam = 'adminList', page = 0)}"
+               th:class="${statusSet != null and statusSet == 'adminList' ? 'my-btn my-btn-purple btn-sm ms-auto' : 'my-btn text-dark btn-signup-approve'}">
+                관리자 리스트
+            </a>
+        </div>
+    </div>
+</div>
+</body>
+</html>

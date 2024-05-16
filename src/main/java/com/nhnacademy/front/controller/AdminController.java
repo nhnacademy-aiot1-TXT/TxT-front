@@ -1,8 +1,7 @@
 package com.nhnacademy.front.controller;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.nhnacademy.front.adaptor.SensorAdapter;
+import com.nhnacademy.front.adaptor.UserAdapter;
 import com.nhnacademy.front.dto.*;
 import com.nhnacademy.front.dto.IlluminationResponse.IlluminationResponse;
 import com.nhnacademy.front.utils.AccessTokenUtil;
@@ -10,14 +9,14 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
-
-import com.nhnacademy.front.adaptor.UserAdapter;
 
 /**
  * 어드민 권한만 접근할 수 있는 Controller
@@ -37,85 +36,56 @@ public class AdminController {
 
     @GetMapping("/dtsensor")
     public String profile(HttpServletRequest request, Model model) {
-        String accessToken = Arrays.stream(request.getCookies())
-                .filter(cookie -> "accessToken".equals(cookie.getName()))
-                .findFirst()
-                .orElse(null)
-                .getValue();
-
+        String accessToken = AccessTokenUtil.findAccessTokenInRequest(request);
         UserDataResponse user = userAdapter.getUserData(accessToken);
+
         model.addAttribute("user", user);
+        model.addAttribute("accessToken", AccessTokenUtil.findAccessTokenInRequest(request));
 
         return "detailedSensor";
     }
 
-
     @GetMapping("/manage")
     public String manage(HttpServletRequest request, Model model,
-                         @RequestParam(value = "statusId", defaultValue = "4") int statusId,
+                         @RequestParam(value = "statusParam", defaultValue = "userList") String statusParam,
                          @RequestParam(value = "page", defaultValue = "0") int page,
-                         @RequestParam(value = "size", defaultValue = "5") int size) throws JsonProcessingException {
-
+                         @RequestParam(value = "size", defaultValue = "5") int size) {
         Page<UserDataResponse> users;
-        String formAction;
+        String accessToken = AccessTokenUtil.findAccessTokenInRequest(request);
 
-        String accessToken = Arrays.stream(request.getCookies())
-                .filter(cookie -> "accessToken".equals(cookie.getName()))
-                .findFirst()
-                .orElse(null)
-                .getValue();
-
-
-        if (statusId == 99) {
-            //관리자 승인
-            formAction = "/admin/manage/promotion";
-            users = userAdapter.findAllUsers(accessToken, page, size);
-        } else if (statusId == 100) {
-            //경로 없음(관리자 리스트)
-            formAction = "";
-            users = userAdapter.findSortedUserByRole(accessToken, page, size, 1);
-        } else if(statusId == 4) {
-            //회원가입 승인
-            formAction = "/admin/manage/permit";
-            users = userAdapter.findSortedUsers(accessToken, statusId, page, size);
-        } else if(statusId == 3){
-            //탈퇴 복구 경로
-            formAction = "/admin/manage/reactive";
-            users = userAdapter.findSortedUsers(accessToken, statusId, page, size);
-        } else{
-            formAction = "";
-            users = userAdapter.findSortedUsers(accessToken, statusId, page, size);
+        switch (statusParam) {
+            case "pendingUser":
+                users = userAdapter.findSortedUsers(accessToken, 4, page, size);
+                model.addAttribute("actionUrl", "/admin/manage/permit");
+                break;
+            case "deactivateUser":
+                users = userAdapter.findSortedUsers(accessToken, 3, page, size);
+                model.addAttribute("actionUrl", "/admin/manage/permit");
+                break;
+            case "adminList":
+                users = userAdapter.findSortedUserByRole(accessToken, page, size, 1);
+                break;
+            default:
+                users = userAdapter.findAllUsers(accessToken, page, size);
+                model.addAttribute("actionUrl", "/admin/manage/promotion");
+                break;
         }
 
-
-
-
-
-        System.out.println(users);
-
         model.addAttribute("users", users);
-        model.addAttribute("statSet", statusId);
-        model.addAttribute("formAction", formAction);
-
+        model.addAttribute("statusSet", statusParam);
 
         return "manage";
     }
 
-
     //유저등록
-
     @PostMapping("/manage/permit")
-    public String permitUser(HttpServletRequest request, Model model) {
-
+    public String permitUser(HttpServletRequest request, @RequestParam("redirectUrl") String redirectUrl) {
         List<PermitUserRequest> permitUserRequests = new ArrayList<>();
-
         String accessToken = AccessTokenUtil.findAccessTokenInRequest(request);
-
         String[] selectedUserIds = request.getParameterValues("userIds");
 
         if (selectedUserIds != null) {
             for (String userId : selectedUserIds) {
-                System.out.println("Selected User ID: " + userId);
                 PermitUserRequest permitUserRequest = new PermitUserRequest(); // 각 반복마다 새 객체 생성
                 permitUserRequest.setId(userId); // 유저 ID 설정
                 permitUserRequests.add(permitUserRequest); // 리스트에 추가
@@ -123,109 +93,53 @@ public class AdminController {
             userAdapter.permitUser(accessToken, permitUserRequests); // 사용자 허용 메서드 호출
         }
 
-        return "redirect:/admin/manage";
+        return "redirect:" + redirectUrl.substring(redirectUrl.indexOf("/admin"));
     }
-
-    //관리자 승인
 
     @PostMapping("/manage/promotion")
-    public String promoteUser(HttpServletRequest request, Model model) {
-
-
-
-        String accessToken = AccessTokenUtil.findAccessTokenInRequest(request);
-
-        String[] selectedUserIds = request.getParameterValues("userIds");
-
-        if (selectedUserIds != null) {
-
-            PermitUserRequest permitUserRequest = new PermitUserRequest();
-            permitUserRequest.setId(selectedUserIds[0]);
-
-            userAdapter.promoteUserToAdmin(accessToken, permitUserRequest); // 사용자 허용 메서드 호출
-
-        }
-
-        return "redirect:/admin/manage";
-    }
-
-
-    // 탈퇴회원 복구
-
-    @PostMapping("/manage/reactive")
-    public String reactiveUser(HttpServletRequest request, Model model) {
-
+    public String promotionUser(HttpServletRequest request, @RequestParam("redirectUrl") String redirectUrl) {
         List<PermitUserRequest> permitUserRequests = new ArrayList<>();
-
         String accessToken = AccessTokenUtil.findAccessTokenInRequest(request);
-
         String[] selectedUserIds = request.getParameterValues("userIds");
 
         if (selectedUserIds != null) {
             for (String userId : selectedUserIds) {
-                System.out.println("Selected User ID: " + userId);
-                PermitUserRequest permitUserRequest = new PermitUserRequest(); // 각 반복마다 새 객체 생성
-                permitUserRequest.setId(userId); // 유저 ID 설정
-                permitUserRequests.add(permitUserRequest); // 리스트에 추가
+                PermitUserRequest permitUserRequest = new PermitUserRequest();
+                permitUserRequest.setId(userId);
+                permitUserRequests.add(permitUserRequest);
             }
-            userAdapter.rejectDeleteUser(accessToken, permitUserRequests); // 사용자 허용 메서드 호출
+            userAdapter.promotionUser(accessToken, permitUserRequests);
         }
 
-
-        return "redirect:/admin/manage";
+        return "redirect:" + redirectUrl.substring(redirectUrl.indexOf("/admin"));
     }
 
-
     // 상세센서 정보
-
     @GetMapping("temperature/week")
     public String weeklyTemperature(HttpServletRequest request, Model model) {
-
-        String accessToken = Arrays.stream(request.getCookies())
-                .filter(cookie -> "accessToken".equals(cookie.getName()))
-                .findFirst()
-                .orElse(null)
-                .getValue();
-
+        String accessToken = AccessTokenUtil.findAccessTokenInRequest(request);
 
         List<TemperatureResponse> tempWeek = sensorAdapter.getWeeklyTemperatures(accessToken);
         model.addAttribute("temperatureList", tempWeek);
-
 
         return "sensor-log/log-temperature";
     }
 
     @GetMapping("illumination/week")
     public String weeklyIllumination(HttpServletRequest request, Model model) {
-
-        String accessToken = Arrays.stream(request.getCookies())
-                .filter(cookie -> "accessToken".equals(cookie.getName()))
-                .findFirst()
-                .orElse(null)
-                .getValue();
-
+        String accessToken = AccessTokenUtil.findAccessTokenInRequest(request);
 
         List<IlluminationResponse> illuminationWeek = sensorAdapter.getWeeklyIllumination(accessToken);
         model.addAttribute("illuminationWeek", illuminationWeek);
 
-
         return "sensor-log/log-birghtness";
     }
 
-
     @GetMapping("humidity/week")
     public String weeklyHumidity(HttpServletRequest request, Model model) {
-
-
-        String accessToken = Arrays.stream(request.getCookies())
-                .filter(cookie -> "accessToken".equals(cookie.getName()))
-                .findFirst()
-                .orElse(null)
-                .getValue();
-
+        String accessToken = AccessTokenUtil.findAccessTokenInRequest(request);
 
         List<HumidityResponse> humidityDaily = sensorAdapter.getWeeklyHumidity(accessToken);
-
         model.addAttribute("humidityList", humidityDaily);
 
         return "sensor-log/log-humidity";
@@ -233,22 +147,11 @@ public class AdminController {
 
     @GetMapping("co2/week")
     public String weeklyCo2(HttpServletRequest request, Model model) {
-
-
-        String accessToken = Arrays.stream(request.getCookies())
-                .filter(cookie -> "accessToken".equals(cookie.getName()))
-                .findFirst()
-                .orElse(null)
-                .getValue();
-
+        String accessToken = AccessTokenUtil.findAccessTokenInRequest(request);
 
         List<Co2Response> Co2Week = sensorAdapter.getWeeklyCo2(accessToken);
-
         model.addAttribute("co2List", Co2Week);
-
 
         return "sensor-log/log-co2";
     }
-
-
 }
