@@ -52,6 +52,9 @@
             <div class="col" th:each="deviceSetting : ${deviceSettingList}">
                 <th:block th:replace="'device-setting/' + ${deviceSetting.getDevice().getDeviceName()} + '-setting'"/>
             </div>
+            <div class="col" th:if="${currentPlace == null}">
+                <th:block th:replace="'device-setting/detection-setting'"/>
+            </div>
         </div>
     </div>
     <div th:replace="fragments/time-interval-setting"></div>
