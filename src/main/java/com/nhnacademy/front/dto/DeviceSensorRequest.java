@@ -10,6 +10,7 @@ import lombok.NoArgsConstructor;
 public class DeviceSensorRequest {
     private String deviceName;
     private String sensorName;
+    private String placeName;
     private Float onValue;
     private Float offValue;
 }

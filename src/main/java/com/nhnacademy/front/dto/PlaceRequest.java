@@ -1,18 +1,17 @@
 package com.nhnacademy.front.dto;
 
 import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.time.LocalTime;
 
-@Data
-@Builder
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class PlaceResponse {
-    private Long placeId;
+public class PlaceRequest {
     private String placeName;
     private LocalTime cycle;
 }
