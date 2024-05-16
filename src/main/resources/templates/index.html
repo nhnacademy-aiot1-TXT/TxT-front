@@ -378,12 +378,13 @@
 
 <script th:inline="javascript">
     const domain = "https://contxt.co.kr";
+    const place = [[${place}]];
+    const placeList=  [[${placeList}]];
 
     // 첫번째로 로딩될 때
     $(document).ready(function () {
         // api/common/place 로 드롭박스 메뉴에 장소 채워넣기
-        // <li><a className="dropdown-item" th:href="@{/(place = 'class_a')}">class_a</a></li>
-        [[${placeList}]].forEach((e) => {
+        placeList.forEach((e) => {
             let placeMenuButton = document.getElementById("placeDropdownMenuButton");
 
             let li = document.createElement("LI");
@@ -397,11 +398,11 @@
         });
 
         // 지금 선택한 드롭박스 이름 바꾸기
-        document.getElementById("placeDropdownButton").innerText = [[${place}]];
+        document.getElementById("placeDropdownButton").innerText = place;
 
         // 차트
         changeSlideTitle();
-        applyChart(domain, [[${place}]]);
+        applyChart(domain, place);
 
         //재실 인원
         updatePeopleCount(domain);
@@ -410,13 +411,17 @@
         weather(domain);
 
         //게이지
-        gaugeUpdate(domain, [[${place}]]);
+        gaugeUpdate(domain, place);
 
         // 첫번째 로딩 후 5초마다
+        // class_b 면 재실 안받음
         setInterval(() => {
-            gaugeUpdate(domain, [[${place}]]);
+            gaugeUpdate(domain, place);
+            if('class_b' !== place){
+            updatePeopleCount(domain);
+            }
         }, 5000);
-    });
+    })
 </script>
 <script>
     var win = navigator.platform.indexOf('Win') > -1;
