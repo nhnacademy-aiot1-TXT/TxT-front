@@ -1,5 +1,6 @@
 package com.nhnacademy.front.controller;
 
+import com.nhnacademy.front.adaptor.DeviceSettingAdapter;
 import com.nhnacademy.front.adaptor.SensorAdapter;
 import com.nhnacademy.front.adaptor.UserAdapter;
 import com.nhnacademy.front.dto.*;
@@ -28,6 +29,7 @@ public class AdminController {
 
     private final UserAdapter userAdapter;
     private final SensorAdapter sensorAdapter;
+    private final DeviceSettingAdapter deviceSettingAdapter;
 
     @GetMapping
     public String admin() {
@@ -35,12 +37,14 @@ public class AdminController {
     }
 
     @GetMapping("/dtsensor")
-    public String profile(HttpServletRequest request, Model model) {
+    public String profile(HttpServletRequest request,
+                          @RequestParam(value = "currentPlace", defaultValue = "class_a") String currentPlace,
+                          Model model) {
         String accessToken = AccessTokenUtil.findAccessTokenInRequest(request);
-        UserDataResponse user = userAdapter.getUserData(accessToken);
 
-        model.addAttribute("user", user);
         model.addAttribute("accessToken", AccessTokenUtil.findAccessTokenInRequest(request));
+        model.addAttribute("currentPlace", currentPlace);
+        model.addAttribute("placeList", deviceSettingAdapter.getPlaceList(AccessTokenUtil.findAccessTokenInRequest(request)));
 
         return "detailedSensor";
     }
