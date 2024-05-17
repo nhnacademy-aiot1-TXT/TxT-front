@@ -136,7 +136,7 @@ public class AdminController {
         List<IlluminationResponse> illuminationWeek = sensorAdapter.getWeeklyIllumination(accessToken);
         model.addAttribute("illuminationWeek", illuminationWeek);
 
-        return "sensor-log/log-birghtness";
+        return "sensor-log/log-illumination";
     }
 
     @GetMapping("humidity/week")
