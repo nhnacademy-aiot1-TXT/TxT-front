@@ -58,7 +58,7 @@
                 <ul id="placeDropdownMenuButton" class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                     <li th:each="place : ${placeList}">
                         <a class="dropdown-item" th:text="${place.getPlaceName()}"
-                           th:href="@{detailSensorInfo(currentPlace = ${place.getPlaceName()})}">
+                           th:href="@{detail-sensor-info(currentPlace = ${place.getPlaceName()})}">
                         </a>
                     </li>
                 </ul>

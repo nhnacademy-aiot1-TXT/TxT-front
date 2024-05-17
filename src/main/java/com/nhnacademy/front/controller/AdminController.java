@@ -36,7 +36,7 @@ public class AdminController {
         return "redirect:/";
     }
 
-    @GetMapping("/detailSensorInfo")
+    @GetMapping("/detail-sensor-info")
     public String profile(HttpServletRequest request,
                           @RequestParam(value = "currentPlace", defaultValue = "class_a") String currentPlace,
                           Model model) {
