@@ -50,7 +50,8 @@
     <div class="container-fluid py-4">
         <div class="row">
             <div class="col" th:each="deviceSetting : ${deviceSettingList}">
-                <th:block th:replace="|device-setting/${deviceSetting.device.deviceName}-setting|"/>
+                <th:block
+                        th:replace="'device-setting/' + ${deviceSetting.getDevice().getDeviceName().toLowerCase()} + '-setting'"/>
             </div>
             <div class="col" th:if="${currentPlace == null}">
                 <th:block th:replace="device-setting/detection-setting"/>
