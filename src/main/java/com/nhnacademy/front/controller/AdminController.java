@@ -4,6 +4,9 @@ import com.nhnacademy.front.adaptor.SensorAdapter;
 import com.nhnacademy.front.adaptor.UserAdapter;
 import com.nhnacademy.front.dto.*;
 import com.nhnacademy.front.dto.IlluminationResponse.IlluminationResponse;
+import com.nhnacademy.front.dto.rule.AiMode;
+import com.nhnacademy.front.dto.rule.MqttInInfo;
+import com.nhnacademy.front.dto.rule.RuleInfo;
 import com.nhnacademy.front.utils.AccessTokenUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -153,5 +156,11 @@ public class AdminController {
         model.addAttribute("co2List", Co2Week);
 
         return "sensor-log/log-co2";
+    }
+
+    @GetMapping("device/add")
+    public String deviceAddPage( HttpServletRequest request, Model model) {
+
+        return "device-add";
     }
 }
