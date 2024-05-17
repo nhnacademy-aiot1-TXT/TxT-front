@@ -8,9 +8,7 @@ import lombok.NoArgsConstructor;
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class Condition {
-    private String mqttUrl;
+public class MqttInDto {
+    private String url;
     private String topic;
-    private ComparisonOperator comparisonOperator;
-    private float standardValue;
 }

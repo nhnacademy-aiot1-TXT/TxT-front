@@ -25,35 +25,11 @@
     <script th:inline="javascript">const accessToken = [[${accessToken}]];</script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="/static/js/device-add/card.js"></script>
-    <script>
-        var currentPage = 0;
-
-        function showPage(index) {
-            var pages = document.getElementsByClassName("page");
-            pages[currentPage].classList.remove("active");
-            currentPage = index;
-            pages[currentPage].classList.add("active");
-            document.getElementById("prevButton").disabled = currentPage == 0;
-            document.getElementById("nextButton").disabled = currentPage == pages.length - 1;
-        }
-
-        function prevPage() {
-            if (currentPage > 0) showPage(currentPage - 1);
-        }
-
-        function nextPage() {
-            if (currentPage < document.getElementsByClassName("page").length - 1) showPage(currentPage + 1);
-        }
-
-        window.onload = function () {
-            showPage(0);
-        }
-    </script>
-
     <style>
         .page {
             display: none;
         }
+
         .page.active {
             display: block;
         }
@@ -62,13 +38,12 @@
 
 <body class="g-sidenav-show bg-gray-100">
 <aside th:replace="fragments/sidebar"></aside>
-<div class="main-content card position-relative text-center" id="main-body" style="padding-left: 10px; width: 50%; margin: 0 auto;">
+<div class="main-content card position-relative text-center" id="main-body"
+     style="padding-left: 10px; width: 50%; margin: 0 auto;">
     <div th:replace="fragments/nav"></div>
 
     <h2 style="margin-bottom: 25px; margin-top: 25px;">Class A</h2>
     <form action="/submitRuleInfo" method="post" class="px-4 py-3">
-
-
         <div class="page active">
             <div class="form-group">
                 <label for="place">장소</label>
@@ -79,7 +54,7 @@
                 </select>
             </div>
             <div class="form-group">
-                <label for="deviceName">추가할 장치 이름</label>
+                <label for="deviceName">추가할 장치</label>
                 <select id="deviceName" name="deviceName" class="form-control">
                     <option value="에어컨">에어컨</option>
                     <option value="조명">조명</option>
@@ -95,23 +70,22 @@
             </div>
         </div>
 
-        <div class="page">
+        <div class="page ai-mode">
             <h2>AI 모드 설정</h2>
             <div id="aiModesContainer"></div>
 
             <button type="button" onclick="createAiModeGroup()">AI Mode 추가</button>
-            <div>
-                <label for="ai_time">메세지 보내는 간격</label>
-                <input type="time" id="ai_time" name="ai_time" min="00:01" max="00:10" step="60" class="form-control">
-                <input type="hidden" id="localTime" name="localTime">
+            <div class="form-group mb-3 row">
+                <label for="time_interval" class="form-label col-sm-3">메세지 보내는 간격 (분)</label>
+                <div class="col-sm-9">
+                    <input type="number" id="time_interval" name="time_interval" min="0" max="10" class="form-control">
+                </div>
             </div>
         </div>
 
-        <!-- This is page 3 -->
-        <div class="page">
+        <div class="page custom-mode">
             <h2>커스텀 모드 설정</h2>
             <div id="conditionsContainer"></div>
-
             <button type="button" onclick="createConditionGroup()">Condition 추가</button>
             <div class="form-group">
                 <label for="hours">Hours</label>

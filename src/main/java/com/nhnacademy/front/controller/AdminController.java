@@ -5,8 +5,6 @@ import com.nhnacademy.front.adaptor.UserAdapter;
 import com.nhnacademy.front.dto.*;
 import com.nhnacademy.front.dto.IlluminationResponse.IlluminationResponse;
 import com.nhnacademy.front.dto.rule.AiMode;
-import com.nhnacademy.front.dto.rule.MqttInInfo;
-import com.nhnacademy.front.dto.rule.RuleInfo;
 import com.nhnacademy.front.utils.AccessTokenUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -159,8 +157,7 @@ public class AdminController {
     }
 
     @GetMapping("device/add")
-    public String deviceAddPage( HttpServletRequest request, Model model) {
-
+    public String deviceAddPage() {
         return "device-add";
     }
 }
