@@ -8,8 +8,7 @@ import lombok.NoArgsConstructor;
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-class CompareConditionDto {
-    ComparisonOperator comparisonOperator;
-    float standardValue;
+public class CompareConditionDto {
+    private ComparisonOperator comparisonOperator;
+    private float standardValue;
 }
-

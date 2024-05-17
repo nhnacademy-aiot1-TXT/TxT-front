@@ -24,7 +24,7 @@
             crossorigin="anonymous"></script>
     <script th:inline="javascript">const accessToken = [[${accessToken}]];</script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script src="/static/js/device-add/card.js"></script>
+    <script src="/js/device-add/card.js"></script>
     <style>
         .page {
             display: none;
@@ -43,7 +43,10 @@
     <div th:replace="fragments/nav"></div>
 
     <h2 style="margin-bottom: 25px; margin-top: 25px;">Class A</h2>
-    <form action="/submitRuleInfo" method="post" class="px-4 py-3">
+    <form action="/admin/device/register" method="post" class="px-4 py-3" enctype="application/x-www-form-urlencoded">
+        <label>
+            <input name="_csrf" hidden="" th:id="${_csrf.token}" th:value="${_csrf.getToken()}">
+        </label>
         <div class="page active">
             <div class="form-group">
                 <label for="place">장소</label>
@@ -96,6 +99,7 @@
             </div>
 
             <input type="hidden" id="custom_localTime" name="custom_localTime">
+            <button id="submitButton" type="submit">제출</button>
         </div>
 
         <div class="d-flex justify-content-between">

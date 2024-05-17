@@ -10,14 +10,14 @@ import java.util.Optional;
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class RuleInfo {
+public class RuleDto {
     private String place;
     private String deviceName;
     private boolean occupancyCheckRequired;
-    private AiMode aiMode;
-    private CustomMode customMode;
+    private AiModeDto aiMode;
+    private CustomModeDto customMode;
 
-    public Optional<AiMode> getAiMode() {
+    public Optional<AiModeDto> getAiMode() {
         return Optional.ofNullable(aiMode);
     }
 }

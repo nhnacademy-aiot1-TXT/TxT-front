@@ -4,16 +4,14 @@ import com.nhnacademy.front.adaptor.SensorAdapter;
 import com.nhnacademy.front.adaptor.UserAdapter;
 import com.nhnacademy.front.dto.*;
 import com.nhnacademy.front.dto.IlluminationResponse.IlluminationResponse;
-import com.nhnacademy.front.dto.rule.AiMode;
+import com.nhnacademy.front.dto.rule.RuleDto;
 import com.nhnacademy.front.utils.AccessTokenUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
@@ -116,7 +114,7 @@ public class AdminController {
     }
 
     // 상세센서 정보
-    @GetMapping("temperature/week")
+    @GetMapping("/temperature/week")
     public String weeklyTemperature(HttpServletRequest request, Model model) {
         String accessToken = AccessTokenUtil.findAccessTokenInRequest(request);
 
@@ -158,6 +156,15 @@ public class AdminController {
 
     @GetMapping("device/add")
     public String deviceAddPage() {
+
         return "device-add";
+    }
+
+
+    @PostMapping("/device/register")
+    public ResponseEntity<String> registerRuleInfoFlow(@ModelAttribute RuleDto ruleDto) {
+
+        System.out.println("device register" + ruleDto.toString());
+        return ResponseEntity.ok("Flow registered successfully!");
     }
 }

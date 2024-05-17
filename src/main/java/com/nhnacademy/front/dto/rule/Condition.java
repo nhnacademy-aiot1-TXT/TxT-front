@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class ConditionSetDto {
-    private CompareConditionDto onCondition;
-    private CompareConditionDto offCondition;
+public class Condition {
+    private ComparisonOperator comparisonOperator;
+    private float standardValue;
 }

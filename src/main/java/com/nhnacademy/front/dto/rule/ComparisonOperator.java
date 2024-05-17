@@ -1,5 +1,8 @@
 package com.nhnacademy.front.dto.rule;
 
+import lombok.Getter;
+
+@Getter
 public enum ComparisonOperator {
     GREATER_THAN,
     LESS_THAN,
@@ -8,4 +11,3 @@ public enum ComparisonOperator {
     EQUAL,
     NOT_EQUAL
 }
-
