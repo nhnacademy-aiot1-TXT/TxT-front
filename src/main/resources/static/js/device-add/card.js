@@ -105,7 +105,19 @@ function showPage(index) {
     currentPage = index;
     pages[currentPage].classList.add("active");
     document.getElementById("prevButton").disabled = currentPage === 0;
-    document.getElementById("nextButton").disabled = currentPage === pages.length - 1;
+
+    // 다음 페이지가 없는 경우 버튼을 '제출' 버튼으로 변경한다.
+    if (currentPage === pages.length - 1) {
+        const nextButton = document.getElementById("nextButton");
+        nextButton.innerHTML = "제출";
+        nextButton.type = "submit";
+        nextButton.onclick = null;   // '다음' 버튼의 onclick 이벤트 핸들러를 제거한다.
+    } else {
+        const nextButton = document.getElementById("nextButton");
+        nextButton.innerHTML = "다음";
+        nextButton.type = "button";
+        nextButton.onclick = nextPage;   // '다음' 버튼의 onclick 이벤트 핸들러를 원래대로 복원한다.
+    }
 }
 
 function prevPage() {

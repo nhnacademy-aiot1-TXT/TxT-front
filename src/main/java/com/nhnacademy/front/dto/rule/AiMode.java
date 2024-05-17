@@ -13,5 +13,5 @@ import java.util.List;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class AiMode {
     private List<MqttInDto> mqttInInfos;
-    private Integer minutes;
+    private Integer aiMinutes;
 }
