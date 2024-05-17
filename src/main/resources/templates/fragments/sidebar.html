@@ -11,8 +11,7 @@
             navItems.forEach(function (item) {
                 const link = item.querySelector("a");
                 const href = link.getAttribute("href");
-
-                if (href === currentUrl) {
+                if (href === currentUrl.replace(/\/\d+$/, '')) {
                     link.classList.add("active");
                 }
             });
@@ -63,7 +62,7 @@
             </th:block>
             <th:block th:if="${authority == 'ROLE_ADMIN'}">
                 <li class="nav-item">
-                    <a class="nav-link " href="/admin/dtsensor">
+                    <a class="nav-link " href="/admin/detail-sensor-info">
                         <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
                             <i class="ni ni-chart-pie-35 text-warning text-sm opacity-10"></i>
                         </div>
