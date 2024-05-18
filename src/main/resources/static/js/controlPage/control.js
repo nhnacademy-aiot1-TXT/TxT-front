@@ -1,9 +1,11 @@
 document.addEventListener('DOMContentLoaded', function () {
     let lightSwitch = document.getElementById('light');
+    console.log(lightSwitch);
     lightSwitch.addEventListener('click', function () {
         let isOn = lightSwitch.checked; // checkbox의 상태를 확인합니다.
+
         console.log(isOn);
-        fetch(`/control/light?isOn=${isOn}`, {
+        fetch(`/control/light?placeName=${placeName}&isOn=${isOn}`, {
             method: 'GET',
         }).then(function (response) {
             console.log('light control success');
@@ -15,8 +17,9 @@ document.addEventListener('DOMContentLoaded', function () {
     let airconditionerSwitch = document.getElementById('airconditioner');
     airconditionerSwitch.addEventListener('click', function () {
         let isOn = airconditionerSwitch.checked; // checkbox의 상태를 확인합니다.
-        console.log(isOn);
-        fetch(`/control/air-conditioner?isOn=${isOn}`, {
+
+
+        fetch(`/control/air-conditioner?placeName=class_a&isOn=${isOn}`, {
             method: 'GET',
         }).then(function (response) {
             console.log('airconditioner control success');
@@ -28,8 +31,9 @@ document.addEventListener('DOMContentLoaded', function () {
     let aircleanerSwitch = document.getElementById('aircleaner');
     aircleanerSwitch.addEventListener('click', function () {
         let isOn = aircleanerSwitch.checked; // checkbox의 상태를 확인합니다.
+
         console.log(isOn);
-        fetch(`/control/air-cleaner?isOn=${isOn}`, {
+        fetch(`/control/air-cleaner?placeName=${placeName}&isOn=${isOn}`, {
             method: 'GET',
         }).then(function (response) {
             console.log('aircleaner control success');
@@ -41,8 +45,9 @@ document.addEventListener('DOMContentLoaded', function () {
     let modeSwitch = document.getElementById('mode');
     modeSwitch.addEventListener('click', function () {
         let isOn = modeSwitch.checked; // checkbox의 상태를 확인합니다.
+
         console.log(isOn);
-        fetch(`/control/ai-mode?isOn=${isOn}`, {
+        fetch(`/control/ai-mode?placeName=${placeName}&isOn=${isOn}`, {
             method: 'GET',
         }).then(function (response) {
             console.log('mode control success');
