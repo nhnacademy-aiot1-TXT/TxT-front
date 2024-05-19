@@ -19,7 +19,7 @@ document.addEventListener('DOMContentLoaded', function () {
         let isOn = airconditionerSwitch.checked; // checkbox의 상태를 확인합니다.
 
 
-        fetch(`/control/air-conditioner?placeName=class_a&isOn=${isOn}`, {
+        fetch(`/control/air-conditioner?placeName=${placeName}&isOn=${isOn}`, {
             method: 'GET',
         }).then(function (response) {
             console.log('airconditioner control success');

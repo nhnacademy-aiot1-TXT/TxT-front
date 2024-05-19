@@ -16,7 +16,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 @RequiredArgsConstructor
@@ -53,14 +55,16 @@ public class ControlController {
         Object airCleanerStatus = redisUtil.getDeviceStatus(DEVICE_KEY, AIR_CLEANER.concat(":").concat(currentPlace.getPlaceName()));
         Object autoMode = redisUtil.getMode(AUTO_MODE.concat(currentPlace.getPlaceName()));
 
-
+        Map<String, Object> statusMap = new HashMap<>();
+        statusMap.put(LIGHT, lightStatus);
+        statusMap.put(AIR_CONDITIONER, airConditionerStatus);
+        statusMap.put(AIR_CLEANER, airCleanerStatus);
+        
+        model.addAttribute("status", statusMap);
         model.addAttribute("placeList", placeList);
         model.addAttribute("currentPlace", currentPlace);
         model.addAttribute("deviceList", deviceList);
         model.addAttribute("aiMode", aiMode);
-        model.addAttribute(LIGHT, lightStatus);
-        model.addAttribute(AIR_CONDITIONER, airConditionerStatus);
-        model.addAttribute(AIR_CLEANER, airCleanerStatus);
         model.addAttribute(MODE, autoMode);
 
         return "control";

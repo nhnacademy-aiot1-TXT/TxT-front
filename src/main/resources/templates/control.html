@@ -61,10 +61,10 @@
                             <h2 class="text" style="color: royalblue; font-size: 30px;"
                                 th:text="${device.getDeviceName().toUpperCase()}"></h2>
                             <div class="form-check form-switch">
-                                <input th:class="'form-check-input ' + ${device.getDeviceName().toLowerCase()}"
+                                <input th:class="form-check-input"
                                        type="checkbox"
                                        th:id="${device.getDeviceName().toLowerCase()}"
-                                       th:checked="${light}"
+                                       th:checked="${status[device.getDeviceName().toLowerCase()]}"
                                        th:disabled="${mode}">
                                 <label class="form-check-label" th:for="${device.getDeviceName()}"
                                        th:text="${device.getDeviceName().toUpperCase().concat(' SWITCH')}"></label>
