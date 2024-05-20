@@ -186,6 +186,33 @@ public class AdminController {
 
         return "sensor-log/log-co2";
     }
-}
+
+    @GetMapping("/list/notification")
+    public String notification(HttpServletRequest request, Model model) {
+
+        String accessToken = AccessTokenUtil.findAccessTokenInRequest(request);
+
+        UserDataResponse user = userAdapter.getUserData(accessToken);
+        String userId = user.getId();
+
+        List<NotificationResponse> notificationResponseList = deviceSettingAdapter.getNotifications(accessToken);
+
+        //notificationResponseList.sort(Comparator.comparing(NotificationResponse::getTime));
+
+        NotificationResponse notification = NotificationResponse.builder()
+                .roleId(1L)
+                .contents("Notification contents here")
+                .time(LocalDateTime.now())
+                .build();
+
+        notificationResponseList.add(notification);
+        System.out.println(notificationResponseList);
+        System.out.println(notification);
+
+
+        model.addAttribute("alarmList", notificationResponseList);
+
+        return "fragments/nav";
+    }
 
 }
