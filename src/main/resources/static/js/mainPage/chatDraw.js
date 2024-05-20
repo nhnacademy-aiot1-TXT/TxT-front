@@ -1,4 +1,4 @@
-function drawChart(ctx) {
+function chatDraw(ctx) {
 
     let gradientStroke1 = ctx.createLinearGradient(0, 230, 0, 50);
 

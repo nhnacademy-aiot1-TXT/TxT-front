@@ -46,559 +46,88 @@
 <main class="main-content position-relative border-radius-lg ">
     <div th:replace="fragments/nav"></div>
 
-    <div class="container-fluid py-4">
-        <div class="row text-capitalize">
-            <h4>Detail Sensor Info</h4>
+    <div class="container-fluid py-3">
+        <div class="row text-capitalize justify-content-center">
+            <h4 class="card text-center"
+                style="width: 300px; background-image: linear-gradient(120deg, #a1c4fd 0%, #c2e9fb 100%);">Detail Sensor
+                Info</h4>
+            <div class="dropdown">
+                <button class="btn bg-gradient-primary dropdown-toggle" type="button" id="placeDropdownButton"
+                        data-bs-toggle="dropdown" aria-expanded="false" th:text="${currentPlace}">
+                </button>
+                <ul id="placeDropdownMenuButton" class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                    <li th:each="place : ${placeList}">
+                        <a class="dropdown-item" th:text="${place.getPlaceName()}"
+                           th:href="@{detail-sensor-info(currentPlace = ${place.getPlaceName()})}">
+                        </a>
+                    </li>
+                </ul>
+            </div>
         </div>
-        <div class="row mt-4">
-            <!--            온도-->
+        <div class="row mt-0">
             <div class="col-lg-6 mb-lg-0 mb-4">
                 <div class="card z-index-2 h-100">
                     <div class="card-header pb-0 pt-3 bg-transparent">
                         <h6 class="text-capitalize">Temperature</h6>
-                        <p class="text-sm mb-0">
-                            <i class="fa fa-arrow-up text-success"></i>
-                            <span class="font-weight-bold">4% more</span> in 2021
-                        </p>
                     </div>
                     <div class="card-body p-3">
                         <a class="nav-link " href="temperature/week">
                             <div class="chart">
-                                <canvas id="temp-chart" width="800" height="400"></canvas>
-                                <script>
-                                    var ctx = document.getElementById('temp-chart').getContext('2d');
-                                    var temperatureChart = new Chart(ctx, {
-                                        type: "line",
-                                        data: {
-                                            labels: [],
-                                            datasets: [{
-                                                label: [],
-                                                tension: 0.4,
-                                                pointRadius: 0,
-                                                borderColor: "#172b4d",
-                                                backgroundColor: "rgb(23,43,77, 0.2)",
-                                                borderWidth: 3,
-                                                fill: true,
-                                                maxBarThickness: 6,
-                                                data: []
-                                            }]
-                                        },
-                                        options: {
-                                            responsive: true,
-                                            maintainAspectRatio: false,
-                                            plugins: {
-                                                legend: {
-                                                    display: false,
-                                                }
-                                            },
-                                            interaction: {
-                                                intersect: false,
-                                                mode: 'index',
-                                            },
-                                            animations: {
-                                                y: {
-                                                    easing: 'linear',
-                                                    duration: 0,
-                                                }
-                                            },
-                                            scales: {
-                                                y: {
-                                                    min: 0,
-                                                    max: 40,
-                                                    grid: {
-                                                        drawBorder: false,
-                                                        display: true,
-                                                        drawOnChartArea: true,
-                                                        drawTicks: false,
-                                                        borderDash: [5, 5]
-                                                    },
-                                                    ticks: {
-                                                        display: true,
-                                                        padding: 20,
-                                                        font: {
-                                                            size: 11,
-                                                            family: "Open Sans",
-                                                            style: 'normal',
-                                                            lineHeight: 2
-                                                        },
-                                                    }
-                                                },
-                                                x: {
-                                                    grid: {
-                                                        drawBorder: false,
-                                                        display: false,
-                                                        drawOnChartArea: false,
-                                                        drawTicks: false,
-                                                        borderDash: [5, 5]
-                                                    },
-                                                    ticks: {
-                                                        display: false,
-                                                        // 글씨색깔
-                                                        color: '#333',
-                                                        padding: 20,
-                                                        font: {
-                                                            size: 11,
-                                                            family: "Open Sans",
-                                                            style: 'normal',
-                                                            lineHeight: 2
-                                                        },
-                                                    }
-                                                },
-                                            },
-                                        }
-                                    });
-
-                                    function addData(chart, label, data) {
-                                        if (chart.data.labels.length > 100) { // 최대 데이터 포인트 수를 100으로 제한
-                                            chart.data.labels.shift(); // 가장 오래된 라벨 제거
-                                            chart.data.datasets.forEach((dataset) => {
-                                                dataset.data.shift(); // 가장 오래된 데이터 포인트 제거
-                                            });
-                                        }
-
-                                        chart.data.labels.push(label);
-                                        chart.data.datasets.forEach((dataset) => {
-                                            dataset.data.push(data);
-                                        });
-
-                                        chart.update();
-                                    }
-
-                                    // 데이터를 업데이트하는 함수를 1000ms(1초)마다 실행
-                                    setInterval(async function () {
-                                        // 새로운 데이터 포인트 생성 (예: 사인파)
-                                        const url = 'https://contxt.co.kr/api/sensor/temperature';
-                                        const option = {
-                                            method: "GET",
-                                            headers: {
-                                                Authorization: accessToken
-                                            }
-                                        }
-
-                                        let data = await (await fetch(url, option)).json();
-
-                                        addData(temperatureChart, data.time, data.value);
-                                    }, 1000);
-                                </script>
+                                <canvas id="temperature-chart" width="800" height="400"></canvas>
                             </div>
                         </a>
                     </div>
                 </div>
             </div>
-            <!--             조도 -->
             <div class="col-lg-6 mb-lg-0 mb-4">
                 <div class="card z-index-2 h-100">
                     <div class="card-header pb-0 pt-3 bg-transparent">
-                        <h6 class="text-capitalize">Brightness</h6>
-                        <p class="text-sm mb-0">
-                            <i class="fa fa-arrow-up text-success"></i>
-                            <span class="font-weight-bold">4% more</span> in 2021
-                        </p>
+                        <h6 class="text-capitalize">Illumination</h6>
                     </div>
                     <div class="card-body p-3">
                         <a class="nav-link " href="illumination/week">
                             <div class="chart">
-                                <canvas id="illu-chart" width="800" height="400"></canvas>
-                                <script>
-                                    var ctx = document.getElementById('illu-chart').getContext('2d');
-                                    var illuminationChart = new Chart(ctx, {
-                                        type: "line",
-                                        data: {
-                                            labels: [],
-                                            datasets: [{
-                                                label: [],
-                                                tension: 0.4,
-                                                pointRadius: 0,
-                                                borderColor: "#172b4d",
-                                                backgroundColor: "rgb(23,43,77, 0.2)",
-                                                borderWidth: 3,
-                                                fill: true,
-                                                maxBarThickness: 6,
-                                                data: []
-                                            }]
-                                        },
-                                        options: {
-                                            responsive: true,
-                                            maintainAspectRatio: false,
-                                            plugins: {
-                                                legend: {
-                                                    display: false,
-                                                }
-                                            },
-                                            interaction: {
-                                                intersect: false,
-                                                mode: 'index',
-                                            },
-                                            animations: {
-                                                y: {
-                                                    easing: 'linear',
-                                                    duration: 0,
-                                                }
-                                            },
-                                            scales: {
-                                                y: {
-                                                    min: 0,
-                                                    max: 200,
-                                                    grid: {
-                                                        drawBorder: false,
-                                                        display: true,
-                                                        drawOnChartArea: true,
-                                                        drawTicks: false,
-                                                        borderDash: [5, 5]
-                                                    },
-                                                    ticks: {
-                                                        display: true,
-                                                        padding: 20,
-                                                        font: {
-                                                            size: 11,
-                                                            family: "Open Sans",
-                                                            style: 'normal',
-                                                            lineHeight: 2
-                                                        },
-                                                    }
-                                                },
-                                                x: {
-                                                    grid: {
-                                                        drawBorder: false,
-                                                        display: false,
-                                                        drawOnChartArea: false,
-                                                        drawTicks: false,
-                                                        borderDash: [5, 5]
-                                                    },
-                                                    ticks: {
-                                                        display: false,
-                                                        // 글씨색깔
-                                                        color: '#333',
-                                                        padding: 20,
-                                                        font: {
-                                                            size: 11,
-                                                            family: "Open Sans",
-                                                            style: 'normal',
-                                                            lineHeight: 2
-                                                        },
-                                                    }
-                                                },
-                                            },
-                                        }
-                                    });
-
-                                    function addData(chart, label, data) {
-                                        if (chart.data.labels.length > 100) { // 최대 데이터 포인트 수를 100으로 제한
-                                            chart.data.labels.shift(); // 가장 오래된 라벨 제거
-                                            chart.data.datasets.forEach((dataset) => {
-                                                dataset.data.shift(); // 가장 오래된 데이터 포인트 제거
-                                            });
-                                        }
-
-                                        chart.data.labels.push(label);
-                                        chart.data.datasets.forEach((dataset) => {
-                                            dataset.data.push(data);
-                                        });
-
-                                        chart.update();
-                                    }
-
-                                    // 데이터를 업데이트하는 함수를 1000ms(1초)마다 실행
-                                    setInterval(async function () {
-                                        // 새로운 데이터 포인트 생성 (예: 사인파)
-                                        const url = 'https://contxt.co.kr/api/sensor/illumination';
-                                        const option = {
-                                            method: "GET",
-                                            headers: {
-                                                Authorization: accessToken
-                                            }
-                                        }
-
-                                        let data = await (await fetch(url, option)).json();
-
-                                        addData(illuminationChart, data.time, data.value);
-                                    }, 1000);
-                                </script>
+                                <canvas id="illumination-chart" width="800" height="400"></canvas>
                             </div>
                         </a>
                     </div>
                 </div>
             </div>
         </div>
-        <!--윗부분 끝 -->
         <div class="row mt-4">
-            <!--            습도-->
             <div class="col-lg-6 mb-lg-0 mb-4">
                 <div class="card z-index-2 h-100">
                     <a class="nav-link " href="humidity/week">
                         <div class="card-header pb-0 pt-3 bg-transparent">
                             <h6 class="text-capitalize">Humidity</h6>
-                            <p class="text-sm mb-0">
-                                <i class="fa fa-arrow-up text-success"></i>
-                                <span class="font-weight-bold">4% more</span> in 2021
-                            </p>
                         </div>
                     </a>
                     <div class="card-body p-3">
                         <a class="nav-link " href="humidity/week">
                             <div class="chart">
-                                <canvas id="humi-chart" width="800" height="400"></canvas>
-                                <script>
-                                    var ctx = document.getElementById('humi-chart').getContext('2d');
-                                    var humidityChart = new Chart(ctx, {
-                                        type: "line",
-                                        data: {
-                                            labels: [],
-                                            datasets: [{
-                                                label: [],
-                                                tension: 0.4,
-                                                pointRadius: 0,
-                                                borderColor: "#172b4d",
-                                                backgroundColor: "rgb(23,43,77, 0.2)",
-                                                borderWidth: 3,
-                                                fill: true,
-                                                maxBarThickness: 6,
-                                                data: []
-                                            }]
-                                        },
-                                        options: {
-                                            responsive: true,
-                                            maintainAspectRatio: false,
-                                            plugins: {
-                                                legend: {
-                                                    display: false,
-                                                }
-                                            },
-                                            interaction: {
-                                                intersect: false,
-                                                mode: 'index',
-                                            },
-                                            animations: {
-                                                y: {
-                                                    easing: 'linear',
-                                                    duration: 0,
-                                                }
-                                            },
-                                            scales: {
-                                                y: {
-                                                    min: 0,
-                                                    max: 100,
-                                                    grid: {
-                                                        drawBorder: false,
-                                                        display: true,
-                                                        drawOnChartArea: true,
-                                                        drawTicks: false,
-                                                        borderDash: [5, 5]
-                                                    },
-                                                    ticks: {
-                                                        display: true,
-                                                        padding: 20,
-                                                        font: {
-                                                            size: 11,
-                                                            family: "Open Sans",
-                                                            style: 'normal',
-                                                            lineHeight: 2
-                                                        },
-                                                    }
-                                                },
-                                                x: {
-                                                    grid: {
-                                                        drawBorder: false,
-                                                        display: false,
-                                                        drawOnChartArea: false,
-                                                        drawTicks: false,
-                                                        borderDash: [5, 5]
-                                                    },
-                                                    ticks: {
-                                                        display: false,
-                                                        // 글씨색깔
-                                                        color: '#333',
-                                                        padding: 20,
-                                                        font: {
-                                                            size: 11,
-                                                            family: "Open Sans",
-                                                            style: 'normal',
-                                                            lineHeight: 2
-                                                        },
-                                                    }
-                                                },
-                                            },
-                                        }
-                                    });
-
-                                    function addData(chart, label, data) {
-                                        if (chart.data.labels.length > 100) { // 최대 데이터 포인트 수를 100으로 제한
-                                            chart.data.labels.shift(); // 가장 오래된 라벨 제거
-                                            chart.data.datasets.forEach((dataset) => {
-                                                dataset.data.shift(); // 가장 오래된 데이터 포인트 제거
-                                            });
-                                        }
-
-                                        chart.data.labels.push(label);
-                                        chart.data.datasets.forEach((dataset) => {
-                                            dataset.data.push(data);
-                                        });
-
-                                        chart.update();
-                                    }
-
-                                    // 데이터를 업데이트하는 함수를 1000ms(1초)마다 실행
-                                    setInterval(async function () {
-                                        // 새로운 데이터 포인트 생성 (예: 사인파)
-                                        const url = 'https://contxt.co.kr/api/sensor/humidity';
-                                        const option = {
-                                            method: "GET",
-                                            headers: {
-                                                Authorization: accessToken
-                                            }
-                                        }
-
-                                        let data = await (await fetch(url, option)).json();
-
-                                        addData(humidityChart, data.time, data.value);
-                                    }, 1000);
-                                </script>
+                                <canvas id="humidity-chart" width="800" height="400"></canvas>
                             </div>
                         </a>
                     </div>
                 </div>
             </div>
-            <!--            Co2-->
             <div class="col-lg-6 mb-lg-0 mb-4">
                 <div class="card z-index-2 h-100">
                     <div class="card-header pb-0 pt-3 bg-transparent">
                         <h6 class="text-capitalize">Co2</h6>
-                        <p class="text-sm mb-0">
-                            <i class="fa fa-arrow-up text-success"></i>
-                            <span class="font-weight-bold">4% more</span> in 2021
-                        </p>
                     </div>
                     <div class="card-body p-3">
                         <a class="nav-link " href="co2/week">
                             <div class="chart">
                                 <canvas id="co2-chart" width="800" height="400"></canvas>
-                                <script>
-                                    var ctx = document.getElementById('co2-chart').getContext('2d');
-                                    var co2Chart = new Chart(ctx, {
-                                        type: "line",
-                                        data: {
-                                            labels: [],
-                                            datasets: [{
-                                                label: [],
-                                                tension: 0.4,
-                                                pointRadius: 0,
-                                                borderColor: "#172b4d",
-                                                backgroundColor: "rgb(23,43,77, 0.2)",
-                                                borderWidth: 3,
-                                                fill: true,
-                                                maxBarThickness: 6,
-                                                data: []
-                                            }]
-                                        },
-                                        options: {
-                                            responsive: true,
-                                            maintainAspectRatio: false,
-                                            plugins: {
-                                                legend: {
-                                                    display: false,
-                                                }
-                                            },
-                                            interaction: {
-                                                intersect: false,
-                                                mode: 'index',
-                                            },
-                                            animations: {
-                                                y: {
-                                                    easing: 'linear',
-                                                    duration: 0,
-                                                }
-                                            },
-                                            scales: {
-                                                y: {
-                                                    min: 0,
-                                                    max: 4000,
-                                                    grid: {
-                                                        drawBorder: false,
-                                                        display: true,
-                                                        drawOnChartArea: true,
-                                                        drawTicks: false,
-                                                        borderDash: [5, 5]
-                                                    },
-                                                    ticks: {
-                                                        display: true,
-                                                        padding: 20,
-                                                        font: {
-                                                            size: 11,
-                                                            family: "Open Sans",
-                                                            style: 'normal',
-                                                            lineHeight: 2
-                                                        },
-                                                    }
-                                                },
-                                                x: {
-                                                    grid: {
-                                                        drawBorder: false,
-                                                        display: false,
-                                                        drawOnChartArea: false,
-                                                        drawTicks: false,
-                                                        borderDash: [5, 5]
-                                                    },
-                                                    ticks: {
-                                                        display: false,
-                                                        // 글씨색깔
-                                                        color: '#333',
-                                                        padding: 20,
-                                                        font: {
-                                                            size: 11,
-                                                            family: "Open Sans",
-                                                            style: 'normal',
-                                                            lineHeight: 2
-                                                        },
-                                                    }
-                                                },
-                                            },
-                                        }
-                                    });
-
-                                    function addData(chart, label, data) {
-                                        if (chart.data.labels.length > 100) { // 최대 데이터 포인트 수를 100으로 제한
-                                            chart.data.labels.shift(); // 가장 오래된 라벨 제거
-                                            chart.data.datasets.forEach((dataset) => {
-                                                dataset.data.shift(); // 가장 오래된 데이터 포인트 제거
-                                            });
-                                        }
-
-                                        chart.data.labels.push(label);
-                                        chart.data.datasets.forEach((dataset) => {
-                                            dataset.data.push(data);
-                                        });
-
-                                        chart.update();
-                                    }
-
-                                    // 데이터를 업데이트하는 함수를 1000ms(1초)마다 실행
-                                    setInterval(async function () {
-                                        // 새로운 데이터 포인트 생성 (예: 사인파)
-                                        const url = 'https://contxt.co.kr/api/sensor/co2';
-                                        const option = {
-                                            method: "GET",
-                                            headers: {
-                                                Authorization: accessToken
-                                            }
-                                        }
-
-                                        let data = await (await fetch(url, option)).json();
-
-                                        addData(co2Chart, data.time, data.value);
-                                    }, 1000);
-                                </script>
                             </div>
                         </a>
                     </div>
                 </div>
             </div>
         </div>
-        <!--            아랫 부분 끝-->
-
     </div>
 </main>
-
-
 <div class="fixed-plugin">
     <a class="fixed-plugin-button text-dark position-fixed px-3 py-2">
         <i class="fa fa-cog py-2"> </i>
@@ -697,11 +226,142 @@
 <script src="/js/plugins/smooth-scrollbar.min.js"></script>
 <script src="/js/plugins/chartjs.min.js"></script>
 <script src="/js/plugins/jquery-3.7.1.min.js"></script>
-<script src="/js/plugins/GaugeMeter.js"></script>
 
-<script>
+<!-- 그래프 script -->
+<script th:inline="javascript">
+    function drawChart(sensorName) {
+        let ctx = document.getElementById(sensorName + "-chart").getContext('2d');
+        return new Chart(ctx, {
+            type: "line",
+            data: {
+                labels: [],
+                datasets: [{
+                    label: [],
+                    tension: 0.4,
+                    pointRadius: 0,
+                    borderColor: "#172b4d",
+                    backgroundColor: "rgb(23,43,77, 0.2)",
+                    borderWidth: 3,
+                    fill: true,
+                    maxBarThickness: 6,
+                    data: []
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        display: false,
+                    }
+                },
+                interaction: {
+                    intersect: false,
+                    mode: 'index',
+                },
+                animations: {
+                    y: {
+                        easing: 'linear',
+                        duration: 0,
+                    }
+                },
+                scales: {
+                    y: {
+                        grid: {
+                            drawBorder: false,
+                            display: true,
+                            drawOnChartArea: true,
+                            drawTicks: false,
+                            borderDash: [5, 5]
+                        },
+                        ticks: {
+                            display: true,
+                            padding: 20,
+                            font: {
+                                size: 11,
+                                family: "Open Sans",
+                                style: 'normal',
+                                lineHeight: 2
+                            },
+                        }
+                    },
+                    x: {
+                        grid: {
+                            drawBorder: false,
+                            display: false,
+                            drawOnChartArea: false,
+                            drawTicks: false,
+                            borderDash: [5, 5]
+                        },
+                        ticks: {
+                            display: false,
+                            // 글씨색깔
+                            color: '#333',
+                            padding: 20,
+                            font: {
+                                size: 11,
+                                family: "Open Sans",
+                                style: 'normal',
+                                lineHeight: 2
+                            },
+                        }
+                    },
+                },
+            }
+        });
+    }
+
+    function addData(chart, label, data) {
+        if (chart.data.labels.length > 100) { // 최대 데이터 포인트 수를 100으로 제한
+            chart.data.labels.shift(); // 가장 오래된 라벨 제거
+            chart.data.datasets.forEach((dataset) => {
+                dataset.data.shift(); // 가장 오래된 데이터 포인트 제거
+            });
+        }
+
+        chart.data.labels.push(label);
+        chart.data.datasets.forEach((dataset) => {
+            dataset.data.push(data);
+        });
+
+        chart.update();
+    }
+
+    async function apiData(chart, domain, sensorName, currentPlace) {
+        // 새로운 데이터 포인트 생성 (예: 사인파)
+        const fullDomain = domain + "/api/sensor/" + sensorName + "?place=" + currentPlace;
+        const option = {
+            method: "GET",
+            headers: {
+                Authorization: accessToken
+            }
+        }
+
+        let data = await (await fetch(fullDomain, option)).json();
+
+        addData(chart, data.time, data.value);
+    }
+
     document.addEventListener('DOMContentLoaded', function () {
-        changeSlideTitle();
+        const domain = "https://contxt.co.kr"
+        const currentPlace = [[${currentPlace}]];
+
+        const temperatureChart = drawChart('temperature');
+        const illuminationChart = drawChart('illumination');
+        const humidityChart = drawChart('humidity');
+        const co2Chart = drawChart('co2');
+
+        apiData(temperatureChart, domain, 'temperature', currentPlace);
+        apiData(illuminationChart, domain, 'illumination', currentPlace);
+        apiData(humidityChart, domain, 'humidity', currentPlace);
+        apiData(co2Chart, domain, 'co2', currentPlace);
+
+        setInterval(() => {
+            apiData(temperatureChart, domain, 'temperature', currentPlace);
+            apiData(illuminationChart, domain, 'illumination', currentPlace);
+            apiData(humidityChart, domain, 'humidity', currentPlace);
+            apiData(co2Chart, domain, 'co2', currentPlace);
+        }, 1000);
     });
 </script>
 <script>
@@ -713,14 +373,6 @@
         Scrollbar.init(document.querySelector('#sidenav-scrollbar'), options);
     }
 </script>
-
-
-<script>
-    $(document).ready(function () {
-        $(".GaugeMeter").gaugeMeter();
-    });
-</script>
-
 
 <!-- Github buttons -->
 <script async defer src="https://buttons.github.io/buttons.js"></script>
