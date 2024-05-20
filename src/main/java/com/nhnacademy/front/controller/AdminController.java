@@ -1,9 +1,11 @@
 package com.nhnacademy.front.controller;
 
-import com.nhnacademy.front.adaptor.SensorAdapter;
-import com.nhnacademy.front.adaptor.UserAdapter;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.nhnacademy.front.adaptor.*;
 import com.nhnacademy.front.dto.*;
 import com.nhnacademy.front.dto.IlluminationResponse.IlluminationResponse;
+import com.nhnacademy.front.dto.NotificationResponse.NotificationResponse;
 import com.nhnacademy.front.utils.AccessTokenUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -16,7 +18,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Comparator;
 import java.util.List;
+import java.time.LocalDateTime;
+
+import com.nhnacademy.front.adaptor.UserAdapter;
 
 /**
  * 어드민 권한만 접근할 수 있는 Controller
@@ -28,6 +35,7 @@ public class AdminController {
 
     private final UserAdapter userAdapter;
     private final SensorAdapter sensorAdapter;
+    private final DeviceSettingAdapter deviceSettingAdapter;
 
     @GetMapping
     public String admin() {
@@ -36,14 +44,18 @@ public class AdminController {
 
     @GetMapping("/dtsensor")
     public String profile(HttpServletRequest request, Model model) {
-        String accessToken = AccessTokenUtil.findAccessTokenInRequest(request);
-        UserDataResponse user = userAdapter.getUserData(accessToken);
+        String accessToken = Arrays.stream(request.getCookies())
+                .filter(cookie -> "accessToken".equals(cookie.getName()))
+                .findFirst()
+                .orElse(null)
+                .getValue();
 
+        UserDataResponse user = userAdapter.getUserData(accessToken);
         model.addAttribute("user", user);
-        model.addAttribute("accessToken", AccessTokenUtil.findAccessTokenInRequest(request));
 
         return "detailedSensor";
     }
+
 
     @GetMapping("/manage")
     public String manage(HttpServletRequest request, Model model,
@@ -77,21 +89,27 @@ public class AdminController {
         return "manage";
     }
 
+
     //유저등록
+
     @PostMapping("/manage/permit")
     public String permitUser(HttpServletRequest request, @RequestParam("redirectUrl") String redirectUrl) {
         List<PermitUserRequest> permitUserRequests = new ArrayList<>();
+
         String accessToken = AccessTokenUtil.findAccessTokenInRequest(request);
+
         String[] selectedUserIds = request.getParameterValues("userIds");
 
         if (selectedUserIds != null) {
             for (String userId : selectedUserIds) {
+                System.out.println("Selected User ID: " + userId);
                 PermitUserRequest permitUserRequest = new PermitUserRequest(); // 각 반복마다 새 객체 생성
                 permitUserRequest.setId(userId); // 유저 ID 설정
                 permitUserRequests.add(permitUserRequest); // 리스트에 추가
             }
             userAdapter.permitUser(accessToken, permitUserRequests); // 사용자 허용 메서드 호출
         }
+
 
         return "redirect:" + redirectUrl.substring(redirectUrl.indexOf("/admin"));
     }
@@ -114,13 +132,22 @@ public class AdminController {
         return "redirect:" + redirectUrl.substring(redirectUrl.indexOf("/admin"));
     }
 
+
+
+
+
+
+
+
     // 상세센서 정보
+
     @GetMapping("temperature/week")
     public String weeklyTemperature(HttpServletRequest request, Model model) {
         String accessToken = AccessTokenUtil.findAccessTokenInRequest(request);
 
         List<TemperatureResponse> tempWeek = sensorAdapter.getWeeklyTemperatures(accessToken);
         model.addAttribute("temperatureList", tempWeek);
+
 
         return "sensor-log/log-temperature";
     }
@@ -132,14 +159,17 @@ public class AdminController {
         List<IlluminationResponse> illuminationWeek = sensorAdapter.getWeeklyIllumination(accessToken);
         model.addAttribute("illuminationWeek", illuminationWeek);
 
+
         return "sensor-log/log-birghtness";
     }
+
 
     @GetMapping("humidity/week")
     public String weeklyHumidity(HttpServletRequest request, Model model) {
         String accessToken = AccessTokenUtil.findAccessTokenInRequest(request);
 
         List<HumidityResponse> humidityDaily = sensorAdapter.getWeeklyHumidity(accessToken);
+
         model.addAttribute("humidityList", humidityDaily);
 
         return "sensor-log/log-humidity";
@@ -150,8 +180,12 @@ public class AdminController {
         String accessToken = AccessTokenUtil.findAccessTokenInRequest(request);
 
         List<Co2Response> Co2Week = sensorAdapter.getWeeklyCo2(accessToken);
+
         model.addAttribute("co2List", Co2Week);
+
 
         return "sensor-log/log-co2";
     }
+}
+
 }

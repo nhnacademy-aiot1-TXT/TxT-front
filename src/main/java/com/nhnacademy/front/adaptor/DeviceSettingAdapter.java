@@ -1,6 +1,7 @@
 package com.nhnacademy.front.adaptor;
 
 import com.nhnacademy.front.dto.*;
+import com.nhnacademy.front.dto.NotificationResponse.NotificationResponse;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.*;
 
@@ -28,4 +29,13 @@ public interface DeviceSettingAdapter {
 
     @PutMapping("/time-interval/{timeIntervalId}")
     TimeIntervalResponse updateTimeInterval(@RequestHeader("Authorization") String accessToken, @PathVariable Long timeIntervalId, @RequestBody TimeIntervalRequest timeIntervalRequest);
+
+
+
+
+    //알람 관련
+    @GetMapping("/notification")
+    List<NotificationResponse> getNotifications(@RequestHeader("Authorization") String accessToken);
+
+
 }

@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 /**
- * User 관련 기능을 수행하는 FeignClient 인터페이스
+ * Sensor 관련 기능을 수행하는 FeignClient 인터페이스
  */
 @FeignClient(value = "sensor-data", url = "${gateway.url}")
 public interface SensorAdapter {
