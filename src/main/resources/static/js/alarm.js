@@ -25,17 +25,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
             const notifications = await response.json();
 
-            const add01 = {
-                roleId: 1,
-                contents: "제발좀 나와줘 이러다 다 죽어",
-                time: "2023-05-17T14:30:00" // ISO 8601 형식의 문자열
-            };
 
-            const add02 = {
-                roleId: 2,
-                contents: "Sample content",
-                time: "2023-05-17T14:30:00" // ISO 8601 형식의 문자열
-            };
 
             // 올바른 배열 메소드 사용
             notifications.push(add01);
