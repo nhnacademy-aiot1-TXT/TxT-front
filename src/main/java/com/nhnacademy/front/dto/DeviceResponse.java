@@ -13,4 +13,5 @@ public class DeviceResponse {
     Long placeId;
     Long deviceId;
     String deviceName;
+    Integer aiMode;
 }
