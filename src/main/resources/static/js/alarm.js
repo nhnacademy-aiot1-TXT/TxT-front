@@ -27,10 +27,6 @@ document.addEventListener("DOMContentLoaded", function() {
 
 
 
-            // 올바른 배열 메소드 사용
-            notifications.push(add01);
-            notifications.push(add02);
-
             // 시간 기준으로 정렬
             notifications.sort((a, b) => new Date(b.time) - new Date(a.time));
 
