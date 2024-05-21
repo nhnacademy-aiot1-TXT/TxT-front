@@ -19,7 +19,7 @@ class RabbitmqServiceTest {
 
     @Test
     void sendMessage() {
-        ValueMessage valueMessage = new ValueMessage(true);
+        ValueMessage valueMessage = new ValueMessage("test place", true);
         String routingKey = "test.key";
 
         rabbitmqService.sendMessage(valueMessage, routingKey);
