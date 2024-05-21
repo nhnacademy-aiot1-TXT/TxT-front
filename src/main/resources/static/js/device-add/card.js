@@ -21,18 +21,18 @@ function createConditionGroup() {
           
           <div id="collapseBody${index}" class="card-body collapse show">
               <div class="form-group">
-                  <label for="url${index}">MQTT URL</label>
-                  <input type="text" id="url${index}" name="url${index}" class="form-control" value="134.">
+                  <label for="customMode_mqttUrl[${index}]">MQTT URL</label>
+                  <input type="text" id="customMode_mqttUrl[${index}]" name="customMode_mqttUrl[${index}]" class="form-control" value="134.">
               </div>
 
               <div class="form-group">
-                  <label for="topic${index}">Topic</label>
-                  <input type="text" id="topic${index}" name="topic${index}" class="form-control" value="cus/+/">
+                  <label for="customMode_topic[${index}]">Topic</label>
+                  <input type="text" id="customMode_topic[${index}]" name="customMode_topic[${index}]" class="form-control" value="cus/+/">
               </div>
 
               <div class="form-group">
-                <label for="comparisonOperator${index}">On 비교 연산자</label>
-                <select id="comparisonOperator${index}" name="comparisonOperator${index}" class="form-control">
+                <label for="on_comparisonOperator[${index}]">On 비교 연산자</label>
+                <select id="on_comparisonOperator[${index}]" name="on_comparisonOperator[${index}]" class="form-control">
                     <option value="GREATER_THAN">&gt;</option>
                     <option value="LESS_THAN">&lt;</option>
                     <option value="EQUAL_TO">==</option>
@@ -40,13 +40,13 @@ function createConditionGroup() {
                     <option value="LESS_THAN_OR_EQUAL_TO">&lt;=</option>
                 </select>
                 
-                <label for="standardValue${index}">On 기준값</label>
-                <input type="number" step="0.1" id="onStandardValue${index}" name="standardValue${index}" class="form-control" value="30">
+                <label for="on_standardValue[${index}]">On 기준값</label>
+                <input type="number" step="0.1" id="on_standardValue[${index}]" name="on_standardValue[${index}]" class="form-control" value="30">
               </div>
               
               <div class="form-group">
-                <label for="comparisonOperator${index}">Off 비교 연산자</label>
-                <select id="comparisonOperator${index}" name="comparisonOperator${index}" class="form-control">
+                <label for="off_comparisonOperator[${index}]">Off 비교 연산자</label>
+                <select id="off_comparisonOperator[${index}]" name="off_comparisonOperator[${index}]" class="form-control">
                     <option value="GREATER_THAN">&gt;</option>
                     <option value="LESS_THAN">&lt;</option>
                     <option value="EQUAL_TO">==</option>
@@ -54,8 +54,8 @@ function createConditionGroup() {
                     <option value="LESS_THAN_OR_EQUAL_TO">&lt;=</option>
                 </select>
                 
-                <label for="standardValue${index}">Off 기준값</label>
-                <input type="number" step="0.01" id="offStandardValue${index}" name="standardValue${index}" class="form-control" value="20">
+                <label for="off_standardValue[${index}]}">Off 기준값</label>
+                <input type="number" step="0.01" id="off_standardValue[${index}]" name="off_standardValue[${index}]" class="form-control" value="20">
               </div>
           </div>`;
 
@@ -172,36 +172,42 @@ function submitForm() {
     // AI 모드 데이터 추가
     const aiModesContainer = document.getElementById('aiModesContainer');
     if (aiModesContainer.childElementCount > 0) {
-        jsonData.aiMode = {
+        jsonData.aiModeDto = {
             mqttInDtos: [],
-            minutes: document.getElementById('aiMinutes').value
+            minutes: document.getElementById('aiMode_minutes').value
         };
         for (let i = 0; i < aiModesContainer.childElementCount; i++) {
             const mqttUrl = document.getElementById(`aiMode_mqttUrl[${i}]`).value;
             const topic = document.getElementById(`aiMode_topic[${i}]`).value;
-            jsonData.aiMode.mqttInDtos.push({mqttUrl, topic});
+            jsonData.aiModeDto.mqttInDtos.push({mqttUrl, topic});
         }
     }
 
     // 커스텀 모드 데이터 추가
     const conditionsContainer = document.getElementById('conditionsContainer');
     if (conditionsContainer.childElementCount > 0) {
-        jsonData.customMode = {
+        jsonData.customModeDto = {
             mqttConditionMap: {},
-            hour: document.getElementById('hours').value,
-            minutes: document.getElementById('minutes').value
+            hour: document.getElementById('customMode_hours').value,
+            minutes: document.getElementById('customMode_minutes').value
         };
         for (let i = 0; i < conditionsContainer.childElementCount; i++) {
-            const mqttUrl = document.getElementById(`url${i}`).value;
-            const topic = document.getElementById(`topic${i}`).value;
-            const onComparisonOperator = document.getElementById(`comparisonOperator${i}`).value;
-            const onStandardValue = document.getElementById(`onStandardValue${i}`).value;
-            const offComparisonOperator = document.getElementById(`comparisonOperator${i}`).value;
-            const offStandardValue = document.getElementById(`offStandardValue${i}`).value;
+            const mqttUrl = document.getElementById(`customMode_mqttUrl[${i}]`).value;
+            const topic = document.getElementById(`customMode_topic[${i}]`).value;
+            const onComparisonOperator = document.getElementById(`on_comparisonOperator[${i}]`).value;
+            const onStandardValue = document.getElementById(`on_standardValue[${i}]`).value;
+            const offComparisonOperator = document.getElementById(`off_comparisonOperator[${i}]`).value;
+            const offStandardValue = document.getElementById(`off_standardValue[${i}]`).value;
 
-            jsonData.customMode.mqttConditionMap[`mqttIn${i}`] = {
-                mqttUrl,
-                topic,
+
+            let mqttInfo = {
+                "mqttUrl": mqttUrl,
+                "topic": topic
+            }
+
+            let mqttInDto = JSON.stringify(mqttInfo)
+
+            jsonData.customModeDto.mqttConditionMap[mqttInDto] = {
                 onCondition: {comparisonOperator: onComparisonOperator, standardValue: onStandardValue},
                 offCondition: {comparisonOperator: offComparisonOperator, standardValue: offStandardValue}
             };
@@ -222,7 +228,7 @@ function submitForm() {
         .then(response => {
             if (response.ok) {
                 alert('장치가 성공적으로 등록되었습니다.');
-                window.location.href = '/admin/device/add';
+                window.location.href = '/admin/device/register';
             } else {
                 return response.json().then(data => {
                     console.error('Error:', data);

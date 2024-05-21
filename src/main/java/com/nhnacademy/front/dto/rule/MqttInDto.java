@@ -9,6 +9,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class MqttInDto {
-    private String mattUrl;
+    private String mqttUrl;
     private String topic;
 }

@@ -1,13 +1,13 @@
 package com.nhnacademy.front.controller;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.nhnacademy.front.adaptor.SensorAdapter;
 import com.nhnacademy.front.adaptor.UserAdapter;
 import com.nhnacademy.front.dto.*;
 import com.nhnacademy.front.dto.IlluminationResponse.IlluminationResponse;
+import com.nhnacademy.front.dto.rule.RuleDto;
+import com.nhnacademy.front.service.DeviceRegisterService;
 import com.nhnacademy.front.utils.AccessTokenUtil;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 /**
  * 어드민 권한만 접근할 수 있는 Controller
@@ -29,9 +28,8 @@ public class AdminController {
 
     private final UserAdapter userAdapter;
     private final SensorAdapter sensorAdapter;
+    private final DeviceRegisterService deviceRegisterService;
 
-    @Autowired
-    private ObjectMapper objectMapper;
 
     @GetMapping
     public String admin() {
@@ -159,29 +157,15 @@ public class AdminController {
         return "sensor-log/log-co2";
     }
 
-    @GetMapping("device/add")
+    @GetMapping("device/register")
     public String deviceAddPage() {
-
-        return "device-add";
+        return "device-register";
     }
 
-
-    //    @PostMapping("/device/register")
-//    public ResponseEntity<String> registerRuleInfoFlow(@RequestBody Map<String, String> param) {
-//        System.out.println("device register" + param);
-//        return ResponseEntity.ok("Flow registered successfully!");
-//    }
-//
     @PostMapping("/device/register")
-    public ResponseEntity<String> getDeviceRegisterInfo(@RequestBody String json) {
-        try {
-            System.out.println("Received JSON: " + json);
-            Map<String, Object> param = objectMapper.readValue(json, Map.class);
-            System.out.println("Parsed JSON: " + param);
-            return ResponseEntity.ok("Flow registered successfully!");
-        } catch (Exception e) {
-            e.printStackTrace();
-            return ResponseEntity.status(400).body("Invalid JSON format");
-        }
+    public ResponseEntity<String> getDeviceRegisterInfo(@RequestBody String deviceRegisterInfo) {
+        RuleDto ruleDto = deviceRegisterService.parseDeviceRegisterInfo(deviceRegisterInfo);
+        
+        return ResponseEntity.ok("Flow registered successfully!");
     }
 }
