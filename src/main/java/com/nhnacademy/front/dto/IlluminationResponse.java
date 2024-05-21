@@ -1,4 +1,4 @@
-package com.nhnacademy.front.dto.IlluminationResponse;
+package com.nhnacademy.front.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
