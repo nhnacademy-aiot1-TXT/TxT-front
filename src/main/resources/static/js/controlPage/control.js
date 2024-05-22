@@ -5,7 +5,7 @@ document.addEventListener('DOMContentLoaded', function () {
         let isOn = lightSwitch.checked; // checkbox의 상태를 확인합니다.
 
         console.log(isOn);
-        fetch(`/control/light?placeName=${placeName}&isOn=${isOn}`, {
+        fetch(`/control/light?placeCode=${placeCode}&isOn=${isOn}`, {
             method: 'GET',
         }).then(function (response) {
             console.log('light control success');
@@ -19,7 +19,7 @@ document.addEventListener('DOMContentLoaded', function () {
         let isOn = airconditionerSwitch.checked; // checkbox의 상태를 확인합니다.
 
 
-        fetch(`/control/air-conditioner?placeName=${placeName}&isOn=${isOn}`, {
+        fetch(`/control/air-conditioner?placeCode=${placeCode}&isOn=${isOn}`, {
             method: 'GET',
         }).then(function (response) {
             console.log('airconditioner control success');
@@ -33,7 +33,7 @@ document.addEventListener('DOMContentLoaded', function () {
         let isOn = aircleanerSwitch.checked; // checkbox의 상태를 확인합니다.
 
         console.log(isOn);
-        fetch(`/control/air-cleaner?placeName=${placeName}&isOn=${isOn}`, {
+        fetch(`/control/air-cleaner?placeCode=${placeCode}&isOn=${isOn}`, {
             method: 'GET',
         }).then(function (response) {
             console.log('aircleaner control success');
@@ -47,7 +47,7 @@ document.addEventListener('DOMContentLoaded', function () {
         let isOn = modeSwitch.checked; // checkbox의 상태를 확인합니다.
 
         console.log(isOn);
-        fetch(`/control/ai-mode?placeName=${placeName}&isOn=${isOn}`, {
+        fetch(`/control/ai-mode?placeCode=${placeCode}&isOn=${isOn}`, {
             method: 'GET',
         }).then(function (response) {
             console.log('mode control success');

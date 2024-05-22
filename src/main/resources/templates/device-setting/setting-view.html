@@ -53,9 +53,9 @@
                 <th:block
                         th:replace="'device-setting/' + ${deviceSetting.getDevice().getDeviceName().toLowerCase()} + '-setting'"/>
             </div>
-            <div class="col" th:if="${currentPlace == null}">
-                <th:block th:replace="device-setting/detection-setting"/>
-            </div>
+        </div>
+        <div class="col d-flex justify-content-center align-items-center" th:if="${currentPlace == null}">
+            <th:block th:replace="device-setting/detection-setting"/>
         </div>
     </div>
     <div th:replace="fragments/time-interval-setting"></div>
