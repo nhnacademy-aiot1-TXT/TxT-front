@@ -13,7 +13,7 @@ document.addEventListener("DOMContentLoaded", function() {
                 }
 
             }
-            const response = await fetch('https://contxt.co.kr/api/common/notification', option);
+            const response = await fetch('http://localhost:8000/api/common/notification', option);
 
 
 
@@ -30,7 +30,9 @@ document.addEventListener("DOMContentLoaded", function() {
             // 시간 기준으로 정렬
             notifications.sort((a, b) => new Date(b.time) - new Date(a.time));
 
-            const alarmListHtml = notifications.map(notification => `
+            const chunk = notifications.slice(0,5);
+
+            const alarmListHtml = chunk.slice(chunk => `
                 <li class="mb-2">
                     <a class="dropdown-item border-radius-md">
                         <div class="d-flex py-1">
@@ -39,7 +41,7 @@ document.addEventListener("DOMContentLoaded", function() {
                             </div>
                             <div class="d-flex flex-column justify-content-center">
                                 <h6 class="text-sm font-weight-normal mb-1">
-                                    <span class="font-weight-bold">${notification.contents}</span> from vivid
+                                    <span class="font-weight-bold">${chunk.contents}</span> from vivid
                                 </h6>
                                 <p class="text-xs text-secondary mb-0">
                                     <i class="fa fa-clock me-1"></i>
