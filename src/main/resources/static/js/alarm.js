@@ -32,7 +32,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
             const chunk = notifications.slice(0,5);
 
-            const alarmListHtml = chunk.map(chunk => `
+            const alarmListHtml = chunk.map(notification => `
                 <li class="mb-2">
                     <a class="dropdown-item border-radius-md">
                         <div class="d-flex py-1">
@@ -41,7 +41,7 @@ document.addEventListener("DOMContentLoaded", function() {
                             </div>
                             <div class="d-flex flex-column justify-content-center">
                                 <h6 class="text-sm font-weight-normal mb-1">
-                                    <span class="font-weight-bold">${chunk.contents}</span>
+                                    <span class="font-weight-bold">${notification.contents}</span>
                                 </h6>
                                 <p class="text-xs text-secondary mb-0">
                                     <i class="fa fa-clock me-1"></i>
