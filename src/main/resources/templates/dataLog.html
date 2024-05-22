@@ -95,7 +95,7 @@
                         </thead>
                         <tbody id="weeklyBody" class="mb-0 text-xm">
                         <tr th:each="data : ${sensorDataList}">
-                            <td th:text="${period.equals('day') ? #temporals.format(data.time, 'hh:mm') : #temporals.format(data.time, 'yyyy-MM-dd')}"></td>
+                            <td th:text="${period.equals('day') ? #temporals.format(data.time, 'hh:mm a') : #temporals.format(data.time, 'yyyy-MM-dd')}"></td>
                             <td th:text="${data.maxValue}"></td>
                             <td th:text="${data.minValue}"></td>
                         </tr>
@@ -122,7 +122,18 @@
         let period = [[${period}]];
         let placeList = [[${placeList}]];
         let placeName = [[${currentPlace.getPlaceName()}]];
+        let placeCode = [[${currentPlace.getPlaceCode()}]];
         let sensorUnitEmoticon = '';
+
+        let placeCodeElement = document.getElementById("placeCode");
+        placeCodeElement.value = placeCode;
+
+        let sensorTypeElement = document.getElementById("sensorType");
+        sensorTypeElement.value = sensorType;
+
+        let periodElement = document.getElementById("period");
+        periodElement.value = period;
+
 
         switch (sensorType) {
             case 'temperature':
