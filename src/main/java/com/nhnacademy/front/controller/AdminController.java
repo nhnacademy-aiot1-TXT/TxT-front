@@ -4,7 +4,6 @@ import com.nhnacademy.front.adaptor.DeviceSettingAdapter;
 import com.nhnacademy.front.adaptor.SensorAdapter;
 import com.nhnacademy.front.adaptor.UserAdapter;
 import com.nhnacademy.front.dto.*;
-import com.nhnacademy.front.dto.IlluminationResponse.IlluminationResponse;
 import com.nhnacademy.front.utils.AccessTokenUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -34,19 +33,6 @@ public class AdminController {
     @GetMapping
     public String admin() {
         return "redirect:/";
-    }
-
-    @GetMapping("/detail-sensor-info")
-    public String profile(HttpServletRequest request,
-                          @RequestParam(value = "currentPlace", defaultValue = "class_a") String currentPlace,
-                          Model model) {
-        String accessToken = AccessTokenUtil.findAccessTokenInRequest(request);
-
-        model.addAttribute("accessToken", AccessTokenUtil.findAccessTokenInRequest(request));
-        model.addAttribute("currentPlace", currentPlace);
-        model.addAttribute("placeList", deviceSettingAdapter.getPlaceList(AccessTokenUtil.findAccessTokenInRequest(request)));
-
-        return "detailedSensor";
     }
 
     @GetMapping("/manage")
@@ -119,43 +105,34 @@ public class AdminController {
     }
 
     // 상세센서 정보
-    @GetMapping("temperature/week")
-    public String weeklyTemperature(HttpServletRequest request, Model model) {
+    @GetMapping("/detail-sensor-info")
+    public String profile(HttpServletRequest request,
+                          @RequestParam(value = "currentPlace", defaultValue = "class_a") String currentPlace,
+                          Model model) {
         String accessToken = AccessTokenUtil.findAccessTokenInRequest(request);
 
-        List<TemperatureResponse> tempWeek = sensorAdapter.getWeeklyTemperatures(accessToken);
-        model.addAttribute("temperatureList", tempWeek);
+        model.addAttribute("accessToken", accessToken);
+        model.addAttribute("currentPlace", currentPlace);
+        model.addAttribute("placeList", deviceSettingAdapter.getPlaceList(accessToken));
 
-        return "sensor-log/log-temperature";
+        return "detailedSensor";
     }
 
-    @GetMapping("illumination/week")
-    public String weeklyIllumination(HttpServletRequest request, Model model) {
+    @GetMapping("/detail-sensor-info/log")
+    public String sensorLog(HttpServletRequest request,
+                            @RequestParam(value = "currentPlace", defaultValue = "class_a") String currentPlace,
+                            @RequestParam(value = "sensorType", defaultValue = "temperature") String sensorType,
+                            @RequestParam(value = "period", defaultValue = "day") String period,
+                            Model model){
+
         String accessToken = AccessTokenUtil.findAccessTokenInRequest(request);
 
-        List<IlluminationResponse> illuminationWeek = sensorAdapter.getWeeklyIllumination(accessToken);
-        model.addAttribute("illuminationWeek", illuminationWeek);
+        model.addAttribute("currentPlace", currentPlace);
+        model.addAttribute("sensorType", sensorType);
+        model.addAttribute("period", period);
+        model.addAttribute("placeList", deviceSettingAdapter.getPlaceList(accessToken));
+        model.addAttribute("sensorDataList", sensorAdapter.getSensorData(accessToken, currentPlace, sensorType, period));
 
-        return "sensor-log/log-illumination";
-    }
-
-    @GetMapping("humidity/week")
-    public String weeklyHumidity(HttpServletRequest request, Model model) {
-        String accessToken = AccessTokenUtil.findAccessTokenInRequest(request);
-
-        List<HumidityResponse> humidityDaily = sensorAdapter.getWeeklyHumidity(accessToken);
-        model.addAttribute("humidityList", humidityDaily);
-
-        return "sensor-log/log-humidity";
-    }
-
-    @GetMapping("co2/week")
-    public String weeklyCo2(HttpServletRequest request, Model model) {
-        String accessToken = AccessTokenUtil.findAccessTokenInRequest(request);
-
-        List<Co2Response> Co2Week = sensorAdapter.getWeeklyCo2(accessToken);
-        model.addAttribute("co2List", Co2Week);
-
-        return "sensor-log/log-co2";
+        return "dataLog";
     }
 }
