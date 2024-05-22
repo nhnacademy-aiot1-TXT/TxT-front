@@ -18,7 +18,7 @@
             crossorigin="anonymous"></script>
     <script th:inline="javascript">const accessToken = [[${accessToken}]];</script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script src="/js/device-add/card.js"></script>
+    <script src="/js/device-register/device-card.js"></script>
     <style>
         .page {
             display: none;
@@ -62,8 +62,8 @@
             <div class="form-group">
                 <label for="occupancyCheckRequired">재실 필요 유무</label>
                 <select id="occupancyCheckRequired" name="occupancyCheckRequired" class="form-control">
-                    <option value="true">예</option>
-                    <option value="false">아니오</option>
+                    <option value="true">Yes</option>
+                    <option value="false">No</option>
                 </select>
             </div>
         </div>
@@ -71,13 +71,14 @@
         <div class="page ai-mode">
             <h2>AI 모드 설정</h2>
             <div id="aiModesContainer"></div>
-
             <button type="button" onclick="createAiModeGroup()">AI Mode 추가</button>
             <div class="form-group mb-3 row">
-                <label for="aiMode_minutes" class="form-label col-sm-3">메세지 보내는 간격 (분)</label>
-                <div class="col-sm-9">
-                    <input type="number" id="aiMode_minutes" name="aiMode_minutes" min="0" max="10" class="form-control"
-                           value="5">
+                <div class="form-group">
+                    <h4 class="form-label col-sm-3">메시지 보내는 간격</h4>
+                    <label for="aiMode_hours">Hours</label>
+                    <input type="number" id="aiMode_hours" name="aiMode_hours" min="0" max="23" value="1">
+                    <label for="aiMode_minutes">Minutes</label>
+                    <input type="number" id="aiMode_minutes" name="aiMode_minutes" min="0" max="59" value="0">
                 </div>
             </div>
         </div>
@@ -87,9 +88,9 @@
             <div id="conditionsContainer"></div>
             <button type="button" onclick="createConditionGroup()">Condition 추가</button>
             <div class="form-group">
+                <h4 class="form-label col-sm-3">메시지 보내는 간격</h4>
                 <label for="customMode_hours">Hours</label>
-                <input type="number" id="customMode_hours" name="customMode_hours" min="0" max="23" value="12">
-
+                <input type="number" id="customMode_hours" name="customMode_hours" min="0" max="23" value="1">
                 <label for="customMode_minutes">Minutes</label>
                 <input type="number" id="customMode_minutes" name="customMode_minutes" min="0" max="59" value="30">
             </div>
