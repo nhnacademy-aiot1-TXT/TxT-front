@@ -107,31 +107,43 @@ public class AdminController {
     // 상세센서 정보
     @GetMapping("/detail-sensor-info")
     public String profile(HttpServletRequest request,
-                          @RequestParam(value = "currentPlace", defaultValue = "class_a") String currentPlace,
+                          @RequestParam(value = "placeCode", defaultValue = "class_a") String placeCode,
                           Model model) {
         String accessToken = AccessTokenUtil.findAccessTokenInRequest(request);
+        List<PlaceResponse> placeList = deviceSettingAdapter.getPlaceList(AccessTokenUtil.findAccessTokenInRequest(request));
+
+        for (PlaceResponse p : placeList) {
+            if (p.getPlaceCode().equals(placeCode)) {
+                model.addAttribute("currentPlace", p);
+            }
+        }
 
         model.addAttribute("accessToken", accessToken);
-        model.addAttribute("currentPlace", currentPlace);
-        model.addAttribute("placeList", deviceSettingAdapter.getPlaceList(accessToken));
+        model.addAttribute("placeList", placeList);
 
         return "detailedSensor";
     }
 
     @GetMapping("/detail-sensor-info/log")
     public String sensorLog(HttpServletRequest request,
-                            @RequestParam(value = "currentPlace", defaultValue = "class_a") String currentPlace,
+                            @RequestParam(value = "placeCode", defaultValue = "class_a") String placeCode,
                             @RequestParam(value = "sensorType", defaultValue = "temperature") String sensorType,
                             @RequestParam(value = "period", defaultValue = "day") String period,
-                            Model model){
+                            Model model) {
 
         String accessToken = AccessTokenUtil.findAccessTokenInRequest(request);
+        List<PlaceResponse> placeList = deviceSettingAdapter.getPlaceList(AccessTokenUtil.findAccessTokenInRequest(request));
 
-        model.addAttribute("currentPlace", currentPlace);
+        for (PlaceResponse p : placeList) {
+            if (p.getPlaceCode().equals(placeCode)) {
+                model.addAttribute("currentPlace", p);
+            }
+        }
+
         model.addAttribute("sensorType", sensorType);
         model.addAttribute("period", period);
-        model.addAttribute("placeList", deviceSettingAdapter.getPlaceList(accessToken));
-        model.addAttribute("sensorDataList", sensorAdapter.getSensorData(accessToken, currentPlace, sensorType, period));
+        model.addAttribute("placeList", placeList);
+        model.addAttribute("sensorDataList", sensorAdapter.getSensorData(accessToken, placeCode, sensorType, period));
 
         return "dataLog";
     }

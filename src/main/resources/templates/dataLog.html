@@ -40,8 +40,8 @@
                     <div class="row">
                         <div class="col-3">
                             <div class="form-group">
-                                <label for="currentPlace">장소</label>
-                                <select class="form-control" id="currentPlace" name="currentPlace">
+                                <label for="placeCode">장소</label>
+                                <select class="form-control" id="placeCode" name="placeCode">
                                     <option th:each="place : ${placeList}"
                                             th:text="${place.getPlaceName()}"
                                             th:value="${place.getPlaceCode()}"></option>
@@ -121,14 +121,8 @@
         let sensorType = [[${sensorType}]];
         let period = [[${period}]];
         let placeList = [[${placeList}]];
-        let currentPlace = [[${currentPlace}]];
+        let placeName = [[${currentPlace.getPlaceName()}]];
         let sensorUnitEmoticon = '';
-
-        placeList.forEach(function (place){
-           if (place.placeCode === currentPlace){
-               currentPlace = place.placeName;
-           }
-        });
 
         switch (sensorType) {
             case 'temperature':
@@ -159,7 +153,7 @@
                 break;
         }
 
-        document.getElementById('titleSensorData').textContent = currentPlace + '  ' + sensorType + ' ' + period + ' 로그';
+        document.getElementById('titleSensorData').textContent = placeName + '  ' + sensorType + ' ' + period + ' 로그';
         document.getElementById('theadMaxSensorData').textContent = '최고 ' + sensorType + ' (' + sensorUnitEmoticon + ')';
         document.getElementById('theadMinSensorData').textContent = '최저 ' + sensorType + ' (' + sensorUnitEmoticon + ')';
 
