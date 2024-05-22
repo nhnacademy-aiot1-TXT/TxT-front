@@ -15,8 +15,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpServletRequest;
+import java.time.Instant;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * 어드민 권한만 접근할 수 있는 Controller
@@ -133,6 +136,14 @@ public class AdminController {
 
         String accessToken = AccessTokenUtil.findAccessTokenInRequest(request);
         List<PlaceResponse> placeList = deviceSettingAdapter.getPlaceList(AccessTokenUtil.findAccessTokenInRequest(request));
+        List<SensorResponse> sensorData = sensorAdapter.getSensorData(accessToken, placeCode, sensorType, period)
+                .stream()
+                .map(d -> {
+                    Instant newTime = d.getTime().minus(9, ChronoUnit.HOURS);
+                    d.setTime(newTime);
+                    return d;
+                })
+                .collect(Collectors.toList());
 
         for (PlaceResponse p : placeList) {
             if (p.getPlaceCode().equals(placeCode)) {
@@ -143,7 +154,7 @@ public class AdminController {
         model.addAttribute("sensorType", sensorType);
         model.addAttribute("period", period);
         model.addAttribute("placeList", placeList);
-        model.addAttribute("sensorDataList", sensorAdapter.getSensorData(accessToken, placeCode, sensorType, period));
+        model.addAttribute("sensorDataList", sensorData);
 
         return "dataLog";
     }
