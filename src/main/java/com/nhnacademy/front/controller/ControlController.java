@@ -35,6 +35,7 @@ public class ControlController {
     private static final String AUTO_MODE = "auto_mode:";
     private static final String REDIRECT_CONTROL = "redirect:/control";
     private final DeviceSettingAdapter deviceSettingAdapter;
+    private final Map<String, String> deviceIconMap;
 
     @GetMapping
     public String controlView() {
@@ -59,7 +60,8 @@ public class ControlController {
         statusMap.put(LIGHT, lightStatus);
         statusMap.put(AIR_CONDITIONER, airConditionerStatus);
         statusMap.put(AIR_CLEANER, airCleanerStatus);
-        
+
+        model.addAttribute("deviceIconMap", deviceIconMap);
         model.addAttribute("status", statusMap);
         model.addAttribute("placeList", placeList);
         model.addAttribute("currentPlace", currentPlace);
@@ -71,8 +73,8 @@ public class ControlController {
     }
 
     @GetMapping("/light")
-    public String light(@RequestParam String placeName, @RequestParam Boolean isOn) {
-        ValueMessage valueMessage = new ValueMessage(placeName, isOn);
+    public String light(@RequestParam String placeCode, @RequestParam Boolean isOn) {
+        ValueMessage valueMessage = new ValueMessage(placeCode, isOn);
 
         rabbitmqService.sendMessage(valueMessage, ROUTE_KEY_PREFIX.concat(LIGHT));
 
@@ -80,8 +82,8 @@ public class ControlController {
     }
 
     @GetMapping("/air-conditioner")
-    public String airConditioner(@RequestParam String placeName, @RequestParam Boolean isOn) {
-        ValueMessage valueMessage = new ValueMessage(placeName, isOn);
+    public String airConditioner(@RequestParam String placeCode, @RequestParam Boolean isOn) {
+        ValueMessage valueMessage = new ValueMessage(placeCode, isOn);
 
         rabbitmqService.sendMessage(valueMessage, ROUTE_KEY_PREFIX.concat(AIR_CONDITIONER));
 
@@ -89,8 +91,8 @@ public class ControlController {
     }
 
     @GetMapping("/air-cleaner")
-    public String airCleaner(@RequestParam String placeName, @RequestParam Boolean isOn) {
-        ValueMessage valueMessage = new ValueMessage(placeName, isOn);
+    public String airCleaner(@RequestParam String placeCode, @RequestParam Boolean isOn) {
+        ValueMessage valueMessage = new ValueMessage(placeCode, isOn);
 
         rabbitmqService.sendMessage(valueMessage, ROUTE_KEY_PREFIX.concat(AIR_CLEANER));
 
@@ -98,8 +100,8 @@ public class ControlController {
     }
 
     @GetMapping("/ai-mode")
-    public String aiMode(@RequestParam String placeName, @RequestParam Boolean isOn) {
-        redisUtil.setMode(AUTO_MODE.concat(placeName), isOn);
+    public String aiMode(@RequestParam String placeCode, @RequestParam Boolean isOn) {
+        redisUtil.setMode(AUTO_MODE.concat(placeCode), isOn);
 
         return REDIRECT_CONTROL;
     }

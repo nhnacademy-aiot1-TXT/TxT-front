@@ -14,5 +14,6 @@ import java.time.LocalTime;
 public class PlaceResponse {
     private Long placeId;
     private String placeName;
+    private String placeCode;
     private LocalTime cycle;
 }
