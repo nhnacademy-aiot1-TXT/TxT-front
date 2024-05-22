@@ -32,16 +32,16 @@ document.addEventListener("DOMContentLoaded", function() {
 
             const chunk = notifications.slice(0,5);
 
-            const alarmListHtml = chunk.slice(chunk => `
+            const alarmListHtml = chunk.map(chunk => `
                 <li class="mb-2">
                     <a class="dropdown-item border-radius-md">
                         <div class="d-flex py-1">
                             <div class="my-auto">
-                                <img src="/img/team-4.jpg" class="avatar avatar-sm me-3">
+                                <img src="/img/illustrations/bell_icon.svg" class="avatar avatar-sm me-3">
                             </div>
                             <div class="d-flex flex-column justify-content-center">
                                 <h6 class="text-sm font-weight-normal mb-1">
-                                    <span class="font-weight-bold">${chunk.contents}</span> from vivid
+                                    <span class="font-weight-bold">${chunk.contents}</span>
                                 </h6>
                                 <p class="text-xs text-secondary mb-0">
                                     <i class="fa fa-clock me-1"></i>
