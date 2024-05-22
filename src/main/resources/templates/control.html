@@ -17,7 +17,7 @@
     <script src="https://kit.fontawesome.com/42d5adcbca.js" crossorigin="anonymous"></script>
     <script src="/js/controlPage/control.js"></script>
     <script th:inline="javascript">
-        const placeName = [[${currentPlace.getPlaceName()}]];
+        const placeCode = [[${currentPlace.getPlaceCode()}]];
     </script>
 
     <link href="/css/nucleo-svg.css" rel="stylesheet"/>
@@ -53,11 +53,14 @@
                     th:text="${currentPlace.getPlaceName().toUpperCase()}">
                 </h1>
 
-                <div class="row" style="margin-top: 250px; margin-left: 3%; margin-right: 3%; padding-bottom: 80px;">
+                <div class="row"
+                     style="margin-top: 250px; margin-left: 3%; margin-right: 3%; padding-bottom: 80px;">
                     <div th:each="device : ${deviceList}" class="card bg-cover min-height-150 col-2 z-index-2"
-                         id="card-bulb"
-                         style="min-width: 325px; background-color: rgba(248,248,255,0.8); margin-right: 4%; margin-left: 4%; margin-top: 3%;">
+                         style="min-width: 325px; background-color: rgba(248,248,255,0.8); margin-right: 4%; margin-left: 3%; margin-top: 3%;">
                         <div class="card-body z-index-2" style="margin-top: 10px;">
+                            <span class="material-symbols-outlined" style="font-size:70px; color:darkblue;"
+                                  th:text="${deviceIconMap[device.getDeviceName().toLowerCase()]}">
+                            </span>
                             <h2 class="text" style="color: royalblue; font-size: 30px;"
                                 th:text="${device.getDeviceName().toUpperCase()}"></h2>
                             <div class="form-check form-switch">
@@ -73,8 +76,11 @@
                         <div class="border-radius-lg"></div>
                     </div>
                     <div th:if="${aiMode}" class="card bg-cover min-height-150 col-2 z-index-2 " id="card-ai"
-                         style="min-width: 325px; background-color: rgb(255,255,255,0.8); margin-right: 4%; margin-left: 4%; margin-top: 3%;">
+                         style="min-width: 325px; background-color: rgb(255,255,255,0.8); margin-right: 4%; margin-left: 3%; margin-top: 3%;">
                         <div class="card-body z-index-2" style="margin-top: 10px;">
+                            <span class="material-symbols-outlined" style="font-size:70px; color:darkblue;"
+                                  th:text="${deviceIconMap['aiMode']}">
+                            </span>
                             <h2 class="text" style="color: royalblue; font-size: 30px;">AI Mode</h2>
                             <div class="form-check form-switch">
                                 <input class="form-check-input" type="checkbox" id="mode" th:checked="${mode}">
