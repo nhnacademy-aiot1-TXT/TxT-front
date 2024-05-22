@@ -12,7 +12,7 @@ import java.time.Instant;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class MonthlySensorResponse {
+public class SensorResponse {
     private Instant time;
     @JsonAlias({"maxTemperature", "maxHumidity", "maxIllumination", "maxCo2"})
     private Float maxValue;
