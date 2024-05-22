@@ -81,7 +81,7 @@ class ControlControllerTest {
         boolean isOn = true;
         String place = "test place";
         mockMvc.perform(get("/control/light")
-                        .param("placeName", place)
+                        .param("placeCode", place)
                         .param("isOn", Boolean.toString(isOn)))
                 .andDo(print())
                 .andExpect(status().is3xxRedirection())
@@ -95,7 +95,7 @@ class ControlControllerTest {
         boolean isOn = true;
         String place = "test place";
         mockMvc.perform(get("/control/air-conditioner")
-                        .param("placeName", place)
+                        .param("placeCode", place)
                         .param("isOn", Boolean.toString(isOn)))
                 .andDo(print())
                 .andExpect(status().is3xxRedirection())
@@ -109,7 +109,7 @@ class ControlControllerTest {
         boolean isOn = true;
         String place = "test place";
         mockMvc.perform(get("/control/air-cleaner")
-                        .param("placeName", place)
+                        .param("placeCode", place)
                         .param("isOn", Boolean.toString(isOn)))
                 .andDo(print())
                 .andExpect(status().is3xxRedirection())
@@ -123,7 +123,7 @@ class ControlControllerTest {
         boolean isOn = true;
         String place = "test place";
         mockMvc.perform(get("/control/ai-mode")
-                        .param("placeName", place)
+                        .param("placeCode", place)
                         .param("isOn", Boolean.toString(isOn)))
                 .andDo(print())
                 .andExpect(status().is3xxRedirection())
