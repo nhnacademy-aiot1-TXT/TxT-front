@@ -59,7 +59,7 @@ public class ExceptionAdvice {
             return "redirect:/";
         }
 
-        return "redirect:/logout";
+        return "redirect:/error";
     }
 
     @ExceptionHandler(DeviceRegisterException.class)

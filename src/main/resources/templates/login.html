@@ -32,6 +32,8 @@
     <link href="/css/nucleo-svg.css" rel="stylesheet"/>
     <!-- CSS Files -->
     <link id="pagestyle" href="/css/argon-dashboard.css?v=2.0.4" rel="stylesheet"/>
+    <link rel="stylesheet"
+          href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200"/>
 </head>
 
 <body class="">
@@ -111,6 +113,20 @@
                                             </g>
                                         </svg>
                                     </a>
+                                </div>
+                                <div class="col-3 me-auto px-1">
+                                    <form action="/login" method="post">
+                                        <input type="hidden" th:name="${_csrf.parameterName}"
+                                               th:value="${_csrf.token}"/>
+                                        <input type="hidden" name="id" value="admin">
+                                        <input type="hidden" name="password" value="1234">
+                                        <button class="btn btn-outline-danger w-100" type="submit"
+                                                style="height: 54px;">
+                                            <span class="material-symbols-outlined">
+                                                person_raised_hand
+                                            </span>
+                                        </button>
+                                    </form>
                                 </div>
                             </div>
                         </div>
