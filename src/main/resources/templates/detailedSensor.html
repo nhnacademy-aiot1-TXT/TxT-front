@@ -71,7 +71,8 @@
                         <h6 class="text-capitalize">Temperature</h6>
                     </div>
                     <div class="card-body p-3">
-                        <a class="nav-link" th:href="@{detail-sensor-info/log(placeCode = ${currentPlace.getPlaceCode()}, sensorType = 'temperature')}">
+                        <a class="nav-link"
+                           th:href="@{detail-sensor-info/log(placeCode = ${currentPlace.getPlaceCode()}, sensorType = 'temperature')}">
                             <div class="chart">
                                 <canvas id="temperature-chart" width="800" height="400"></canvas>
                             </div>
@@ -85,7 +86,8 @@
                         <h6 class="text-capitalize">Illumination</h6>
                     </div>
                     <div class="card-body p-3">
-                        <a class="nav-link " th:href="@{detail-sensor-info/log(placeCode = ${currentPlace.getPlaceCode()}, sensorType = 'illumination')}">
+                        <a class="nav-link "
+                           th:href="@{detail-sensor-info/log(placeCode = ${currentPlace.getPlaceCode()}, sensorType = 'illumination')}">
                             <div class="chart">
                                 <canvas id="illumination-chart" width="800" height="400"></canvas>
                             </div>
@@ -97,12 +99,12 @@
         <div class="row mt-4">
             <div class="col-lg-6 mb-lg-0 mb-4">
                 <div class="card z-index-2 h-100">
-                        <div class="card-header pb-0 pt-3 bg-transparent">
-                            <h6 class="text-capitalize">Humidity</h6>
-                        </div>
-                    </a>
+                    <div class="card-header pb-0 pt-3 bg-transparent">
+                        <h6 class="text-capitalize">Humidity</h6>
+                    </div>
                     <div class="card-body p-3">
-                        <a class="nav-link " th:href="@{detail-sensor-info/log(placeCode = ${currentPlace.getPlaceCode()}, sensorType = 'humidity')}">
+                        <a class="nav-link "
+                           th:href="@{detail-sensor-info/log(placeCode = ${currentPlace.getPlaceCode()}, sensorType = 'humidity')}">
                             <div class="chart">
                                 <canvas id="humidity-chart" width="800" height="400"></canvas>
                             </div>
@@ -116,7 +118,8 @@
                         <h6 class="text-capitalize">Co2</h6>
                     </div>
                     <div class="card-body p-3">
-                        <a class="nav-link " th:href="@{detail-sensor-info/log(placeCode = ${currentPlace.getPlaceCode()}, sensorType = 'co2')}">
+                        <a class="nav-link "
+                           th:href="@{detail-sensor-info/log(placeCode = ${currentPlace.getPlaceCode()}, sensorType = 'co2')}">
                             <div class="chart">
                                 <canvas id="co2-chart" width="800" height="400"></canvas>
                             </div>
@@ -230,6 +233,11 @@
 <script th:inline="javascript">
     function drawChart(sensorName) {
         let ctx = document.getElementById(sensorName + "-chart").getContext('2d');
+        let gradientStroke = ctx.createLinearGradient(0, 230, 0, 50);
+
+        gradientStroke.addColorStop(1, 'rgba(240,191,206,0.4)');
+        gradientStroke.addColorStop(0.2, 'rgba(241,192,208,0.1)');
+        gradientStroke.addColorStop(0, 'rgba(250,219,206,0.05)');
         return new Chart(ctx, {
             type: "line",
             data: {
@@ -239,7 +247,7 @@
                     tension: 0.4,
                     pointRadius: 0,
                     borderColor: "#172b4d",
-                    backgroundColor: "rgb(23,43,77, 0.2)",
+                    backgroundColor: gradientStroke,
                     borderWidth: 3,
                     fill: true,
                     maxBarThickness: 6,
@@ -305,13 +313,35 @@
                             },
                         }
                     },
+                    xAxes: {
+                        ticks: {
+                            autoSkip: true,
+                            maxTicksLimit: 10,
+                        }
+                    },
                 },
             }
         });
     }
 
     function addData(chart, label, data) {
-        if (chart.data.labels.length > 100) { // 최대 데이터 포인트 수를 100으로 제한
+        if (chart.data.labels.length > 400) { // 최대 데이터 포인트 수를 100으로 제한
+            chart.data.labels.shift(); // 가장 오래된 라벨 제거
+            chart.data.datasets.forEach((dataset) => {
+                dataset.data.shift(); // 가장 오래된 데이터 포인트 제거
+            });
+        }
+
+        chart.data.labels.push(label);
+        chart.data.datasets.forEach((dataset) => {
+            dataset.data.push(data);
+        });
+
+        chart.update();
+    }
+
+    function addDataUpdate(chart, label, data) {
+        if (chart.data.labels.length > 400) { // 최대 데이터 포인트 수를 100으로 제한
             chart.data.labels.shift(); // 가장 오래된 라벨 제거
             chart.data.datasets.forEach((dataset) => {
                 dataset.data.shift(); // 가장 오래된 데이터 포인트 제거
@@ -337,8 +367,47 @@
         }
 
         let data = await (await fetch(fullDomain, option)).json();
+        let dateTime = new Date(Date.parse(data.time) - (540 * 60 * 1000));
+        addData(chart, dateTime.getHours() + '시 ' + dateTime.getMinutes() + '분 ' + dateTime.getSeconds() + '초', data.value);
+    }
 
-        addData(chart, data.time, data.value);
+    async function apiDataMean(chart, domain, sensorName, currentPlace, addDataFunction) {
+        // 새로운 데이터 포인트 생성 (예: 사인파)
+        const fullDomain = domain + "/api/sensor/" + sensorName + "/day-mean?place=" + currentPlace;
+        const option = {
+            method: "GET",
+            headers: {
+                Authorization: accessToken
+            }
+        }
+
+        let dataList = await (await fetch(fullDomain, option)).json();
+
+        let ctx = document.getElementById(sensorName + "-chart").getContext('2d');
+        let gradientStroke = ctx.createLinearGradient(0, 230, 0, 50);
+
+        gradientStroke.addColorStop(1, 'rgba(240,191,206,0.4)');
+        gradientStroke.addColorStop(0.2, 'rgba(241,192,208,0.1)');
+        gradientStroke.addColorStop(0, 'rgba(250,219,206,0.05)');
+        chart.data = {
+            labels: [],
+            datasets: [{
+                label: [],
+                tension: 0.4,
+                pointRadius: 0,
+                borderColor: "#F0BFCE",
+                backgroundColor: gradientStroke,
+                borderWidth: 3,
+                fill: true,
+                maxBarThickness: 6,
+                data: []
+            }]
+        };
+
+        for (let data of dataList) {
+            let dateTime = new Date(Date.parse(data.time) - (540 * 60 * 1000));
+            addData(chart, dateTime.getHours() + '시 ' + dateTime.getMinutes() + '분 ' + dateTime.getSeconds() + '초', data.value);
+        }
     }
 
     document.addEventListener('DOMContentLoaded', function () {
@@ -350,17 +419,24 @@
         const humidityChart = drawChart('humidity');
         const co2Chart = drawChart('co2');
 
-        apiData(temperatureChart, domain, 'temperature', currentPlace);
-        apiData(illuminationChart, domain, 'illumination', currentPlace);
-        apiData(humidityChart, domain, 'humidity', currentPlace);
-        apiData(co2Chart, domain, 'co2', currentPlace);
+        apiDataMean(temperatureChart, domain, 'temperature', currentPlace, addData);
+        apiDataMean(illuminationChart, domain, 'illumination', currentPlace, addData);
+        apiDataMean(humidityChart, domain, 'humidity', currentPlace, addData);
+        apiDataMean(co2Chart, domain, 'co2', currentPlace, addData);
 
         setInterval(() => {
             apiData(temperatureChart, domain, 'temperature', currentPlace);
             apiData(illuminationChart, domain, 'illumination', currentPlace);
             apiData(humidityChart, domain, 'humidity', currentPlace);
             apiData(co2Chart, domain, 'co2', currentPlace);
-        }, 1000);
+        }, 10 * 1000);
+
+        setInterval(() => {
+            apiDataMean(temperatureChart, domain, 'temperature', currentPlace, addDataUpdate);
+            apiDataMean(illuminationChart, domain, 'illumination', currentPlace, addDataUpdate);
+            apiDataMean(humidityChart, domain, 'humidity', currentPlace, addDataUpdate);
+            apiDataMean(co2Chart, domain, 'co2', currentPlace, addDataUpdate);
+        }, 60 * 60 * 1000);
     });
 </script>
 <script>
