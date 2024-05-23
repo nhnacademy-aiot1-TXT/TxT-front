@@ -1,6 +1,7 @@
 package com.nhnacademy.front.controller;
 
 import com.nhnacademy.front.adaptor.DeviceRegisterAdaptor;
+import com.nhnacademy.front.error.DeviceRegisterException;
 import com.nhnacademy.front.utils.AccessTokenUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -25,8 +26,7 @@ public class DeviceRegisterController {
             deviceRegisterAdaptor.sendDeviceInfo(accessToken, deviceRegisterInfo);
             return ResponseEntity.ok("Device registered successfully!");
         } catch (Exception e) {
-//            return ResponseEntity.status(400).body("Device registration failed: " + e.getMessage());
-            throw new RuntimeException(e);//내가 만든거
+            throw new DeviceRegisterException(e.getMessage());
         }
     }
 }
