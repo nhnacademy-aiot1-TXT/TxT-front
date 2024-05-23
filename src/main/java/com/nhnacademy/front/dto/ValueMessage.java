@@ -8,5 +8,6 @@ import lombok.Getter;
 @AllArgsConstructor
 @EqualsAndHashCode
 public class ValueMessage {
-    private Object value;
+    private String place;
+    private boolean value;
 }

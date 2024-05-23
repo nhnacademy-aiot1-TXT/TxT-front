@@ -1,18 +1,18 @@
-async function weatherCall() {
-    const url = "https://contxt.co.kr/api/common/weather";
+async function weatherCall(domain) {
+    const url = domain + "/api/common/weather";
 
     const option = {
-        method : "GET",
-        headers : {
-            Authorization : accessToken
+        method: "GET",
+        headers: {
+            Authorization: accessToken
         }
     }
-    const response= await fetch(url, option);
+    const response = await fetch(url, option);
     return await response.json();
 }
 
-async function weather() {
-    const data = await weatherCall();
+async function weather(domain) {
+    const data = await weatherCall(domain);
     const weatherSky = document.getElementById('weatherSky');
     const weatherTemperature = document.getElementById('weatherTemperature');
     const weatherImage = document.getElementById('weatherImage');

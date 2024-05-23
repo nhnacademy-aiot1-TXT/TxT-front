@@ -13,6 +13,7 @@ import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import java.time.Duration;
+import java.util.Map;
 
 /**
  * Spring boot 의 전반적인 Web 설정을 위한 Configuration
@@ -64,5 +65,14 @@ public class WebConfig implements WebMvcConfigurer {
                 .excludePathPatterns("/auth/login", "/login", "/register", "/auth/register", "/error", "/oauth2/**", "/css/**", "/js/**", "/img/**");
         registry.addInterceptor(loggedInUserAccessInterceptor)
                 .addPathPatterns("/auth/login", "/auth/register");
+    }
+
+    @Bean
+    public Map<String, String> deviceIconMap() {
+        return Map.of(
+                "light", "lightbulb",
+                "airconditioner", "air",
+                "aircleaner", "air_purifier",
+                "aiMode", "settings_applications");
     }
 }
