@@ -37,7 +37,8 @@ public class ExceptionAdvice {
         if (exception.status() == 401) {
             try {
                 Cookie refreshToken = Arrays.stream(request.getCookies())
-                                            .filter(cookie -> cookie.getName().equals("refreshToken")).findFirst()
+                                            .filter(cookie -> cookie.getName().equals("refreshToken"))
+                                            .findFirst()
                                             .orElse(null);
 
                 if (Objects.nonNull(refreshToken) && !"".equals(refreshToken.getValue())) {
