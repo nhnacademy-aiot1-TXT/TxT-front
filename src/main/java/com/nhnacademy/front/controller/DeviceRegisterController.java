@@ -26,7 +26,7 @@ public class DeviceRegisterController {
             deviceRegisterAdaptor.sendDeviceInfo(accessToken, deviceRegisterInfo);
             return ResponseEntity.ok("Device registered successfully!");
         } catch (Exception e) {
-            throw new DeviceRegisterException(e.getMessage());
+            throw new DeviceRegisterException("Device registered failed!");
         }
     }
 }
