@@ -51,10 +51,10 @@ public class ControlController {
         List<DeviceResponse> deviceList = deviceSettingAdapter.getDeviceListByPlace(accessToken, placeId);
         boolean aiMode = deviceList.stream().anyMatch(deviceResponse -> deviceResponse.getAiMode() == 1);
 
-        Object lightStatus = redisUtil.getDeviceStatus(DEVICE_KEY, LIGHT.concat(":").concat(currentPlace.getPlaceName()));
-        Object airConditionerStatus = redisUtil.getDeviceStatus(DEVICE_KEY, AIR_CONDITIONER.concat(":").concat(currentPlace.getPlaceName()));
-        Object airCleanerStatus = redisUtil.getDeviceStatus(DEVICE_KEY, AIR_CLEANER.concat(":").concat(currentPlace.getPlaceName()));
-        Object autoMode = redisUtil.getMode(AUTO_MODE.concat(currentPlace.getPlaceName()));
+        Object lightStatus = redisUtil.getDeviceStatus(DEVICE_KEY, LIGHT.concat(":").concat(currentPlace.getPlaceCode()));
+        Object airConditionerStatus = redisUtil.getDeviceStatus(DEVICE_KEY, AIR_CONDITIONER.concat(":").concat(currentPlace.getPlaceCode()));
+        Object airCleanerStatus = redisUtil.getDeviceStatus(DEVICE_KEY, AIR_CLEANER.concat(":").concat(currentPlace.getPlaceCode()));
+        Object autoMode = redisUtil.getMode(AUTO_MODE.concat(currentPlace.getPlaceCode()));
 
         Map<String, Object> statusMap = new HashMap<>();
         statusMap.put(LIGHT, lightStatus);

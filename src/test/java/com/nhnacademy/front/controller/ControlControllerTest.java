@@ -4,6 +4,7 @@ import com.nhnacademy.front.adaptor.DeviceSettingAdapter;
 import com.nhnacademy.front.dto.DeviceResponse;
 import com.nhnacademy.front.dto.PlaceResponse;
 import com.nhnacademy.front.interceptor.LoginCheckInterceptor;
+import com.nhnacademy.front.service.RabbitmqService;
 import com.nhnacademy.front.utils.RedisUtil;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -36,6 +37,8 @@ class ControlControllerTest {
     private RedisUtil redisUtil;
     @MockBean
     private DeviceSettingAdapter deviceSettingAdapter;
+    @MockBean
+    private RabbitmqService rabbitmqService;
     @Mock
     private HttpServletRequest request;
 
@@ -58,8 +61,8 @@ class ControlControllerTest {
 
     @Test
     void control() throws Exception {
-        given(deviceSettingAdapter.getPlaceList(anyString())).willReturn(List.of(PlaceResponse.builder().placeName("test place").build()));
-        given(deviceSettingAdapter.getPlace(anyString(), anyLong())).willReturn(PlaceResponse.builder().placeName("test place").build());
+        given(deviceSettingAdapter.getPlaceList(anyString())).willReturn(List.of(PlaceResponse.builder().placeName("test place").placeCode("test place").build()));
+        given(deviceSettingAdapter.getPlace(anyString(), anyLong())).willReturn(PlaceResponse.builder().placeName("test place").placeCode("test place").build());
         given(deviceSettingAdapter.getDeviceListByPlace(anyString(), anyLong())).willReturn(List.of(DeviceResponse.builder().deviceName("test device").aiMode(1).build()));
         given(redisUtil.getDeviceStatus(DEVICE_KEY, LIGHT)).willReturn(true);
         given(redisUtil.getDeviceStatus(DEVICE_KEY, AIR_CONDITIONER)).willReturn(true);
