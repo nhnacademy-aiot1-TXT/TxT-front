@@ -61,8 +61,8 @@ class ControlControllerTest {
 
     @Test
     void control() throws Exception {
-        given(deviceSettingAdapter.getPlaceList(anyString())).willReturn(List.of(PlaceResponse.builder().placeName("test place").build()));
-        given(deviceSettingAdapter.getPlace(anyString(), anyLong())).willReturn(PlaceResponse.builder().placeName("test place").build());
+        given(deviceSettingAdapter.getPlaceList(anyString())).willReturn(List.of(PlaceResponse.builder().placeName("test place").placeCode("test place").build()));
+        given(deviceSettingAdapter.getPlace(anyString(), anyLong())).willReturn(PlaceResponse.builder().placeName("test place").placeCode("test place").build());
         given(deviceSettingAdapter.getDeviceListByPlace(anyString(), anyLong())).willReturn(List.of(DeviceResponse.builder().deviceName("test device").aiMode(1).build()));
         given(redisUtil.getDeviceStatus(DEVICE_KEY, LIGHT)).willReturn(true);
         given(redisUtil.getDeviceStatus(DEVICE_KEY, AIR_CONDITIONER)).willReturn(true);
