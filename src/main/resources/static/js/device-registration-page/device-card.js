@@ -8,15 +8,15 @@ function createConditionGroup() {
     group.innerHTML = `
           <div class="card-header">
               Condition ${index + 1}
-              <button type="button" class="btn btn-sm btn-danger float-end ml-1" onclick="(this.parentElement.parentElement).remove()">Delete</button>
+              <button type="button" class="btn btn-sm btn-danger float-end" onclick="(this.parentElement.parentElement).remove()">삭제</button>
               <button
-                class="btn btn-sm btn-primary float-end"
+                class="btn btn-sm btn-primary float-end me-2"
                 type="button"
                 data-bs-toggle="collapse"
                 data-bs-target="#collapseBody${index}"
                 aria-expanded="true"
                 aria-controls="collapseBody${index}"
-              >Toggle</button>
+              >추가</button>
           </div>
           
           <div id="collapseBody${index}" class="card-body collapse show">
@@ -68,19 +68,19 @@ function createAiModeGroup() {
 
     const group = document.createElement('div');
     group.className = "card mx-auto mb-4";
-    group.style.maxWidth = "70%";
+    group.style.maxWidth = "50%";
     group.innerHTML = `
           <div class="card-header">
               Ai Mode ${index + 1}
-              <button type="button" class="btn btn-sm btn-danger float-end ml-1" onclick="(this.parentElement.parentElement).remove()">Delete</button>
+              <button type="button" class="btn btn-sm btn-danger float-end" onclick="(this.parentElement.parentElement).remove()">삭제</button>
               <button
-                class="btn btn-sm btn-primary float-end"
+                class="btn btn-sm btn-primary float-end me-2"
                 type="button"
                 data-bs-toggle="collapse"
                 data-bs-target="#collapseBody${index}"
                 aria-expanded="true"
                 aria-controls="collapseBody${index}"
-              >Toggle</button>
+              >추가</button>
           </div>
           <div id="collapseBody${index}" class="card-body collapse show">
               <div class="form-group">
@@ -95,50 +95,6 @@ function createAiModeGroup() {
 
     container.appendChild(group);
 }
-
-var currentPage = 0;
-
-
-function showPage(index) {
-    var pages = document.getElementsByClassName("page");
-    pages[currentPage].classList.remove("active");
-    currentPage = index;
-    pages[currentPage].classList.add("active");
-    document.getElementById("prevButton").disabled = currentPage === 0;
-
-    // 다음 페이지가 없는 경우 버튼을 '제출' 버튼으로 변경한다.
-    if (currentPage === pages.length - 1) {
-        const nextButton = document.getElementById("nextButton");
-        nextButton.hidden = true;
-    } else {
-        const nextButton = document.getElementById("nextButton");
-        nextButton.innerHTML = "다음";
-        nextButton.type = "button";
-        nextButton.onclick = nextPage;   // '다음' 버튼의 onclick 이벤트 핸들러를 원래대로 복원한다.
-    }
-}
-
-function prevPage() {
-    if (currentPage > 0) showPage(currentPage - 1);
-}
-
-function nextPage() {
-    var currentFields = document.getElementsByClassName("page")[currentPage].getElementsByTagName("input");
-    for (var i = 0; i < currentFields.length; i++) {
-        if (currentFields[i].value === "") {
-            alert("빈칸을 채워주세요");
-            return;
-        }
-    }
-    if (currentPage < document.getElementsByClassName("page").length - 1) {
-        showPage(currentPage + 1);
-    }
-}
-
-window.onload = function () {
-    showPage(0);
-}
-
 
 function getCookie(name) {
     let cookieValue = null;
@@ -242,6 +198,45 @@ function submitForm() {
         });
 }
 
-window.onload = function () {
-    showPage(0);
+var currentPage = 0;
+
+function showPage(index) {
+    var pages = document.getElementsByClassName("page");
+    pages[currentPage].classList.remove("active");
+    currentPage = index;
+    pages[currentPage].classList.add("active");
+    document.getElementById("prevButton").disabled = currentPage === 0;
+
+    // 다음 페이지가 없는 경우 다음 버튼을 숨기고 '제출' 버튼으로 변경한다.
+    if (currentPage === pages.length - 1) {
+        const nextButton = document.getElementById("nextButton");
+        nextButton.disabled = true;
+    } else {
+        const nextButton = document.getElementById("nextButton");
+        nextButton.disabled = false;
+        nextButton.innerHTML = "다음";
+        nextButton.type = "button";
+        nextButton.onclick = nextPage;   // '다음' 버튼의 onclick 이벤트 핸들러를 원래대로 복원한다.
+    }
 }
+
+function prevPage() {
+    if (currentPage > 0) showPage(currentPage - 1);
+}
+
+function nextPage() {
+    var currentFields = document.getElementsByClassName("page")[currentPage].getElementsByTagName("input");
+    for (var i = 0; i < currentFields.length; i++) {
+        if (currentFields[i].value === "") {
+            alert("빈칸을 채워주세요");
+            return;
+        }
+    }
+    if (currentPage < document.getElementsByClassName("page").length - 1) {
+        showPage(currentPage + 1);
+    }
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+    showPage(0);
+});
