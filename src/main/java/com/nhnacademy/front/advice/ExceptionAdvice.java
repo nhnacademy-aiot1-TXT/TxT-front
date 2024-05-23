@@ -25,9 +25,10 @@ public class ExceptionAdvice {
 
     /**
      * FeignException 예외 처리 메서드
+     *
      * @param exception FeignException 객체
-     * @param request HTTP 요청 객체
-     * @param response HTTP 응답 객체
+     * @param request   HTTP 요청 객체
+     * @param response  HTTP 응답 객체
      * @return redirect 할 URL 문자열
      */
     @ExceptionHandler(FeignException.class)
@@ -55,6 +56,6 @@ public class ExceptionAdvice {
             return "redirect:/";
         }
 
-        return "redirect:/logout";
+        return "redirect:/error";
     }
 }
