@@ -217,7 +217,7 @@ function submitForm() {
     const csrfToken = getCookie('XSRF-TOKEN');
     console.log('Submitting JSON Data:', JSON.stringify(jsonData));
 
-    fetch('/admin/device/register', {
+    fetch('/admin/device/send-data', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',

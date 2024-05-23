@@ -65,7 +65,6 @@ public class ExceptionAdvice {
     @ExceptionHandler(DeviceRegisterException.class)
     public String exceptionHandler(DeviceRegisterException exception) {
         log.error(exception.getMessage(), exception);
-        log.error(exception.getMessage(), exception.getCause());
         return "redirect:/admin/device/register";
     }
 }

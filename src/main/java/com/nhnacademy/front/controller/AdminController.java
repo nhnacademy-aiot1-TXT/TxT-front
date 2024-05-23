@@ -3,7 +3,10 @@ package com.nhnacademy.front.controller;
 import com.nhnacademy.front.adaptor.DeviceSettingAdapter;
 import com.nhnacademy.front.adaptor.SensorAdapter;
 import com.nhnacademy.front.adaptor.UserAdapter;
-import com.nhnacademy.front.dto.*;
+import com.nhnacademy.front.dto.PermitUserRequest;
+import com.nhnacademy.front.dto.PlaceResponse;
+import com.nhnacademy.front.dto.SensorResponse;
+import com.nhnacademy.front.dto.UserDataResponse;
 import com.nhnacademy.front.utils.AccessTokenUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -137,13 +140,13 @@ public class AdminController {
         String accessToken = AccessTokenUtil.findAccessTokenInRequest(request);
         List<PlaceResponse> placeList = deviceSettingAdapter.getPlaceList(AccessTokenUtil.findAccessTokenInRequest(request));
         List<SensorResponse> sensorData = sensorAdapter.getSensorData(accessToken, placeCode, sensorType, period)
-                .stream()
-                .map(d -> {
-                    Instant newTime = d.getTime().minus(9, ChronoUnit.HOURS);
-                    d.setTime(newTime);
-                    return d;
-                })
-                .collect(Collectors.toList());
+                                                       .stream()
+                                                       .map(d -> {
+                                                           Instant newTime = d.getTime().minus(9, ChronoUnit.HOURS);
+                                                           d.setTime(newTime);
+                                                           return d;
+                                                       })
+                                                       .collect(Collectors.toList());
 
         for (PlaceResponse p : placeList) {
             if (p.getPlaceCode().equals(placeCode)) {

@@ -13,13 +13,13 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.servlet.http.HttpServletRequest;
 
 @RestController
-@RequestMapping("/api/device")
+@RequestMapping("/admin/device")
 @RequiredArgsConstructor
 public class DeviceRegisterController {
 
     private final DeviceRegisterAdaptor deviceRegisterAdaptor;
 
-    @PostMapping("/register")
+    @PostMapping("/send-data")
     public ResponseEntity<String> getDeviceRegisterInfo(HttpServletRequest request, @RequestBody String deviceRegisterInfo) {
         String accessToken = AccessTokenUtil.findAccessTokenInRequest(request);
         try {

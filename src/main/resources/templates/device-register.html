@@ -18,7 +18,7 @@
             crossorigin="anonymous"></script>
     <script th:inline="javascript">const accessToken = [[${accessToken}]];</script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script src="/js/device-register/device-card.js"></script>
+    <script src="/js/device-registration-page/device-card.js"></script>
     <style>
         .page {
             display: none;
@@ -37,7 +37,7 @@
     <div th:replace="fragments/nav"></div>
 
     <h2 style="margin-bottom: 25px; margin-top: 25px;">Class A</h2>
-    <form id="deviceAddForm" action="/admin/device/register" method="post" class="px-4 py-3"
+    <form id="deviceAddForm" action="/admin/device/send-data" method="post" class="px-4 py-3"
           enctype="application/x-www-form-urlencoded">
         <label>
             <input name="_csrf" hidden="" th:id="${_csrf.token}" th:value="${_csrf.getToken()}">
