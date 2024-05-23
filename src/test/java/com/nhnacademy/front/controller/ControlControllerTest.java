@@ -4,6 +4,7 @@ import com.nhnacademy.front.adaptor.DeviceSettingAdapter;
 import com.nhnacademy.front.dto.DeviceResponse;
 import com.nhnacademy.front.dto.PlaceResponse;
 import com.nhnacademy.front.interceptor.LoginCheckInterceptor;
+import com.nhnacademy.front.service.RabbitmqService;
 import com.nhnacademy.front.utils.RedisUtil;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -36,6 +37,8 @@ class ControlControllerTest {
     private RedisUtil redisUtil;
     @MockBean
     private DeviceSettingAdapter deviceSettingAdapter;
+    @MockBean
+    private RabbitmqService rabbitmqService;
     @Mock
     private HttpServletRequest request;
 
