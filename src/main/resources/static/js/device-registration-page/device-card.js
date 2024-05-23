@@ -16,7 +16,7 @@ function createConditionGroup() {
                 data-bs-target="#collapseBody${index}"
                 aria-expanded="true"
                 aria-controls="collapseBody${index}"
-              >추가</button>
+              >접기</button>
           </div>
           
           <div id="collapseBody${index}" class="card-body collapse show">
@@ -80,7 +80,7 @@ function createAiModeGroup() {
                 data-bs-target="#collapseBody${index}"
                 aria-expanded="true"
                 aria-controls="collapseBody${index}"
-              >추가</button>
+              >접기</button>
           </div>
           <div id="collapseBody${index}" class="card-body collapse show">
               <div class="form-group">
