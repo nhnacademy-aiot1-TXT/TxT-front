@@ -2,6 +2,7 @@ package com.nhnacademy.front.advice;
 
 import com.nhnacademy.front.adaptor.UserAdapter;
 import com.nhnacademy.front.dto.AccessTokenResponse;
+import com.nhnacademy.front.error.DeviceRegisterException;
 import feign.FeignException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -35,7 +36,10 @@ public class ExceptionAdvice {
     public String feignExceptionHandler(FeignException exception, HttpServletRequest request, HttpServletResponse response) {
         if (exception.status() == 401) {
             try {
-                Cookie refreshToken = Arrays.stream(request.getCookies()).filter(cookie -> cookie.getName().equals("refreshToken")).findFirst().orElse(null);
+                Cookie refreshToken = Arrays.stream(request.getCookies())
+                                            .filter(cookie -> cookie.getName().equals("refreshToken"))
+                                            .findFirst()
+                                            .orElse(null);
 
                 if (Objects.nonNull(refreshToken) && !"".equals(refreshToken.getValue())) {
                     AccessTokenResponse accesstokenresponse = userAdapter.reissue(refreshToken.getValue());
@@ -57,5 +61,11 @@ public class ExceptionAdvice {
         }
 
         return "redirect:/error";
+    }
+
+    @ExceptionHandler(DeviceRegisterException.class)
+    public String exceptionHandler(DeviceRegisterException exception) {
+        log.error(exception.getMessage(), exception);
+        return "redirect:/admin/device/register";
     }
 }
