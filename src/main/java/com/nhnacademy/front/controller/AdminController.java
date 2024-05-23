@@ -1,6 +1,5 @@
 package com.nhnacademy.front.controller;
 
-import com.nhnacademy.front.adaptor.DeviceRegisterAdaptor;
 import com.nhnacademy.front.adaptor.SensorAdapter;
 import com.nhnacademy.front.adaptor.UserAdapter;
 import com.nhnacademy.front.dto.*;
@@ -10,7 +9,10 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
@@ -26,7 +28,6 @@ public class AdminController {
 
     private final UserAdapter userAdapter;
     private final SensorAdapter sensorAdapter;
-    private final DeviceRegisterAdaptor deviceRegisterAdaptor;
 
     @GetMapping
     public String admin() {
@@ -152,18 +153,5 @@ public class AdminController {
         model.addAttribute("co2List", Co2Week);
 
         return "sensor-log/log-co2";
-    }
-
-    @GetMapping("/device/register")
-    public String deviceAddPage() {
-        return "device-register";
-    }
-
-    @PostMapping("/device/register")
-    public String getDeviceRegisterInfo(HttpServletRequest request, @RequestBody String deviceRegisterInfo) {
-        String accessToken = AccessTokenUtil.findAccessTokenInRequest(request);
-        deviceRegisterAdaptor.sendDeviceInfo(accessToken, deviceRegisterInfo);
-
-        return "redirect:/device/register";
     }
 }

@@ -220,7 +220,7 @@ function submitForm() {
     fetch('/admin/device/register', {
         method: 'POST',
         headers: {
-            // 'Content-Type': 'application/json',
+            'Content-Type': 'application/json',
             'X-XSRF-TOKEN': csrfToken
         },
         body: JSON.stringify(jsonData)
@@ -228,7 +228,7 @@ function submitForm() {
         .then(response => {
             if (response.ok) {
                 alert('장치가 성공적으로 등록되었습니다.');
-                // window.location.href = '/admin/device/register';
+                window.location.href = '/admin/device/register';
             } else {
                 return response.json().then(data => {
                     console.error('Error:', data);
