@@ -53,12 +53,12 @@
                 Info</h4>
             <div class="dropdown">
                 <button class="btn bg-gradient-primary dropdown-toggle" type="button" id="placeDropdownButton"
-                        data-bs-toggle="dropdown" aria-expanded="false" th:text="${currentPlace}">
+                        data-bs-toggle="dropdown" aria-expanded="false" th:text="${currentPlace.getPlaceName()}">
                 </button>
                 <ul id="placeDropdownMenuButton" class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                     <li th:each="place : ${placeList}">
                         <a class="dropdown-item" th:text="${place.getPlaceName()}"
-                           th:href="@{detail-sensor-info(currentPlace = ${place.getPlaceName()})}">
+                           th:href="@{detail-sensor-info(placeCode = ${place.getPlaceCode()})}">
                         </a>
                     </li>
                 </ul>
@@ -71,7 +71,7 @@
                         <h6 class="text-capitalize">Temperature</h6>
                     </div>
                     <div class="card-body p-3">
-                        <a class="nav-link " href="temperature/week">
+                        <a class="nav-link" th:href="@{detail-sensor-info/log(placeCode = ${currentPlace.getPlaceCode()}, sensorType = 'temperature')}">
                             <div class="chart">
                                 <canvas id="temperature-chart" width="800" height="400"></canvas>
                             </div>
@@ -85,7 +85,7 @@
                         <h6 class="text-capitalize">Illumination</h6>
                     </div>
                     <div class="card-body p-3">
-                        <a class="nav-link " href="illumination/week">
+                        <a class="nav-link " th:href="@{detail-sensor-info/log(placeCode = ${currentPlace.getPlaceCode()}, sensorType = 'illumination')}">
                             <div class="chart">
                                 <canvas id="illumination-chart" width="800" height="400"></canvas>
                             </div>
@@ -97,13 +97,12 @@
         <div class="row mt-4">
             <div class="col-lg-6 mb-lg-0 mb-4">
                 <div class="card z-index-2 h-100">
-                    <a class="nav-link " href="humidity/week">
                         <div class="card-header pb-0 pt-3 bg-transparent">
                             <h6 class="text-capitalize">Humidity</h6>
                         </div>
                     </a>
                     <div class="card-body p-3">
-                        <a class="nav-link " href="humidity/week">
+                        <a class="nav-link " th:href="@{detail-sensor-info/log(placeCode = ${currentPlace.getPlaceCode()}, sensorType = 'humidity')}">
                             <div class="chart">
                                 <canvas id="humidity-chart" width="800" height="400"></canvas>
                             </div>
@@ -117,7 +116,7 @@
                         <h6 class="text-capitalize">Co2</h6>
                     </div>
                     <div class="card-body p-3">
-                        <a class="nav-link " href="co2/week">
+                        <a class="nav-link " th:href="@{detail-sensor-info/log(placeCode = ${currentPlace.getPlaceCode()}, sensorType = 'co2')}">
                             <div class="chart">
                                 <canvas id="co2-chart" width="800" height="400"></canvas>
                             </div>
@@ -344,7 +343,7 @@
 
     document.addEventListener('DOMContentLoaded', function () {
         const domain = "https://contxt.co.kr"
-        const currentPlace = [[${currentPlace}]];
+        const currentPlace = [[${currentPlace.getPlaceCode()}]];
 
         const temperatureChart = drawChart('temperature');
         const illuminationChart = drawChart('illumination');

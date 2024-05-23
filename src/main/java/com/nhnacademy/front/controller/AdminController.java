@@ -4,7 +4,6 @@ import com.nhnacademy.front.adaptor.DeviceSettingAdapter;
 import com.nhnacademy.front.adaptor.SensorAdapter;
 import com.nhnacademy.front.adaptor.UserAdapter;
 import com.nhnacademy.front.dto.*;
-import com.nhnacademy.front.dto.IlluminationResponse.IlluminationResponse;
 import com.nhnacademy.front.utils.AccessTokenUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -16,8 +15,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpServletRequest;
+import java.time.Instant;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * 어드민 권한만 접근할 수 있는 Controller
@@ -34,19 +36,6 @@ public class AdminController {
     @GetMapping
     public String admin() {
         return "redirect:/";
-    }
-
-    @GetMapping("/detail-sensor-info")
-    public String profile(HttpServletRequest request,
-                          @RequestParam(value = "currentPlace", defaultValue = "class_a") String currentPlace,
-                          Model model) {
-        String accessToken = AccessTokenUtil.findAccessTokenInRequest(request);
-
-        model.addAttribute("accessToken", AccessTokenUtil.findAccessTokenInRequest(request));
-        model.addAttribute("currentPlace", currentPlace);
-        model.addAttribute("placeList", deviceSettingAdapter.getPlaceList(AccessTokenUtil.findAccessTokenInRequest(request)));
-
-        return "detailedSensor";
     }
 
     @GetMapping("/manage")
@@ -119,43 +108,54 @@ public class AdminController {
     }
 
     // 상세센서 정보
-    @GetMapping("temperature/week")
-    public String weeklyTemperature(HttpServletRequest request, Model model) {
+    @GetMapping("/detail-sensor-info")
+    public String profile(HttpServletRequest request,
+                          @RequestParam(value = "placeCode", defaultValue = "class_a") String placeCode,
+                          Model model) {
         String accessToken = AccessTokenUtil.findAccessTokenInRequest(request);
+        List<PlaceResponse> placeList = deviceSettingAdapter.getPlaceList(AccessTokenUtil.findAccessTokenInRequest(request));
 
-        List<TemperatureResponse> tempWeek = sensorAdapter.getWeeklyTemperatures(accessToken);
-        model.addAttribute("temperatureList", tempWeek);
+        for (PlaceResponse p : placeList) {
+            if (p.getPlaceCode().equals(placeCode)) {
+                model.addAttribute("currentPlace", p);
+            }
+        }
 
-        return "sensor-log/log-temperature";
+        model.addAttribute("accessToken", accessToken);
+        model.addAttribute("placeList", placeList);
+
+        return "detailedSensor";
     }
 
-    @GetMapping("illumination/week")
-    public String weeklyIllumination(HttpServletRequest request, Model model) {
+    @GetMapping("/detail-sensor-info/log")
+    public String sensorLog(HttpServletRequest request,
+                            @RequestParam(value = "placeCode", defaultValue = "class_a") String placeCode,
+                            @RequestParam(value = "sensorType", defaultValue = "temperature") String sensorType,
+                            @RequestParam(value = "period", defaultValue = "day") String period,
+                            Model model) {
+
         String accessToken = AccessTokenUtil.findAccessTokenInRequest(request);
+        List<PlaceResponse> placeList = deviceSettingAdapter.getPlaceList(AccessTokenUtil.findAccessTokenInRequest(request));
+        List<SensorResponse> sensorData = sensorAdapter.getSensorData(accessToken, placeCode, sensorType, period)
+                .stream()
+                .map(d -> {
+                    Instant newTime = d.getTime().minus(9, ChronoUnit.HOURS);
+                    d.setTime(newTime);
+                    return d;
+                })
+                .collect(Collectors.toList());
 
-        List<IlluminationResponse> illuminationWeek = sensorAdapter.getWeeklyIllumination(accessToken);
-        model.addAttribute("illuminationWeek", illuminationWeek);
+        for (PlaceResponse p : placeList) {
+            if (p.getPlaceCode().equals(placeCode)) {
+                model.addAttribute("currentPlace", p);
+            }
+        }
 
-        return "sensor-log/log-birghtness";
-    }
+        model.addAttribute("sensorType", sensorType);
+        model.addAttribute("period", period);
+        model.addAttribute("placeList", placeList);
+        model.addAttribute("sensorDataList", sensorData);
 
-    @GetMapping("humidity/week")
-    public String weeklyHumidity(HttpServletRequest request, Model model) {
-        String accessToken = AccessTokenUtil.findAccessTokenInRequest(request);
-
-        List<HumidityResponse> humidityDaily = sensorAdapter.getWeeklyHumidity(accessToken);
-        model.addAttribute("humidityList", humidityDaily);
-
-        return "sensor-log/log-humidity";
-    }
-
-    @GetMapping("co2/week")
-    public String weeklyCo2(HttpServletRequest request, Model model) {
-        String accessToken = AccessTokenUtil.findAccessTokenInRequest(request);
-
-        List<Co2Response> Co2Week = sensorAdapter.getWeeklyCo2(accessToken);
-        model.addAttribute("co2List", Co2Week);
-
-        return "sensor-log/log-co2";
+        return "dataLog";
     }
 }

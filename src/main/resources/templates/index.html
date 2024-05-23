@@ -44,12 +44,12 @@
             <div class="col-10">
                 <div class="dropdown">
                     <button class="btn bg-gradient-primary dropdown-toggle" type="button" id="placeDropdownButton"
-                            data-bs-toggle="dropdown" aria-expanded="false" th:text="${currentPlace}">
+                            data-bs-toggle="dropdown" aria-expanded="false" th:text="${currentPlace.getPlaceName()}">
                     </button>
                     <ul id="placeDropdownMenuButton" class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                         <li th:each="place : ${placeList}">
                             <a class="dropdown-item" th:text="${place.getPlaceName()}"
-                               th:href="@{/(currentPlace = ${place.getPlaceName()})}">
+                               th:href="@{/(placeCode = ${place.getPlaceCode()})}">
                             </a>
                         </li>
                     </ul>
@@ -62,7 +62,7 @@
             <div class="col-10">
                 <div class="row mb-4" style="height: 500px;">
                     <div class="col-lg-4">
-                        <div th:if="${currentPlace != 'class_b'}" class="card mb-2" style="height: 130px">
+                        <div th:if="${currentPlace.getPlaceCode() != 'class_b'}" class="card mb-2" style="height: 130px">
                             <div class="card-body p-3 mb-xl-4 mt-xl-4">
                                 <div class="row">
                                     <div class="col-12 text-center">
@@ -75,7 +75,7 @@
                             </div>
                         </div>
                         <div class="card p-3 d-flex align-items-center justify-content-center"
-                             th:style="${currentPlace != 'class_b' ? 'height: 370px;' : 'height: 500px;'}">
+                             th:style="${currentPlace.getPlaceCode() != 'class_b' ? 'height: 370px;' : 'height: 500px;'}">
                             <div class="mb-3">
                                 <img id="weatherImage">
                             </div>
@@ -385,7 +385,7 @@
 
 <script th:inline="javascript">
     const domain = "https://contxt.co.kr";
-    const currentPlace = [[${currentPlace}]];
+    const currentPlace = [[${currentPlace.getPlaceCode()}]];
 
     // 첫번째로 로딩될 때
     $(document).ready(function () {
