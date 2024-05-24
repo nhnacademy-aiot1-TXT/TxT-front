@@ -4,7 +4,6 @@ document.addEventListener('DOMContentLoaded', function () {
     lightSwitch.addEventListener('click', function () {
         let isOn = lightSwitch.checked; // checkbox의 상태를 확인합니다.
 
-        console.log(isOn);
         fetch(`/control/light?placeCode=${placeCode}&isOn=${isOn}`, {
             method: 'GET',
         }).then(function (response) {
@@ -17,7 +16,6 @@ document.addEventListener('DOMContentLoaded', function () {
     let airconditionerSwitch = document.getElementById('airconditioner');
     airconditionerSwitch.addEventListener('click', function () {
         let isOn = airconditionerSwitch.checked; // checkbox의 상태를 확인합니다.
-
 
         fetch(`/control/air-conditioner?placeCode=${placeCode}&isOn=${isOn}`, {
             method: 'GET',
@@ -32,7 +30,6 @@ document.addEventListener('DOMContentLoaded', function () {
     aircleanerSwitch.addEventListener('click', function () {
         let isOn = aircleanerSwitch.checked; // checkbox의 상태를 확인합니다.
 
-        console.log(isOn);
         fetch(`/control/air-cleaner?placeCode=${placeCode}&isOn=${isOn}`, {
             method: 'GET',
         }).then(function (response) {
@@ -42,12 +39,43 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     });
 
-    let modeSwitch = document.getElementById('mode');
-    modeSwitch.addEventListener('click', function () {
-        let isOn = modeSwitch.checked; // checkbox의 상태를 확인합니다.
+    let customModeAirconditioner = document.getElementById('airconditioner-custom-mode');
+    let customModeAircleaner = document.getElementById('aircleaner-custom-mode');
+    let customModeLight = document.getElementById('light-custom-mode');
+    let aiModeSwitch = document.getElementById('ai-mode');
 
-        console.log(isOn);
-        fetch(`/control/ai-mode?placeCode=${placeCode}&isOn=${isOn}`, {
+    customModeAirconditioner.addEventListener('click', function () {
+        let isOn = customModeAirconditioner.checked;
+
+        fetch(`/control/custom-mode?deviceName=airconditioner&placeCode=${placeCode}&isOn=${isOn}`, {
+            method: 'GET',
+        }).then(function (response) {
+            console.log('mode control success');
+        }).catch(function (error) {
+            console.error('Error:', error);
+        });
+
+        airconditionerSwitch.disabled = isOn;
+    });
+
+    customModeAircleaner.addEventListener('click', function () {
+        let isOn = customModeAircleaner.checked;
+
+        fetch(`/control/custom-mode?deviceName=aircleaner&placeCode=${placeCode}&isOn=${isOn}`, {
+            method: 'GET',
+        }).then(function (response) {
+            console.log('mode control success');
+        }).catch(function (error) {
+            console.error('Error:', error);
+        });
+
+        aircleanerSwitch.disabled = isOn;
+    });
+
+    customModeLight.addEventListener('click', function () {
+        let isOn = customModeLight.checked;
+
+        fetch(`/control/custom-mode?deviceName=light&placeCode=${placeCode}&isOn=${isOn}`, {
             method: 'GET',
         }).then(function (response) {
             console.log('mode control success');
@@ -56,7 +84,23 @@ document.addEventListener('DOMContentLoaded', function () {
         });
 
         lightSwitch.disabled = isOn;
+    });
+
+    aiModeSwitch.addEventListener('click', function () {
+        let isOn = aiModeSwitch.checked; // checkbox의 상태를 확인합니다.
+
+        fetch(`/control/ai-mode?placeCode=${placeCode}&isOn=${isOn}`, {
+            method: 'GET',
+        }).then(function (response) {
+            console.log('mode control success');
+        }).catch(function (error) {
+            console.error('Error:', error);
+        });
+
+        if (isOn)
+            customModeAirconditioner.checked = false;
+
+        customModeAirconditioner.disabled = isOn;
         airconditionerSwitch.disabled = isOn;
-        aircleanerSwitch.disabled = isOn;
     });
 });
