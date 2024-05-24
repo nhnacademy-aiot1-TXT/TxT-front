@@ -28,19 +28,15 @@ public class RedisUtil {
         redisTemplateBlackList.opsForValue().set(key, o, milliSeconds, TimeUnit.MILLISECONDS);
     }
 
-    public Object getMode(String key) {
-        return redisTemplateDevice.opsForValue().get(key);
+    public Object getMode(String key, String hashKey) {
+        return redisTemplateDevice.opsForHash().get(key, hashKey);
     }
 
-    public void setMode(String key, boolean value) {
-        redisTemplateDevice.opsForValue().set(key, value);
+    public void setMode(String key, String hashKey, boolean value) {
+        redisTemplateDevice.opsForHash().put(key, hashKey, value);
     }
 
     public Object getDeviceStatus(String key, String hashKey) {
         return redisTemplateDevice.opsForHash().get(key, hashKey);
-    }
-
-    public void setDeviceStatus(String key, String hashKey, boolean value) {
-        redisTemplateDevice.opsForHash().put(key, hashKey, value);
     }
 }
