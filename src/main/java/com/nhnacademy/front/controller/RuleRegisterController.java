@@ -1,6 +1,6 @@
 package com.nhnacademy.front.controller;
 
-import com.nhnacademy.front.adaptor.DeviceRegisterAdaptor;
+import com.nhnacademy.front.adaptor.RuleRegisterAdaptor;
 import com.nhnacademy.front.error.DeviceRegisterException;
 import com.nhnacademy.front.utils.AccessTokenUtil;
 import lombok.RequiredArgsConstructor;
@@ -15,9 +15,9 @@ import javax.servlet.http.HttpServletRequest;
 @RestController
 @RequestMapping("/admin/device")
 @RequiredArgsConstructor
-public class DeviceRegisterController {
+public class RuleRegisterController {
 
-    private final DeviceRegisterAdaptor deviceRegisterAdaptor;
+    private final RuleRegisterAdaptor deviceRegisterAdaptor;
 
     @PostMapping("/send-data")
     public ResponseEntity<String> getDeviceRegisterInfo(HttpServletRequest request, @RequestBody String deviceRegisterInfo) {

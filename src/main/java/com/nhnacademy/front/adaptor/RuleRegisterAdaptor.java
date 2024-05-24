@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 
 @FeignClient(value = "rule-engine", url = "${gateway.url}", path = "/api/rule")
-public interface DeviceRegisterAdaptor {
+public interface RuleRegisterAdaptor {
 
     @PostMapping(value = "/device/register")
     void sendDeviceInfo(@RequestHeader("Authorization") String accessToken, @RequestBody String deviceRegisterInfo);

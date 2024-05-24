@@ -63,13 +63,6 @@
                             <option value="공기 청정기">공기 청정기</option>
                         </select>
                     </div>
-                    <div class="form-group">
-                        <label for="occupancyCheckRequired">재실 필요 유무</label>
-                        <select id="occupancyCheckRequired" name="occupancyCheckRequired" class="form-control">
-                            <option value="true">Yes</option>
-                            <option value="false">No</option>
-                        </select>
-                    </div>
                 </div>
                 <div class="card-footer"></div>
             </div>
@@ -85,11 +78,13 @@
                     <div class="row justify-content-center align-content-center">
                         <div class="col-4">
                             <label for="aiMode_hours">Hours</label>
-                            <input type="number" class="form-control" id="aiMode_hours" name="aiMode_hours" min="0" max="23" value="1">
+                            <input type="number" class="form-control" id="aiMode_hours" name="aiMode_hours" min="0"
+                                   max="23" value="1">
                         </div>
                         <div class="col-4">
                             <label for="aiMode_minutes">Minutes</label>
-                            <input type="number" class="form-control" id="aiMode_minutes" name="aiMode_minutes" min="0" max="59" value="0">
+                            <input type="number" class="form-control" id="aiMode_minutes" name="aiMode_minutes" min="0"
+                                   max="59" value="0">
                         </div>
                     </div>
                     <div class="card-footer"></div>
@@ -99,24 +94,35 @@
             <div class="page custom-mode">
                 <h4 class="jua-regular">커스텀 모드 설정</h4>
                 <div id="conditionsContainer"></div>
-                <button type="button" class="btn bg-gradient-primary" onclick="createConditionGroup()">Condition 추가</button>
+                <button type="button" class="btn bg-gradient-primary" onclick="createConditionGroup()">Condition 추가
+                </button>
                 <div class="form-group card mb-3" style="max-width: 50%; margin: 0 auto;">
+                    <div class="form-group">
+                        <label for="occupancyCheckRequired">재실 필요 유무</label>
+                        <select id="occupancyCheckRequired" name="occupancyCheckRequired" class="form-control">
+                            <option value="true">Yes</option>
+                            <option value="false">No</option>
+                        </select>
+                    </div>
                     <div class="card-header">
                         <div class="form-label jua-regular" style="font-size: 1rem !important;">메시지 보내는 간격</div>
                     </div>
                     <div class="row justify-content-center align-content-center">
                         <div class="col-4">
                             <label for="customMode_hours">Hours</label>
-                            <input type="number" class="form-control" id="customMode_hours" name="customMode_hours" min="0" max="23" value="1">
+                            <input type="number" class="form-control" id="customMode_hours" name="customMode_hours"
+                                   min="0" max="23" value="1">
                         </div>
                         <div class="col-4">
                             <label for="customMode_minutes">Minutes</label>
-                            <input type="number" class="form-control" id="customMode_minutes" name="customMode_minutes" min="0" max="59" value="30">
+                            <input type="number" class="form-control" id="customMode_minutes" name="customMode_minutes"
+                                   min="0" max="59" value="30">
                         </div>
                     </div>
                     <div class="card-footer"></div>
                 </div>
-                <button id="submitButton" class="btn bg-gradient-primary" type="button" onclick="submitForm()">제출</button>
+                <button id="submitButton" class="btn bg-gradient-primary" type="button" onclick="submitForm()">제출
+                </button>
             </div>
 
             <div class="d-flex justify-content-between">

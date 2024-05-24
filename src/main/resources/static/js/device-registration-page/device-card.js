@@ -128,23 +128,24 @@ function submitForm() {
     // AI 모드 데이터 추가
     const aiModesContainer = document.getElementById('aiModesContainer');
     if (aiModesContainer.childElementCount > 0) {
-        jsonData.aiModeDto = {
-            mqttInDtos: [],
+        jsonData.aiMode = {
+            mqttInInfos: [],
             hour: document.getElementById('aiMode_hours').value,
             minutes: document.getElementById('aiMode_minutes').value
         };
         for (let i = 0; i < aiModesContainer.childElementCount; i++) {
             const mqttUrl = document.getElementById(`aiMode_mqttUrl[${i}]`).value;
             const topic = document.getElementById(`aiMode_topic[${i}]`).value;
-            jsonData.aiModeDto.mqttInDtos.push({mqttUrl, topic});
+            jsonData.aiMode.mqttInInfos.push({mqttUrl, topic});
         }
     }
 
     // 커스텀 모드 데이터 추가
     const conditionsContainer = document.getElementById('conditionsContainer');
     if (conditionsContainer.childElementCount > 0) {
-        jsonData.customModeDto = {
+        jsonData.customMode = {
             mqttConditionMap: {},
+            occupancyCheckRequired: document.getElementById('occupancyCheckRequired').value,
             hour: document.getElementById('customMode_hours').value,
             minutes: document.getElementById('customMode_minutes').value
         };
@@ -163,7 +164,7 @@ function submitForm() {
 
             let mqttInDto = JSON.stringify(mqttInfo)
 
-            jsonData.customModeDto.mqttConditionMap[mqttInDto] = {
+            jsonData.customMode.mqttConditionMap[mqttInDto] = {
                 onCondition: {comparisonOperator: onComparisonOperator, standardValue: onStandardValue},
                 offCondition: {comparisonOperator: offComparisonOperator, standardValue: offStandardValue}
             };
