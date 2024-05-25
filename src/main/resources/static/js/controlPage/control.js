@@ -55,6 +55,9 @@ document.addEventListener('DOMContentLoaded', function () {
             console.error('Error:', error);
         });
 
+        if (isOn)
+            aiResultButton.hidden = isOn;
+
         airconditionerSwitch.disabled = isOn;
     });
 
