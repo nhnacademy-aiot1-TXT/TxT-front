@@ -15,6 +15,7 @@ import java.util.concurrent.TimeUnit;
 public class RedisUtil {
     private final RedisTemplate<String, Object> redisTemplateBlackList;
     private final RedisTemplate<String, Object> redisTemplateDevice;
+    private final RedisTemplate<String, String> redisTemplateAI;
 
     /**
      * 블랙리스트에 항목을 추가하는 메서드
@@ -38,5 +39,9 @@ public class RedisUtil {
 
     public Object getDeviceStatus(String key, String hashKey) {
         return redisTemplateDevice.opsForHash().get(key, hashKey);
+    }
+
+    public Object getAiInfo(String key, String hashKey) {
+        return redisTemplateAI.opsForHash().get(key, hashKey);
     }
 }
