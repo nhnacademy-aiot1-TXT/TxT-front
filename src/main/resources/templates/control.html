@@ -39,9 +39,13 @@
 <aside th:replace="fragments/sidebar"></aside>
 
 <div class="main-content position-relative">
-    <button type="button" class="btn btn-block bg-gradient-primary mb-3 center-left-button" id="ai-result"
+    <button type="button"
+            class="btn btn-block bg-gradient-primary mb-3 center-left-button"
+            id="ai-result"
             data-bs-toggle="modal"
-            data-bs-target="#modal-form">
+            data-bs-target="#modal-form"
+            th:hidden="${!aiMode}"
+    >
         AI Result
     </button>
     <div class="modal fade" id="modal-form" tabindex="-1" role="dialog" aria-labelledby="modal-form"
