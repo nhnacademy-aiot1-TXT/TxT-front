@@ -8,12 +8,10 @@ import com.nhnacademy.front.service.RabbitmqService;
 import com.nhnacademy.front.utils.AccessTokenUtil;
 import com.nhnacademy.front.utils.RedisUtil;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
@@ -34,6 +32,7 @@ public class ControlController {
     private static final String AI_MODE = "ai_mode";
     private static final String CUSTOM_MODE = "custom_mode";
     private static final String REDIRECT_CONTROL = "redirect:/control";
+    private static final String PREDICT_DATA = "predict_data";
     private final DeviceSettingAdapter deviceSettingAdapter;
     private final Map<String, String> deviceIconMap;
 
@@ -114,5 +113,16 @@ public class ControlController {
         redisUtil.setMode(CUSTOM_MODE, placeCode.concat("_").concat(deviceName), isOn);
 
         return REDIRECT_CONTROL;
+    }
+
+    @ResponseBody
+    @GetMapping("/ai-result")
+    public ResponseEntity<Map<String, Object>> getAiResult() {
+        List<String> fieldList = List.of("deviceName", "time", "indoorTemperature", "indoorHumidity", "outdoorTemperature", "outdoorHumidity", "totalPeopleCount", "result");
+        Map<String, Object> aiResultMap = new HashMap<>();
+
+        fieldList.forEach(s -> aiResultMap.put(s, redisUtil.getAiInfo(PREDICT_DATA, s)));
+
+        return ResponseEntity.ok(aiResultMap);
     }
 }
