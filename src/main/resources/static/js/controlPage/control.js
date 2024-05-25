@@ -42,6 +42,7 @@ document.addEventListener('DOMContentLoaded', function () {
     let customModeAircleaner = document.getElementById('aircleaner-custom-mode');
     let customModeLight = document.getElementById('light-custom-mode');
     let aiModeSwitch = document.getElementById('ai-mode');
+    let aiResultButton = document.getElementById('ai-result');
 
     customModeAirconditioner.addEventListener('click', function () {
         let isOn = customModeAirconditioner.checked;
@@ -99,11 +100,11 @@ document.addEventListener('DOMContentLoaded', function () {
         if (isOn)
             customModeAirconditioner.checked = false;
 
+        aiResultButton.hidden = !isOn;
         customModeAirconditioner.disabled = isOn;
         airconditionerSwitch.disabled = isOn;
     });
 
-    let aiResultButton = document.getElementById('ai-result');
     aiResultButton.addEventListener('click', async function () {
         let deviceName = document.getElementById('deviceName');
         let time = document.getElementById('time');
