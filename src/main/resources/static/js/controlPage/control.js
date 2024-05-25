@@ -120,8 +120,9 @@ document.addEventListener('DOMContentLoaded', function () {
             method: "GET",
         }
         const response = await fetch(url, option);
-
         const data = await response.json();
+        console.log(response);
+        console.log(data);
         console.log(data.deviceName);
 
         deviceName.innerText = data.deviceName;
