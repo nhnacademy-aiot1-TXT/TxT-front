@@ -1,6 +1,5 @@
 document.addEventListener('DOMContentLoaded', function () {
     let lightSwitch = document.getElementById('light');
-    console.log(lightSwitch);
     lightSwitch.addEventListener('click', function () {
         let isOn = lightSwitch.checked; // checkbox의 상태를 확인합니다.
 
@@ -103,4 +102,35 @@ document.addEventListener('DOMContentLoaded', function () {
         customModeAirconditioner.disabled = isOn;
         airconditionerSwitch.disabled = isOn;
     });
+
+    let aiResultButton = document.getElementById('ai-result');
+    aiResultButton.addEventListener('click', async function () {
+        let deviceName = document.getElementById('deviceName');
+        let time = document.getElementById('time');
+        let indoorTemperature = document.getElementById('indoorTemperature');
+        let indoorHumidity = document.getElementById('indoorHumidity');
+        let outdoorTemperature = document.getElementById('outdoorTemperature');
+        let outdoorHumidity = document.getElementById('outdoorHumidity');
+        let totalPeopleCount = document.getElementById('totalPeopleCount');
+        let result = document.getElementById('result');
+
+        const url = '/control/ai-result';
+
+        const option = {
+            method: "GET",
+        }
+        const response = await fetch(url, option);
+
+        const data = await response.json();
+        console.log(data.deviceName);
+
+        deviceName.innerText = data.deviceName;
+        time.innerText = data.time;
+        indoorTemperature.innerText = data.indoorTemperature + '도';
+        indoorHumidity.innerText = data.indoorHumidity + '%';
+        outdoorTemperature.innerText = data.outdoorTemperature + '도';
+        outdoorHumidity.innerText = data.outdoorHumidity + '%';
+        totalPeopleCount.innerText = data.totalPeopleCount + '명';
+        result.innerText = data.result;
+    })
 });
