@@ -42,6 +42,15 @@ public class ControlController {
         return "redirect:/control/1";
     }
 
+    /**
+     * 주어진 장소 ID에 해당하는 제어 페이지를 렌더링합니다.
+     *
+     * @param request HTTP 요청 객체
+     * @param placeId 장소 ID
+     * @param model 뷰에 전달할 데이터를 담은 모델 객체
+     * @return 컨트롤 페이지의 뷰 이름
+     */
+
     @GetMapping("/{placeId}")
     public String control(HttpServletRequest request, @PathVariable Long placeId, Model model) {
         String accessToken = AccessTokenUtil.findAccessTokenInRequest(request);
@@ -72,6 +81,15 @@ public class ControlController {
         return "control";
     }
 
+    /**
+     * 조명을 제어하기 위한 요청을 처리합니다.
+     * 주어진 장소 코드와 켜기/끄기 상태를 받아와서 해당 장치에 대한 제어 메시지를 RabbitMQ를 통해 전송합니다.
+     *
+     * @param placeCode 장소 코드
+     * @param isOn 조명 상태 (켜짐: true, 꺼짐: false)
+     * @return 제어 페이지로의 리다이렉트 URL
+     */
+
     @GetMapping("/light")
     public String light(@RequestParam String placeCode, @RequestParam Boolean isOn) {
         ValueMessage valueMessage = new ValueMessage(placeCode, isOn);
@@ -80,6 +98,15 @@ public class ControlController {
 
         return REDIRECT_CONTROL;
     }
+
+    /**
+     * 에어컨을 제어하기 위한 요청을 처리합니다.
+     * 주어진 장소 코드와 켜기/끄기 상태를 받아와서 해당 장치에 대한 제어 메시지를 RabbitMQ를 통해 전송합니다.
+     *
+     * @param placeCode 장소 코드
+     * @param isOn 에어컨 상태 (켜짐: true, 꺼짐: false)
+     * @return 제어 페이지로의 리다이렉트 URL
+     */
 
     @GetMapping("/air-conditioner")
     public String airConditioner(@RequestParam String placeCode, @RequestParam Boolean isOn) {
@@ -90,6 +117,15 @@ public class ControlController {
         return REDIRECT_CONTROL;
     }
 
+    /**
+     * 공기 청정기를 제어하기 위한 요청을 처리합니다.
+     * 주어진 장소 코드와 켜기/끄기 상태를 받아와서 해당 장치에 대한 제어 메시지를 RabbitMQ를 통해 전송합니다.
+     *
+     * @param placeCode 장소 코드
+     * @param isOn 공기 청정기 상태 (켜짐: true, 꺼짐: false)
+     * @return 제어 페이지로의 리다이렉트 URL
+     */
+
     @GetMapping("/air-cleaner")
     public String airCleaner(@RequestParam String placeCode, @RequestParam Boolean isOn) {
         ValueMessage valueMessage = new ValueMessage(placeCode, isOn);
@@ -98,6 +134,15 @@ public class ControlController {
 
         return REDIRECT_CONTROL;
     }
+
+    /**
+     * 인공지능 모드를 설정하기 위한 요청을 처리합니다.
+     * 주어진 장소 코드와 켜기/끄기 상태를 받아와서 해당 장소의 인공지능 모드를 설정합니다.
+     *
+     * @param placeCode 장소 코드
+     * @param isOn 인공지능 모드 상태 (활성화: true, 비활성화: false)
+     * @return 제어 페이지로의 리다이렉트 URL
+     */
 
     @GetMapping("/ai-mode")
     public String aiMode(@RequestParam String placeCode, @RequestParam Boolean isOn) {

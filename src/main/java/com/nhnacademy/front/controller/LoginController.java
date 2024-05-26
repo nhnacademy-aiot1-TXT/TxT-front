@@ -39,6 +39,7 @@ public class LoginController {
      * @exception RuntimeException TxT-auth 의 RuntimeException 을 받아온다.
      * @return redirect 할 URL 문자열
      */
+
     @PostMapping("/login")
     public String login(LoginRequest loginRequest, HttpServletResponse response, @RequestAttribute("_csrf") CsrfToken csrfToken, Model model) {
         try{

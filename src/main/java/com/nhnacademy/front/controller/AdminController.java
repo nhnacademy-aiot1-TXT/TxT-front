@@ -73,6 +73,21 @@ public class AdminController {
         return "manage";
     }
 
+
+
+    /**
+     * 사용자 허용 요청을 처리하고 지정된 URL로 리디렉션하는 매서드.
+     *
+     * <p>이 메서드는 "/manage/permit" URL에 대한 POST 요청에 매핑되어 있습니다.
+     * 요청에서 선택된 사용자 ID를 가져와 {@code PermitUserRequest} 객체 리스트를 생성한 후,
+     * 접근 토큰과 사용자 요청 리스트를 사용하여 {@code userAdapter}의 {@code permitUser} 메서드를 호출합니다.
+     * 처리 후, 지정된 URL로 리디렉션합니다.
+     *
+     * @param request 사용자 ID 및 기타 매개변수가 포함된 HTTP 서블릿 요청
+     * @param redirectUrl 처리 후 리디렉션할 URL
+     * @return "/admin"으로 시작하는 지정된 URL로 리디렉션하는 문자열
+     */
+
     //유저등록
     @PostMapping("/manage/permit")
     public String permitUser(HttpServletRequest request, @RequestParam("redirectUrl") String redirectUrl) {
@@ -91,6 +106,21 @@ public class AdminController {
 
         return "redirect:" + redirectUrl.substring(redirectUrl.indexOf("/admin"));
     }
+
+
+    /**
+     * 관리 페이지에서 사용자를 승격하는 메서드.
+     * 이 메서드는 HTTP 요청에서 선택된 사용자 ID들을 가져와 PermitUserRequest 객체로 변환한 후,
+     * userAdapter.promotionUser 메서드를 호출하여 사용자를 승격시킵니다.
+     * 이후, 주어진 redirectUrl의 "/admin" 경로로 리다이렉트합니다.
+     *
+     * @param request       HTTP 요청 객체.
+     * @param redirectUrl   리다이렉트할 URL.
+     * @return              리다이렉트 URL 문자열.
+     *
+
+     */
+
 
     @PostMapping("/manage/promotion")
     public String promotionUser(HttpServletRequest request, @RequestParam("redirectUrl") String redirectUrl) {
@@ -111,6 +141,17 @@ public class AdminController {
     }
 
     // 상세센서 정보
+
+    /**
+     * 상세 센서 정보 페이지를 반환하는 메서드.
+     *
+     * @param request    HTTP 요청 객체.
+     * @param placeCode  장소 코드를 나타내는 문자열 (기본값은 "class_a").
+     * @param model      모델 객체.
+     * @return           상세 센서 정보 페이지의 뷰 이름.
+     *
+     */
+
     @GetMapping("/detail-sensor-info")
     public String profile(HttpServletRequest request,
                           @RequestParam(value = "placeCode", defaultValue = "class_a") String placeCode,
@@ -129,6 +170,21 @@ public class AdminController {
 
         return "detailedSensor";
     }
+
+    /**
+     * 센서 로그 데이터를 반환하는 메서드.
+     * 이 메서드는 주어진 조건에 따라 센서 데이터를 가져와 모델에 추가하고,
+     * 센서 로그 데이터 페이지를 반환합니다.
+     *
+     * @param request     HTTP 요청 객체.
+     * @param placeCode   장소 코드를 나타내는 문자열 (기본값은 "class_a").
+     * @param sensorType  센서 타입을 나타내는 문자열 (기본값은 "temperature").
+     * @param period      기간을 나타내는 문자열 (기본값은 "day").
+     * @param model       모델 객체.
+     * @return            센서 로그 데이터 페이지의 뷰 이름.
+     *
+
+     */
 
     @GetMapping("/detail-sensor-info/log")
     public String sensorLog(HttpServletRequest request,

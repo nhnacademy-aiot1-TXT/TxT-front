@@ -19,6 +19,15 @@ public class DeviceRegisterController {
 
     private final DeviceRegisterAdaptor deviceRegisterAdaptor;
 
+    /**
+     * 장치 등록 정보를 전송하는 요청을 처리하는 매서드.
+     *
+     * @param request HTTP 요청 객체
+     * @param deviceRegisterInfo 장치 등록 정보(JSON 형식)
+     * @return HTTP 응답 엔터티 (장치 등록 성공 또는 실패 메시지)
+     * @throws DeviceRegisterException 장치 등록에 실패한 경우 발생하는 예외
+     */
+
     @PostMapping("/send-data")
     public ResponseEntity<String> getDeviceRegisterInfo(HttpServletRequest request, @RequestBody String deviceRegisterInfo) {
         String accessToken = AccessTokenUtil.findAccessTokenInRequest(request);
