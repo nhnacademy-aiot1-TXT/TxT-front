@@ -38,6 +38,9 @@
 </head>
 
 <body class="g-sidenav-show bg-gray-100">
+<div class="position-absolute w-100 h-100 top-0"
+     style="background-image: url('/img/bg-detailSensor.jpg'); background-size: cover; background-position-y: 50%;">
+</div>
 <aside th:replace="fragments/sidebar"></aside>
 
 <main class="main-content position-relative border-radius-lg">
@@ -49,9 +52,10 @@
 
     <div class="container-fluid py-4">
         <div class="row">
-            <div class="col" th:each="deviceSetting : ${deviceSettingList}">
-                <th:block
-                        th:replace="'device-setting/' + ${deviceSetting.getDevice().getDeviceName().toLowerCase()} + '-setting'"/>
+            <div class="col" th:each="device : ${deviceList}" th:if="${!device.getDeviceName().equals('light')}">
+                    <th:block
+                            th:replace="'device-setting/' + ${device.getDeviceName().toLowerCase()} + '-setting'"/>
+                </div>
             </div>
         </div>
         <div class="col d-flex justify-content-center align-items-center" th:if="${currentPlace == null}">
