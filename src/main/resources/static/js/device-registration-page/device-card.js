@@ -85,12 +85,12 @@ function createAiModeGroup() {
           <div id="collapseBody${index}" class="card-body collapse show">
               <div class="form-group">
                   <label for="aiMode_mqttUrl[${index}]">MQTT URL</label>
-                  <input type="text" id="aiMode_mqttUrl[${index}]" name="aiMode_mqttUrl[${index}]" class="form-control" value="133.">
+                  <input type="text" id="aiMode_mqttUrl[${index}]" name="aiMode_mqttUrl[${index}]" class="form-control">
               </div>
 
               <div class="form-group">
                   <label for="aiMode_topic[${index}]">Topic</label>
-                  <input type="text" id="aiMode_topic[${index}]" name="aiMode_topic[${index}]" class="form-control" value="ai/+/">
+                  <input type="text" id="aiMode_topic[${index}]" name="aiMode_topic[${index}]" class="form-control">
               </div>`;
 
     container.appendChild(group);
@@ -127,17 +127,26 @@ function submitForm() {
 
     // AI 모드 데이터 추가
     const aiModesContainer = document.getElementById('aiModesContainer');
-    if (aiModesContainer.childElementCount > 0) {
-        jsonData.aiMode = {
-            mqttInInfos: [],
-            hour: document.getElementById('aiMode_hours').value,
-            minutes: document.getElementById('aiMode_minutes').value
-        };
-        for (let i = 0; i < aiModesContainer.childElementCount; i++) {
-            const mqttUrl = document.getElementById(`aiMode_mqttUrl[${i}]`).value;
-            const topic = document.getElementById(`aiMode_topic[${i}]`).value;
-            jsonData.aiMode.mqttInInfos.push({mqttUrl, topic});
+    let aiModeHasValue = false;
+
+    const aiModeData = {
+        mqttInInfos: [],
+        hour: document.getElementById('aiMode_hours').value,
+        minutes: document.getElementById('aiMode_minutes').value
+    };
+
+    for (let i = 0; i < aiModesContainer.childElementCount; i++) {
+        const mqttUrl = document.getElementById(`aiMode_mqttUrl[${i}]`).value;
+        const topic = document.getElementById(`aiMode_topic[${i}]`).value;
+
+        if (mqttUrl !== "" || topic !== "") {
+            aiModeHasValue = true;
         }
+        aiModeData.mqttInInfos.push({mqttUrl, topic});
+    }
+
+    if (aiModeHasValue || aiModeData.hour !== "" || aiModeData.minutes !== "") {
+        jsonData.aiMode = aiModeData;
     }
 
     // 커스텀 모드 데이터 추가
@@ -227,12 +236,12 @@ function prevPage() {
 
 function nextPage() {
     var currentFields = document.getElementsByClassName("page")[currentPage].getElementsByTagName("input");
-    for (var i = 0; i < currentFields.length; i++) {
-        if (currentFields[i].value === "") {
-            alert("빈칸을 채워주세요");
-            return;
-        }
-    }
+    // for (var i = 0; i < currentFields.length; i++) {
+    //     if (currentFields[i].value === "") {
+    //         alert("빈칸을 채워주세요");
+    //         return;
+    //     }
+    // }
     if (currentPage < document.getElementsByClassName("page").length - 1) {
         showPage(currentPage + 1);
     }
