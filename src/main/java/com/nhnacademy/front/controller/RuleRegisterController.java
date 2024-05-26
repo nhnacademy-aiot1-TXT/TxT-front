@@ -1,6 +1,6 @@
 package com.nhnacademy.front.controller;
 
-import com.nhnacademy.front.adaptor.DeviceRegisterAdaptor;
+import com.nhnacademy.front.adaptor.RuleRegisterAdaptor;
 import com.nhnacademy.front.error.DeviceRegisterException;
 import com.nhnacademy.front.utils.AccessTokenUtil;
 import lombok.RequiredArgsConstructor;
@@ -13,11 +13,11 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.servlet.http.HttpServletRequest;
 
 @RestController
-@RequestMapping("/admin/device")
+@RequestMapping("/admin/rule")
 @RequiredArgsConstructor
-public class DeviceRegisterController {
+public class RuleRegisterController {
 
-    private final DeviceRegisterAdaptor deviceRegisterAdaptor;
+    private final RuleRegisterAdaptor ruleRegisterAdaptor;
 
     /**
      * 장치 등록 정보를 전송하는 요청을 처리하는 매서드.
@@ -29,13 +29,13 @@ public class DeviceRegisterController {
      */
 
     @PostMapping("/send-data")
-    public ResponseEntity<String> getDeviceRegisterInfo(HttpServletRequest request, @RequestBody String deviceRegisterInfo) {
+    public ResponseEntity<String> getRuleRegisterInfo(HttpServletRequest request, @RequestBody String ruleRegisterInfo) {
         String accessToken = AccessTokenUtil.findAccessTokenInRequest(request);
         try {
-            deviceRegisterAdaptor.sendDeviceInfo(accessToken, deviceRegisterInfo);
-            return ResponseEntity.ok("Device registered successfully!");
+            ruleRegisterAdaptor.sendRuleRegisterInfo(accessToken, ruleRegisterInfo);
+            return ResponseEntity.ok("Rule registered successfully!");
         } catch (Exception e) {
-            throw new DeviceRegisterException("Device registered failed!");
+            throw new DeviceRegisterException("Rule registered failed!");
         }
     }
 }

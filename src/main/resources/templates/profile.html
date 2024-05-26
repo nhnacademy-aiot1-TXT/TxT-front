@@ -51,8 +51,8 @@
             <div class="row gx-4">
                 <div class="col-auto">
                     <div class="avatar avatar-xl position-relative">
-                        <img src="/img/team-1.jpg" alt="profile_image"
-                             class="w-100 border-radius-lg shadow-sm">
+                        <img src="/img/user_icon.png" alt="profile_image"
+                             class="w-100">
                     </div>
                 </div>
                 <div class="col-auto my-auto">
@@ -193,16 +193,15 @@
         return !(!nameValue.trim() || !passwordValue.trim() || !emailValue.trim() || (passwordValue.trim().length < 4));
     }
 </script>
-<!--<script>-->
-<!--    var win = navigator.platform.indexOf('Win') > -1;-->
-<!--    if (win && document.querySelector('#sidenav-scrollbar')) {-->
-<!--        var options = {-->
-<!--            damping: '0.5'-->
-<!--        }-->
-<!--        Scrollbar.init(document.querySelector('#sidenav-scrollbar'), options);-->
-<!--    }-->
-<!--</script>-->
-<!--Github buttons-->
+<script>
+    var win = navigator.platform.indexOf('Win') > -1;
+    if (win && document.querySelector('#sidenav-scrollbar')) {
+        var options = {
+            damping: '0.5'
+        }
+        Scrollbar.init(document.querySelector('#sidenav-scrollbar'), options);
+    }
+</script>
 <script async defer src="https://buttons.github.io/buttons.js"></script>
 <!-- Control Center for Soft Dashboard: parallax effects, scripts for the example pages etc -->
 <script src="/js/argon-dashboard.min.js?v=2.0.4"></script>

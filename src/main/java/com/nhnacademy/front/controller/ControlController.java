@@ -8,12 +8,10 @@ import com.nhnacademy.front.service.RabbitmqService;
 import com.nhnacademy.front.utils.AccessTokenUtil;
 import com.nhnacademy.front.utils.RedisUtil;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
@@ -31,9 +29,10 @@ public class ControlController {
     private static final String LIGHT = "light";
     private static final String AIR_CONDITIONER = "airconditioner";
     private static final String AIR_CLEANER = "aircleaner";
-    private static final String MODE = "mode";
-    private static final String AUTO_MODE = "auto_mode:";
+    private static final String AI_MODE = "ai_mode";
+    private static final String CUSTOM_MODE = "custom_mode";
     private static final String REDIRECT_CONTROL = "redirect:/control";
+    private static final String PREDICT_DATA = "predict_data";
     private final DeviceSettingAdapter deviceSettingAdapter;
     private final Map<String, String> deviceIconMap;
 
@@ -58,17 +57,17 @@ public class ControlController {
         List<PlaceResponse> placeList = deviceSettingAdapter.getPlaceList(accessToken);
         PlaceResponse currentPlace = deviceSettingAdapter.getPlace(accessToken, placeId);
         List<DeviceResponse> deviceList = deviceSettingAdapter.getDeviceListByPlace(accessToken, placeId);
-        boolean aiMode = deviceList.stream().anyMatch(deviceResponse -> deviceResponse.getAiMode() == 1);
-
-        Object lightStatus = redisUtil.getDeviceStatus(DEVICE_KEY, LIGHT.concat(":").concat(currentPlace.getPlaceCode()));
-        Object airConditionerStatus = redisUtil.getDeviceStatus(DEVICE_KEY, AIR_CONDITIONER.concat(":").concat(currentPlace.getPlaceCode()));
-        Object airCleanerStatus = redisUtil.getDeviceStatus(DEVICE_KEY, AIR_CLEANER.concat(":").concat(currentPlace.getPlaceCode()));
-        Object autoMode = redisUtil.getMode(AUTO_MODE.concat(currentPlace.getPlaceCode()));
 
         Map<String, Object> statusMap = new HashMap<>();
-        statusMap.put(LIGHT, lightStatus);
-        statusMap.put(AIR_CONDITIONER, airConditionerStatus);
-        statusMap.put(AIR_CLEANER, airCleanerStatus);
+        Map<String, Object> customMap = new HashMap<>();
+        deviceList.forEach(deviceResponse -> {
+            Object deviceStatus = redisUtil.getDeviceStatus(DEVICE_KEY, deviceResponse.getDeviceName().toLowerCase().concat(":").concat(currentPlace.getPlaceCode()));
+            Object customMode = redisUtil.getMode(CUSTOM_MODE, currentPlace.getPlaceCode().concat("_").concat(deviceResponse.getDeviceName().toLowerCase()));
+            statusMap.put(deviceResponse.getDeviceName().toLowerCase(), deviceStatus);
+            customMap.put(deviceResponse.getDeviceName().toLowerCase(), customMode);
+        });
+
+        Object aiMode = redisUtil.getMode(AI_MODE, currentPlace.getPlaceCode().concat("_").concat(AIR_CONDITIONER));
 
         model.addAttribute("deviceIconMap", deviceIconMap);
         model.addAttribute("status", statusMap);
@@ -76,7 +75,7 @@ public class ControlController {
         model.addAttribute("currentPlace", currentPlace);
         model.addAttribute("deviceList", deviceList);
         model.addAttribute("aiMode", aiMode);
-        model.addAttribute(MODE, autoMode);
+        model.addAttribute("custom", customMap);
 
         return "control";
     }
@@ -146,8 +145,29 @@ public class ControlController {
 
     @GetMapping("/ai-mode")
     public String aiMode(@RequestParam String placeCode, @RequestParam Boolean isOn) {
-        redisUtil.setMode(AUTO_MODE.concat(placeCode), isOn);
+        redisUtil.setMode(AI_MODE, placeCode.concat("_").concat(AIR_CONDITIONER), isOn);
+
+        if (Boolean.TRUE.equals(isOn))
+            redisUtil.setMode(CUSTOM_MODE, placeCode.concat("_").concat(AIR_CONDITIONER), false);
 
         return REDIRECT_CONTROL;
+    }
+
+    @GetMapping("/custom-mode")
+    public String customMode(@RequestParam String deviceName, @RequestParam String placeCode, @RequestParam Boolean isOn) {
+        redisUtil.setMode(CUSTOM_MODE, placeCode.concat("_").concat(deviceName), isOn);
+
+        return REDIRECT_CONTROL;
+    }
+
+    @ResponseBody
+    @GetMapping("/ai-result")
+    public ResponseEntity<Map<String, Object>> getAiResult() {
+        List<String> fieldList = List.of("deviceName", "time", "indoorTemperature", "indoorHumidity", "outdoorTemperature", "outdoorHumidity", "totalPeopleCount", "result");
+        Map<String, Object> aiResultMap = new HashMap<>();
+
+        fieldList.forEach(s -> aiResultMap.put(s, redisUtil.getAiInfo(PREDICT_DATA, s)));
+
+        return ResponseEntity.ok(aiResultMap);
     }
 }

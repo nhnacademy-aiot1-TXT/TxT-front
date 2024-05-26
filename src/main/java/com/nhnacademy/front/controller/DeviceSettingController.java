@@ -11,15 +11,15 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import java.time.LocalTime;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
-import java.util.stream.Collectors;
 
 @Controller
 @RequiredArgsConstructor
 @RequestMapping("/device/settings")
 public class DeviceSettingController {
-
     private final DeviceSettingAdapter deviceSettingAdapter;
 
     @GetMapping
@@ -42,23 +42,18 @@ public class DeviceSettingController {
         String accessToken = AccessTokenUtil.findAccessTokenInRequest(request);
         List<PlaceResponse> placeList = deviceSettingAdapter.getPlaceList(accessToken);
         PlaceResponse currentPlace = deviceSettingAdapter.getPlace(accessToken, placeId);
-        List<DeviceResponse> deviceList;
-        deviceList = deviceSettingAdapter.getDeviceListByPlace(accessToken, placeId);
-        List<DeviceSettingInfo> deviceSettingList = deviceList.stream()
-                .map(deviceResponse -> {
-                    List<DeviceSensorResponse> deviceSensorResponseList = deviceSettingAdapter.getSensorList(accessToken, deviceResponse.getDeviceId());
-                    if (deviceSensorResponseList.isEmpty()) {
-                        return null;
-                    }
-
-                    return new DeviceSettingInfo(deviceResponse, deviceSensorResponseList.get(0));
-                })
-                .filter(Objects::nonNull)
-                .collect(Collectors.toList());
-
+        List<DeviceResponse> deviceList = deviceSettingAdapter.getDeviceListByPlace(accessToken, placeId);
+        Map<String, List<DeviceSensorResponse>> deviceSensorMap = new HashMap<>();
+        deviceList.forEach(deviceResponse -> {
+            List<DeviceSensorResponse> deviceSensorResponseList = deviceSettingAdapter.getSensorList(accessToken, deviceResponse.getDeviceId());
+            if (deviceSensorResponseList != null) {
+                deviceSensorMap.put(deviceResponse.getDeviceName(), deviceSensorResponseList);
+            }
+        });
+        model.addAttribute("deviceList", deviceList);
         model.addAttribute("currentPlace", currentPlace);
         model.addAttribute("placeList", placeList);
-        model.addAttribute("deviceSettingList", deviceSettingList);
+        model.addAttribute("deviceSensorMap", deviceSensorMap);
         return "device-setting/setting-view";
     }
 

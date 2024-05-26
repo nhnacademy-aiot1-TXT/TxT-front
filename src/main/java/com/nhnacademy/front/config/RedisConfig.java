@@ -94,4 +94,16 @@ public class RedisConfig {
 
         return redisTemplate;
     }
+
+    @Bean
+    public RedisTemplate<String, String> redisTemplateAI() {
+        RedisTemplate<String, String> redisTemplate = new RedisTemplate<>();
+        redisTemplate.setConnectionFactory(redisConnectionFactoryDevice());
+        redisTemplate.setKeySerializer(new StringRedisSerializer());
+        redisTemplate.setValueSerializer(new StringRedisSerializer());
+        redisTemplate.setHashKeySerializer(new StringRedisSerializer());
+        redisTemplate.setHashValueSerializer(new StringRedisSerializer());
+
+        return redisTemplate;
+    }
 }
