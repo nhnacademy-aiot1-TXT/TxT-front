@@ -26996,3 +26996,9 @@ body {
   font-weight: 200;
   opacity: .8;
 }
+
+.jua-regular {
+  font-family: "Jua", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+}
