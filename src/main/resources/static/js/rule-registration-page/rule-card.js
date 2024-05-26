@@ -112,9 +112,9 @@ function getCookie(name) {
 }
 
 function submitForm() {
-    const form = document.getElementById('deviceAddForm');
+    const form = document.getElementById('ruleAddForm');
     if (!(form instanceof HTMLFormElement)) {
-        console.error('deviceAddForm is not an HTMLFormElement');
+        console.error('ruleAddForm is not an HTMLFormElement');
         return;
     }
 
@@ -196,7 +196,7 @@ function submitForm() {
 
     // rule register info request
     const csrfToken = getCookie('XSRF-TOKEN');
-    fetch('/admin/device/send-data', {
+    fetch('/admin/rule/send-data', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -207,7 +207,7 @@ function submitForm() {
         .then(response => {
             if (response.ok) {
                 alert('장치가 성공적으로 등록되었습니다.');
-                window.location.href = '/admin/device/register';
+                window.location.href = '/admin/rule/register';
             } else {
                 return response.json().then(data => {
                     console.error('Error:', data);

@@ -18,7 +18,7 @@
 
     <script th:inline="javascript">const accessToken = [[${accessToken}]];</script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script src="/js/device-registration-page/device-card.js"></script>
+    <script src="/js/rule-registration-page/rule-card.js"></script>
     <style>
         .page {
             display: none;
@@ -37,7 +37,7 @@
 
     <div class="card text-center" id="main-body" style="padding-left: 10px; width: 50%; margin: 0 auto;">
         <h2 class="jua-regular" style="margin-bottom: 5px; margin-top: 25px;">장치 관리</h2>
-        <form id="deviceAddForm" action="/admin/device/send-data" method="post" class="px-4 py-3"
+        <form id="ruleAddForm" action="/admin/rule/send-data" method="post" class="px-4 py-3"
               enctype="application/x-www-form-urlencoded">
             <label>
                 <input name="_csrf" hidden="" th:id="${_csrf.token}" th:value="${_csrf.getToken()}">

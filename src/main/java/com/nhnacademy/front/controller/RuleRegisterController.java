@@ -13,20 +13,20 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.servlet.http.HttpServletRequest;
 
 @RestController
-@RequestMapping("/admin/device")
+@RequestMapping("/admin/rule")
 @RequiredArgsConstructor
 public class RuleRegisterController {
 
-    private final RuleRegisterAdaptor deviceRegisterAdaptor;
+    private final RuleRegisterAdaptor ruleRegisterAdaptor;
 
     @PostMapping("/send-data")
-    public ResponseEntity<String> getDeviceRegisterInfo(HttpServletRequest request, @RequestBody String deviceRegisterInfo) {
+    public ResponseEntity<String> getRuleRegisterInfo(HttpServletRequest request, @RequestBody String ruleRegisterInfo) {
         String accessToken = AccessTokenUtil.findAccessTokenInRequest(request);
         try {
-            deviceRegisterAdaptor.sendDeviceInfo(accessToken, deviceRegisterInfo);
-            return ResponseEntity.ok("Device registered successfully!");
+            ruleRegisterAdaptor.sendRuleRegisterInfo(accessToken, ruleRegisterInfo);
+            return ResponseEntity.ok("Rule registered successfully!");
         } catch (Exception e) {
-            throw new DeviceRegisterException("Device registered failed!");
+            throw new DeviceRegisterException("Rule registered failed!");
         }
     }
 }

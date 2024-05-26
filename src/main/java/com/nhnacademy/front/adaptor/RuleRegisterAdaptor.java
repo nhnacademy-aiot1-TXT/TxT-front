@@ -9,5 +9,5 @@ import org.springframework.web.bind.annotation.RequestHeader;
 public interface RuleRegisterAdaptor {
 
     @PostMapping(value = "/device/register")
-    void sendDeviceInfo(@RequestHeader("Authorization") String accessToken, @RequestBody String deviceRegisterInfo);
+    void sendRuleRegisterInfo(@RequestHeader("Authorization") String accessToken, @RequestBody String ruleRegisterInfo);
 }
