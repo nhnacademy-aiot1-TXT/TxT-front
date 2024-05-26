@@ -151,38 +151,51 @@ function submitForm() {
 
     // 커스텀 모드 데이터 추가
     const conditionsContainer = document.getElementById('conditionsContainer');
-    if (conditionsContainer.childElementCount > 0) {
-        jsonData.customMode = {
-            mqttConditionMap: {},
-            occupancyCheckRequired: document.getElementById('occupancyCheckRequired').value,
-            hour: document.getElementById('customMode_hours').value,
-            minutes: document.getElementById('customMode_minutes').value
-        };
-        for (let i = 0; i < conditionsContainer.childElementCount; i++) {
-            const mqttUrl = document.getElementById(`customMode_mqttUrl[${i}]`).value;
-            const topic = document.getElementById(`customMode_topic[${i}]`).value;
-            const onComparisonOperator = document.getElementById(`on_comparisonOperator[${i}]`).value;
-            const onStandardValue = document.getElementById(`on_standardValue[${i}]`).value;
-            const offComparisonOperator = document.getElementById(`off_comparisonOperator[${i}]`).value;
-            const offStandardValue = document.getElementById(`off_standardValue[${i}]`).value;
+    let customModeHasValue = true;
+    const customModeData = {
+        mqttConditionMap: {},
+        occupancyCheckRequired: document.getElementById('occupancyCheckRequired').value,
+        hour: document.getElementById('customMode_hours').value,
+        minutes: document.getElementById('customMode_minutes').value
+    };
 
-            let mqttInfo = {
-                "mqttUrl": mqttUrl,
-                "topic": topic
-            }
-
-            let mqttInDto = JSON.stringify(mqttInfo)
-
-            jsonData.customMode.mqttConditionMap[mqttInDto] = {
-                onCondition: {comparisonOperator: onComparisonOperator, standardValue: onStandardValue},
-                offCondition: {comparisonOperator: offComparisonOperator, standardValue: offStandardValue}
-            };
-        }
+    if (customModeData.hour === "" || customModeData.minutes === "") {
+        customModeHasValue = false;
     }
 
-    const csrfToken = getCookie('XSRF-TOKEN');
-    console.log('Submitting JSON Data:', JSON.stringify(jsonData));
+    for (let i = 0; i < conditionsContainer.childElementCount; i++) {
+        const mqttUrl = document.getElementById(`customMode_mqttUrl[${i}]`).value;
+        const topic = document.getElementById(`customMode_topic[${i}]`).value;
+        const onComparisonOperator = document.getElementById(`on_comparisonOperator[${i}]`).value;
+        const onStandardValue = document.getElementById(`on_standardValue[${i}]`).value;
+        const offComparisonOperator = document.getElementById(`off_comparisonOperator[${i}]`).value;
+        const offStandardValue = document.getElementById(`off_standardValue[${i}]`).value;
 
+        let mqttInfo = {
+            "mqttUrl": mqttUrl,
+            "topic": topic
+        }
+
+        if (mqttUrl === "" || topic === "" || onStandardValue === "" || offStandardValue === "") {
+            customModeHasValue = false;
+        }
+
+        let mqttInDto = JSON.stringify(mqttInfo)
+        customModeData.mqttConditionMap[mqttInDto] = {
+            onCondition: {comparisonOperator: onComparisonOperator, standardValue: onStandardValue},
+            offCondition: {comparisonOperator: offComparisonOperator, standardValue: offStandardValue}
+        };
+    }
+
+    if (!customModeHasValue) {
+        alert("Custom Mode의 모든 필드를 채워주세요.");
+        return;
+    }
+
+    jsonData.customMode = customModeData;
+
+    // rule register info request
+    const csrfToken = getCookie('XSRF-TOKEN');
     fetch('/admin/device/send-data', {
         method: 'POST',
         headers: {
@@ -235,13 +248,6 @@ function prevPage() {
 }
 
 function nextPage() {
-    var currentFields = document.getElementsByClassName("page")[currentPage].getElementsByTagName("input");
-    // for (var i = 0; i < currentFields.length; i++) {
-    //     if (currentFields[i].value === "") {
-    //         alert("빈칸을 채워주세요");
-    //         return;
-    //     }
-    // }
     if (currentPage < document.getElementsByClassName("page").length - 1) {
         showPage(currentPage + 1);
     }
