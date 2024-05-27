@@ -78,11 +78,9 @@
         </div>
     </div>
     <div th:replace="fragments/nav" style="position: sticky; top:0; z-index: 3;"></div>
-
     <div class="card" id="main-body">
-
         <div class="z-index-1" id="background-img"
-             style="background-image: url('/img/campus.jpg'); padding-top: revert; height: 100vh; position: relative;">
+             style="background-image: url('/img/campus.jpg'); background-size: cover; background-position: center; min-height: 100vh;">
             <div class="dropdown mb-2 z-index-2">
                 <button class="btn bg-gradient-primary dropdown-toggle mt-3 ms-3" type="button" id="placeDropdownButton"
                         data-bs-toggle="dropdown" aria-expanded="false" th:text="${currentPlace.getPlaceName()}">
