@@ -36,6 +36,11 @@
 </head>
 
 <body class="g-sidenav-show bg-gray-100">
+<div class="position-absolute w-100 h-100 top-0"
+     style="background-image: url('/img/bg-index.jpg'); background-size: cover; background-position: center; min-height: 100vh; opacity: 0.5">
+</div>
+<div class="mask" style="background-color: rgba(255,255,255,0.5)"></div>
+
 <aside th:replace="fragments/sidebar"></aside>
 <main class="main-content position-relative border-radius-lg ">
     <div th:replace="fragments/nav"></div>
@@ -384,7 +389,7 @@
 <script src="/js/mainPage/weather.js"></script>
 
 <script th:inline="javascript">
-    const domain = "https://contxt.co.kr";
+    const domain = "http://localhost:8000";
     const currentPlace = [[${currentPlace.getPlaceCode()}]];
 
     // 첫번째로 로딩될 때
