@@ -4,8 +4,6 @@ document.addEventListener("DOMContentLoaded", function() {
     async function fetchAndDisplayNotifications() {
         try {
 
-
-
             const option = {
                 method : "GET",
                 headers : {
@@ -13,7 +11,7 @@ document.addEventListener("DOMContentLoaded", function() {
                 }
 
             }
-            const response = await fetch('https://contxt.co.kr/api/common/notification', option);
+            const response = await fetch('http://localhost:8000/api/common/notification', option);
 
 
 

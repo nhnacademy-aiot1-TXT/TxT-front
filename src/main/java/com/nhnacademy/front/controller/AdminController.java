@@ -69,6 +69,8 @@ public class AdminController {
 
         model.addAttribute("users", users);
         model.addAttribute("statusSet", statusParam);
+        model.addAttribute("accessTokenTemp", AccessTokenUtil.findAccessTokenInRequest(request));
+
 
         return "manage";
     }
@@ -214,6 +216,10 @@ public class AdminController {
         model.addAttribute("period", period);
         model.addAttribute("placeList", placeList);
         model.addAttribute("sensorDataList", sensorData);
+
+
+        model.addAttribute("accessTokenTemp", AccessTokenUtil.findAccessTokenInRequest(request));
+
 
         return "dataLog";
     }
