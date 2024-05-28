@@ -91,7 +91,7 @@
         </div>
         <div class="card-body z-index-1 position-relative">
             <h1 class="text text-center z-index-1" id="text-title"
-                style="color: black; font-size: 60px; margin-top: 170px; text-shadow: -1px 1px whitesmoke, 0px 2px whitesmoke, 2px 0px whitesmoke, 1px -1px whitesmoke;"
+                style="color: black; font-size: 60px; text-shadow: -1px 1px whitesmoke, 0px 2px whitesmoke, 2px 0px whitesmoke, 1px -1px whitesmoke;"
                 th:text="${currentPlace.getPlaceName().toUpperCase()}">
             </h1>
             <div class="row"
@@ -99,7 +99,7 @@
 
                 <div th:each="device : ${deviceList}" class="card bg-cover min-height-150 col-2 z-index-2"
                      style="min-width: 325px; background-color: rgba(248,248,255,0.8); margin-right: 4%; margin-left: 3%; margin-top: 3%;">
-                    <div class="card-body z-index-2" style="margin-top: 10px;" th:if="${device.getAiMode() == 1}">
+                    <div class="card-body z-index-2" style="margin-top: 10px;">
                         <div class="row">
                             <div class="col">
                                 <div class="material-symbols-outlined" style="font-size:70px; color:darkblue;"
@@ -112,14 +112,14 @@
                                         id="ai-result"
                                         data-bs-toggle="modal"
                                         data-bs-target="#modal-form"
-                                        th:hidden="${!aiMode}"
+                                        th:hidden="${device.getAiMode() == 0}"
                                 >AI Result
                                 </button>
                             </div>
                         </div>
                         <h2 class="text" style="color: royalblue; font-size: 30px;"
                             th:text="${device.getDeviceName().toUpperCase()}"></h2>
-                        <div class="form-check form-switch">
+                        <div class="form-check form-switch" th:if="${device.getAiMode() == 1}">
                             <input class="form-check-input" type="checkbox" id="ai-mode" th:checked="${aiMode}">
                             <label class="form-check-label" for="ai-mode">
                                 AI MODE
@@ -145,32 +145,6 @@
                                    th:text="${device.getDeviceName().toUpperCase().concat(' SWITCH')}"></label>
                         </div>
                     </div>
-                    <div class="card-body z-index-2" style="margin-top: 10px;" th:if="${device.getAiMode() == 0}">
-                            <span class="material-symbols-outlined" style="font-size:70px; color:darkblue;"
-                                  th:text="${deviceIconMap[device.getDeviceName().toLowerCase()]}">
-                            </span>
-                        <h2 class="text" style="color: royalblue; font-size: 30px;"
-                            th:text="${device.getDeviceName().toUpperCase()}"></h2>
-                        <div class="form-check form-switch">
-                            <input class="form-check-input" type="checkbox"
-                                   th:id="${device.getDeviceName().toLowerCase().concat('-').concat('custom-mode')}"
-                                   th:checked="${custom[device.getDeviceName().toLowerCase()]}">
-                            <label class="form-check-label"
-                                   th:for="${device.getDeviceName().toLowerCase().concat('-').concat('custom-mode')}">
-                                CUSTOM MODE
-                            </label>
-                        </div>
-                        <div class="form-check form-switch">
-                            <input th:class="form-check-input"
-                                   type="checkbox"
-                                   th:id="${device.getDeviceName().toLowerCase()}"
-                                   th:checked="${status[device.getDeviceName().toLowerCase()]}"
-                                   th:disabled="${custom[device.getDeviceName().toLowerCase()]}">
-                            <label class="form-check-label" th:for="${device.getDeviceName().toLowerCase()}"
-                                   th:text="${device.getDeviceName().toUpperCase().concat(' SWITCH')}"></label>
-                        </div>
-                    </div>
-                    <div class="border-radius-lg"></div>
                 </div>
             </div>
         </div>
