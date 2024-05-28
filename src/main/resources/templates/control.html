@@ -36,9 +36,14 @@
     </style>
 </head>
 <body class="g-sidenav-show bg-gray-100">
+<div class="position-absolute w-100 h-100 top-0"
+     style="background-image: url('/img/campus.jpg'); background-size: cover; background-position: center; min-height: 100vh;">
+</div>
+<div class="mask" style="background-color: rgba(255,255,255,0.5)"></div>
 <aside th:replace="fragments/sidebar"></aside>
 
 <div class="main-content position-relative">
+    <div th:replace="fragments/nav" style="position: sticky; top:0; z-index: 3;"></div>
 
     <div class="modal fade" id="modal-form" tabindex="-1" role="dialog" aria-labelledby="modal-form"
          aria-hidden="true">
@@ -47,6 +52,7 @@
                 <div class="modal-header">
                     <div class="card-header pb-0 text-left">
                         <h3 class="font-weight-bolder text-primary text-gradient">AI Result</h3>
+                        <h5 class="text-dark">ai 가 예측한 상세 정보 입니다.</h5>
                     </div>
                 </div>
                 <div class="modal-body p-0">
@@ -69,106 +75,104 @@
             </div>
         </div>
     </div>
-    <div th:replace="fragments/nav" style="position: sticky; top:0; z-index: 3;"></div>
 
-    <div class="card" id="main-body">
+    <div class="z-index-1">
+        <div class="dropdown mb-2 z-index-2">
+            <button class="btn bg-gradient-primary dropdown-toggle mt-3 ms-3" type="button" id="placeDropdownButton"
+                    data-bs-toggle="dropdown" aria-expanded="false" th:text="${currentPlace.getPlaceName()}">
+            </button>
+            <ul id="placeDropdownMenuButton" class="dropdown-menu z-index-0" aria-labelledby="dropdownMenuButton">
+                <li th:each="place : ${placeList}">
+                    <a class="dropdown-item" th:text="${place.getPlaceName()}"
+                       th:href="@{'/control/' + ${place.getPlaceId()}}">
+                    </a>
+                </li>
+            </ul>
+        </div>
+        <div class="card-body z-index-1 position-relative">
+            <h1 class="text text-center z-index-1" id="text-title"
+                style="color: black; font-size: 60px; margin-top: 170px; text-shadow: -1px 1px whitesmoke, 0px 2px whitesmoke, 2px 0px whitesmoke, 1px -1px whitesmoke;"
+                th:text="${currentPlace.getPlaceName().toUpperCase()}">
+            </h1>
+            <div class="row"
+                 style="margin-top: 250px; margin-left: 3%; margin-right: 3%; padding-bottom: 80px;">
 
-        <div class="z-index-1" id="background-img"
-             style="background-image: url('/img/campus.jpg'); background-size: cover; background-position: center; min-height: 100vh;">
-            <div class="dropdown mb-2 z-index-2">
-                <button class="btn bg-gradient-primary dropdown-toggle mt-3 ms-3" type="button" id="placeDropdownButton"
-                        data-bs-toggle="dropdown" aria-expanded="false" th:text="${currentPlace.getPlaceName()}">
-                </button>
-                <ul id="placeDropdownMenuButton" class="dropdown-menu z-index-0" aria-labelledby="dropdownMenuButton">
-                    <li th:each="place : ${placeList}">
-                        <a class="dropdown-item" th:text="${place.getPlaceName()}"
-                           th:href="@{'/control/' + ${place.getPlaceId()}}">
-                        </a>
-                    </li>
-                </ul>
-            </div>
-            <div class="card-body z-index-1 position-relative">
-                <h1 class="text text-center z-index-1" id="text-title"
-                    style="color: black; font-size: 60px; margin-top: 170px; text-shadow: -1px 1px whitesmoke, 0px 2px whitesmoke, 2px 0px whitesmoke, 1px -1px whitesmoke;"
-                    th:text="${currentPlace.getPlaceName().toUpperCase()}">
-                </h1>
-                <button type="button"
-                        class="btn btn-block bg-gradient-primary mb-3 center-left-button"
-                        id="ai-result"
-                        data-bs-toggle="modal"
-                        data-bs-target="#modal-form"
-                        th:hidden="${!aiMode}"
-                >AI Result
-                </button>
-                <div class="row"
-                     style="margin-top: 250px; margin-left: 3%; margin-right: 3%; padding-bottom: 80px;">
-
-
-                    <div th:each="device : ${deviceList}" class="card bg-cover min-height-150 col-2 z-index-2"
-                         style="min-width: 325px; background-color: rgba(248,248,255,0.8); margin-right: 4%; margin-left: 3%; margin-top: 3%;">
-                        <div class="card-body z-index-2" style="margin-top: 10px;" th:if="${device.getAiMode() == 1}">
-                            <div class="material-symbols-outlined" style="font-size:70px; color:darkblue;"
-                                 th:text="${deviceIconMap[device.getDeviceName().toLowerCase()]}">
+                <div th:each="device : ${deviceList}" class="card bg-cover min-height-150 col-2 z-index-2"
+                     style="min-width: 325px; background-color: rgba(248,248,255,0.8); margin-right: 4%; margin-left: 3%; margin-top: 3%;">
+                    <div class="card-body z-index-2" style="margin-top: 10px;" th:if="${device.getAiMode() == 1}">
+                        <div class="row">
+                            <div class="col">
+                                <div class="material-symbols-outlined" style="font-size:70px; color:darkblue;"
+                                     th:text="${deviceIconMap[device.getDeviceName().toLowerCase()]}">
+                                </div>
                             </div>
-                            <h2 class="text" style="color: royalblue; font-size: 30px;"
-                                th:text="${device.getDeviceName().toUpperCase()}"></h2>
-                            <div class="form-check form-switch">
-                                <input class="form-check-input" type="checkbox" id="ai-mode" th:checked="${aiMode}">
-                                <label class="form-check-label" for="ai-mode">
-                                    AI MODE
-                                </label>
-                            </div>
-                            <div class="form-check form-switch">
-                                <input class="form-check-input" type="checkbox"
-                                       th:id="${device.getDeviceName().toLowerCase().concat('-').concat('custom-mode')}"
-                                       th:disabled="${aiMode}"
-                                       th:checked="${custom[device.getDeviceName().toLowerCase()]}">
-                                <label class="form-check-label"
-                                       th:for="${device.getDeviceName().toLowerCase().concat('-').concat('custom-mode')}">
-                                    CUSTOM MODE
-                                </label>
-                            </div>
-                            <div class="form-check form-switch">
-                                <input th:class="form-check-input"
-                                       type="checkbox"
-                                       th:id="${device.getDeviceName().toLowerCase()}"
-                                       th:checked="${status[device.getDeviceName().toLowerCase()]}"
-                                       th:disabled="${aiMode} or ${custom[device.getDeviceName().toLowerCase()]}">
-                                <label class="form-check-label" th:for="${device.getDeviceName().toLowerCase()}"
-                                       th:text="${device.getDeviceName().toUpperCase().concat(' SWITCH')}"></label>
+                            <div class="col">
+                                <button type="button"
+                                        class="btn btn-block bg-gradient-primary mt-2 ms-2"
+                                        id="ai-result"
+                                        data-bs-toggle="modal"
+                                        data-bs-target="#modal-form"
+                                        th:hidden="${!aiMode}"
+                                >AI Result
+                                </button>
                             </div>
                         </div>
-                        <div class="card-body z-index-2" style="margin-top: 10px;" th:if="${device.getAiMode() == 0}">
+                        <h2 class="text" style="color: royalblue; font-size: 30px;"
+                            th:text="${device.getDeviceName().toUpperCase()}"></h2>
+                        <div class="form-check form-switch">
+                            <input class="form-check-input" type="checkbox" id="ai-mode" th:checked="${aiMode}">
+                            <label class="form-check-label" for="ai-mode">
+                                AI MODE
+                            </label>
+                        </div>
+                        <div class="form-check form-switch">
+                            <input class="form-check-input" type="checkbox"
+                                   th:id="${device.getDeviceName().toLowerCase().concat('-').concat('custom-mode')}"
+                                   th:disabled="${aiMode}"
+                                   th:checked="${custom[device.getDeviceName().toLowerCase()]}">
+                            <label class="form-check-label"
+                                   th:for="${device.getDeviceName().toLowerCase().concat('-').concat('custom-mode')}">
+                                CUSTOM MODE
+                            </label>
+                        </div>
+                        <div class="form-check form-switch">
+                            <input th:class="form-check-input"
+                                   type="checkbox"
+                                   th:id="${device.getDeviceName().toLowerCase()}"
+                                   th:checked="${status[device.getDeviceName().toLowerCase()]}"
+                                   th:disabled="${aiMode} or ${custom[device.getDeviceName().toLowerCase()]}">
+                            <label class="form-check-label" th:for="${device.getDeviceName().toLowerCase()}"
+                                   th:text="${device.getDeviceName().toUpperCase().concat(' SWITCH')}"></label>
+                        </div>
+                    </div>
+                    <div class="card-body z-index-2" style="margin-top: 10px;" th:if="${device.getAiMode() == 0}">
                             <span class="material-symbols-outlined" style="font-size:70px; color:darkblue;"
                                   th:text="${deviceIconMap[device.getDeviceName().toLowerCase()]}">
                             </span>
-                            <h2 class="text" style="color: royalblue; font-size: 30px;"
-                                th:text="${device.getDeviceName().toUpperCase()}"></h2>
-                            <div class="form-check form-switch">
-                                <input class="form-check-input" type="checkbox"
-                                       th:id="${device.getDeviceName().toLowerCase().concat('-').concat('custom-mode')}"
-                                       th:checked="${custom[device.getDeviceName().toLowerCase()]}">
-                                <label class="form-check-label"
-                                       th:for="${device.getDeviceName().toLowerCase().concat('-').concat('custom-mode')}">
-                                    CUSTOM MODE
-                                </label>
-                            </div>
-                            <div class="form-check form-switch">
-                                <input th:class="form-check-input"
-                                       type="checkbox"
-                                       th:id="${device.getDeviceName().toLowerCase()}"
-                                       th:checked="${status[device.getDeviceName().toLowerCase()]}"
-                                       th:disabled="${custom[device.getDeviceName().toLowerCase()]}">
-                                <label class="form-check-label" th:for="${device.getDeviceName().toLowerCase()}"
-                                       th:text="${device.getDeviceName().toUpperCase().concat(' SWITCH')}"></label>
-                            </div>
+                        <h2 class="text" style="color: royalblue; font-size: 30px;"
+                            th:text="${device.getDeviceName().toUpperCase()}"></h2>
+                        <div class="form-check form-switch">
+                            <input class="form-check-input" type="checkbox"
+                                   th:id="${device.getDeviceName().toLowerCase().concat('-').concat('custom-mode')}"
+                                   th:checked="${custom[device.getDeviceName().toLowerCase()]}">
+                            <label class="form-check-label"
+                                   th:for="${device.getDeviceName().toLowerCase().concat('-').concat('custom-mode')}">
+                                CUSTOM MODE
+                            </label>
                         </div>
-                        <div class="border-radius-lg"></div>
+                        <div class="form-check form-switch">
+                            <input th:class="form-check-input"
+                                   type="checkbox"
+                                   th:id="${device.getDeviceName().toLowerCase()}"
+                                   th:checked="${status[device.getDeviceName().toLowerCase()]}"
+                                   th:disabled="${custom[device.getDeviceName().toLowerCase()]}">
+                            <label class="form-check-label" th:for="${device.getDeviceName().toLowerCase()}"
+                                   th:text="${device.getDeviceName().toUpperCase().concat(' SWITCH')}"></label>
+                        </div>
                     </div>
+                    <div class="border-radius-lg"></div>
                 </div>
             </div>
-
-            <div class="mask" style="background-color: rgba(255,255,255,0.5)"></div>  <!--bg-gradient-faded-light-->
         </div>
     </div>
 </div>
