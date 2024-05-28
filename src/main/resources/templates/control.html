@@ -112,7 +112,7 @@
                                         id="ai-result"
                                         data-bs-toggle="modal"
                                         data-bs-target="#modal-form"
-                                        th:hidden="${device.getAiMode() == 0}"
+                                        th:hidden="${device.getAiMode() == 0 || aiMode == false}"
                                 >AI Result
                                 </button>
                             </div>
