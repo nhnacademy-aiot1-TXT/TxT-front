@@ -8,36 +8,45 @@
         </div>
     </div>
     <div class="card-body">
-        <div class="row">
-            <div class="row mt-5 w-50">
-                <div class="mb-3 col-md-6">
-                    <input id="onHour" type="text" class="form-control" name="onHour"
-                           th:placeholder="${detect.getBegin().getHour()}"
-                           th:value="${detect.getBegin().getHour()}" disabled>
-                    <label for="onHour">HOUR</label>
+        <form role="form" th:action="@{'/detect/settings'}"
+              method="post">
+            <input type="hidden" name="sensorId" th:value="${detect.getSensorId()}"/>
+            <input type="hidden" name="sensorName" th:value="${detect.getSensorName()}"/>
+            <input type="hidden" name="timeIntervalId" th:value="${detect.getTimeIntervalId()}"/>
+            <div class="row">
+                <div class="row mt-5 w-50">
+                    <div class="mb-3 col-md-6">
+                        <input id="onHour" type="text" class="form-control" name="onHour"
+                               th:placeholder="${detect.getBegin().getHour()}"
+                               th:value="${detect.getBegin().getHour()}">
+                        <label for="onHour">HOUR</label>
+                    </div>
+                    <div class="mb-3 col-md-6">
+                        <input id="onMinute" type="text" class="form-control" name="onMinute"
+                               th:placeholder="${detect.getBegin().getMinute()}"
+                               th:value="${detect.getBegin().getMinute()}">
+                        <label for="onMinute">MINUTE</label>
+                    </div>
                 </div>
-                <div class="mb-3 col-md-6">
-                    <input id="onMinute" type="text" class="form-control" name="onMinute"
-                           th:placeholder="${detect.getBegin().getMinute()}"
-                           th:value="${detect.getBegin().getMinute()}" disabled>
-                    <label for="onMinute">MINUTE</label>
+                <p class="w-1 mt-6 me-3">~</p>
+                <div class="row mt-5 w-50">
+                    <div class="mb-3 col-md-6">
+                        <input id="offHour" type="text" class="form-control" name="offHour"
+                               th:placeholder="${detect.getEnd().getHour()}"
+                               th:value="${detect.getEnd().getHour()}">
+                        <label for="offHour">HOUR</label>
+                    </div>
+                    <div class="mb-3 col-md-6">
+                        <input id="offMinute" type="text" class="form-control" name="offMinute"
+                               th:placeholder="${detect.getEnd().getMinute()}"
+                               th:value="${detect.getEnd().getMinute()}">
+                        <label for="offMinute">MINUTE</label>
+                    </div>
                 </div>
             </div>
-            <p class="w-1 mt-6 me-3">~</p>
-            <div class="row mt-5 w-50">
-                <div class="mb-3 col-md-6">
-                    <input id="offHour" type="text" class="form-control" name="offHour"
-                           th:placeholder="${detect.getEnd().getHour()}"
-                           th:value="${detect.getEnd().getHour()}" disabled>
-                    <label for="offHour">HOUR</label>
-                </div>
-                <div class="mb-3 col-md-6">
-                    <input id="offMinute" type="text" class="form-control" name="offMinute"
-                           th:placeholder="${detect.getEnd().getMinute()}"
-                           th:value="${detect.getEnd().getMinute()}" disabled>
-                    <label for="offMinute">MINUTE</label>
-                </div>
+            <div class="text-center mt-4">
+                <button type="submit" class="btn bg-gradient-primary w-50 my-4 mb-2">Setting</button>
             </div>
-        </div>
+        </form>
     </div>
 </div>
