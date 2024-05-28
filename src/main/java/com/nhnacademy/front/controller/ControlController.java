@@ -77,6 +77,8 @@ public class ControlController {
         model.addAttribute("aiMode", aiMode);
         model.addAttribute("custom", customMap);
 
+        model.addAttribute("accessTokenTemp", AccessTokenUtil.findAccessTokenInRequest(request));
+
         return "control";
     }
 

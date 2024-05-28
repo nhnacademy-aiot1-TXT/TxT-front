@@ -25,7 +25,7 @@ public class DetectionSettingController {
 
 
     /**
-     * 감지 정보를 조회하는 요청을 처리하는 매서드.
+     * 침입 감지 정보를 조회하는 요청을 처리하는 매서드.
      *
      * @param request HTTP 요청 객체
      * @param model 뷰에 전달할 데이터를 담은 모델 객체
@@ -40,11 +40,13 @@ public class DetectionSettingController {
 
         model.addAttribute("placeList", placeList);
         model.addAttribute("detect", response);
+        model.addAttribute("accessTokenTemp", AccessTokenUtil.findAccessTokenInRequest(request));
+
         return "device-setting/setting-view";
     }
 
     /**
-     * 감지 정보를 업데이트하는 요청을 처리하는 매서드.
+     * 침입 감지 정보를 업데이트하는 요청을 처리하는 매서드.
      *
      * @param request HTTP 요청 객체
      * @param timeIntervalId 감지 시간 간격 ID

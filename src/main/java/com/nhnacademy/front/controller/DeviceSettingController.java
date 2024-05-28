@@ -24,6 +24,8 @@ public class DeviceSettingController {
 
     @GetMapping
     public String settingView() {
+
+
         return "redirect:/device/settings/1";
     }
 
@@ -54,6 +56,8 @@ public class DeviceSettingController {
         model.addAttribute("currentPlace", currentPlace);
         model.addAttribute("placeList", placeList);
         model.addAttribute("deviceSensorMap", deviceSensorMap);
+
+        model.addAttribute("accessTokenTemp", AccessTokenUtil.findAccessTokenInRequest(request));
         return "device-setting/setting-view";
     }
 
