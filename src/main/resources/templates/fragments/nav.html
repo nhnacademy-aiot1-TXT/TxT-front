@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <script th:inline="javascript">const accessToken = [[${accessTokenTemp}]];</script>
 </head>
 <body>
 <main class="main-content position-relative border-radius-lg ">
@@ -66,24 +67,24 @@
                             aria-labelledby="dropdownMenuButton"  id="alarmList" style="margin-top:5px !important;">
 
 <!--&lt;!&ndash;                            알람 한 단위&ndash;&gt;-->
-                            <li class="mb-2">
-                                <a class="dropdown-item border-radius-md" href="javascript:">
-                                    <div class="d-flex py-1">
-                                        <div class="my-auto">
-                                            <img src="/img/team-2.jpg" class="avatar avatar-sm  me-3 ">
-                                        </div>
-                                        <div class="d-flex flex-column justify-content-center">
-                                            <h6 class="text-sm font-weight-normal mb-1">
-                                                <span class="font-weight-bold">New message</span> from nasd
-                                            </h6>
-                                            <p class="text-xs text-secondary mb-0">
-                                                <i class="fa fa-clock me-1"></i>
-                                                13 minutes ago
-                                            </p>
-                                        </div>
-                                    </div>
-                                </a>
-                            </li>
+<!--                            <li class="mb-2">-->
+<!--                                <a class="dropdown-item border-radius-md" href="javascript:">-->
+<!--                                    <div class="d-flex py-1">-->
+<!--                                        <div class="my-auto">-->
+<!--                                            <img src="/img/team-2.jpg" class="avatar avatar-sm  me-3 ">-->
+<!--                                        </div>-->
+<!--                                        <div class="d-flex flex-column justify-content-center">-->
+<!--                                            <h6 class="text-sm font-weight-normal mb-1">-->
+<!--                                                <span class="font-weight-bold">New message</span> from nasd-->
+<!--                                            </h6>-->
+<!--                                            <p class="text-xs text-secondary mb-0">-->
+<!--                                                <i class="fa fa-clock me-1"></i>-->
+<!--                                                13 minutes ago-->
+<!--                                            </p>-->
+<!--                                        </div>-->
+<!--                                    </div>-->
+<!--                                </a>-->
+<!--                            </li>-->
 <!--&lt;!&ndash;                            알람 한 단위 끝&ndash;&gt;-->
 
                         </ul>
