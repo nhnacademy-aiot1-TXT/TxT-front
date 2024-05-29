@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns="http://www.w3.org/1999/html">
+<html lang="en" xmlns="http://www.w3.org/1999/html" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
@@ -14,15 +14,7 @@
                 </div>
                 <ul class="navbar-nav justify-content-end">
                     <li class="nav-item d-flex align-items-center">
-                        <a th:if="${authority == null}" href="/auth/login"
-                           class="nav-link text-white font-weight-bold px-0">
-                            <div>
-                                <i class="fa fa-user me-sm-1"></i>
-                                <span class="d-sm-inline d-none">Sign In</span>
-                            </div>
-                        </a>
-                        <!--                        유저 버튼-->
-                        <div th:if="${authority != null}" class="dropdown">
+                        <div sec:authorize="isAuthenticated()" class="dropdown">
                             <a href="#" class="fa fa-user me-sm-1 dropdown-toggle text-white" data-bs-toggle="dropdown"
                                id="navbarDropdown">
                             </a>
