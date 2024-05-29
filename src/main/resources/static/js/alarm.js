@@ -1,22 +1,48 @@
 document.addEventListener("DOMContentLoaded", function() {
     const alarmListContainer = document.getElementById('alarmList');
 
+    function isEmptyValue(value) {
+        return value === null || value === undefined || value.trim() === '';
+    }
+
+
     async function fetchAndDisplayNotifications() {
+
+
+        // console.log("accessTokent is " + accessToken)
+        // console.log("accessTokentTemp is " + accessTokenTemp)
+
+        let accessTokenfinal = accessToken;
+        if (isEmptyValue(accessToken)) {
+            accessTokenfinal = accessTokenTemp;
+            // console.log("After processed accessTokent is " + accessTokenfinal)
+        }
+
+
+
+
+
         try {
+
+
+
+
 
             const option = {
                 method : "GET",
                 headers : {
-                    Authorization: accessToken
+                    Authorization: accessTokenfinal
                 }
 
             }
             const response = await fetch('http://localhost:8000/api/common/notification', option);
 
+            // console.log(response)
 
 
-            console.log(accessToken)
-            console.log(response);
+
+
+
             if (!response.ok) {
                 throw new Error('Network response was not ok');
             }

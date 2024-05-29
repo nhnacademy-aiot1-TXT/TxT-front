@@ -69,7 +69,7 @@ public class AdminController {
 
         model.addAttribute("users", users);
         model.addAttribute("statusSet", statusParam);
-        model.addAttribute("accessTokenTemp", AccessTokenUtil.findAccessTokenInRequest(request));
+
 
 
         return "manage";
