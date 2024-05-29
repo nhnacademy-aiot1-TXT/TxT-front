@@ -8,13 +8,10 @@ document.addEventListener("DOMContentLoaded", function() {
     async function fetchAndDisplayNotifications() {
 
 
-        // console.log("accessTokent is " + accessToken)
-        // console.log("accessTokentTemp is " + accessTokenTemp)
 
         let accessTokenfinal = accessToken;
         if (isEmptyValue(accessToken)) {
             accessTokenfinal = accessTokenTemp;
-            // console.log("After processed accessTokent is " + accessTokenfinal)
         }
 
         try {
@@ -26,9 +23,7 @@ document.addEventListener("DOMContentLoaded", function() {
                 }
 
             }
-            const response = await fetch('http://localhost:8000/api/common/notification', option);
-
-            // console.log(response)
+            const response = await fetch('http://contxt.co.kr/api/common/notification', option);
 
             if (!response.ok) {
                 throw new Error('Network response was not ok');
