@@ -64,8 +64,5 @@ public class AddAuthorityToModelInterceptor implements HandlerInterceptor {
             model.addAttribute("errorMessage", errorMessage);
             response.sendRedirect("login");
         }
-
-//        String authority = String.valueOf(SecurityContextHolder.getContext().getAuthentication().getAuthorities().stream().findFirst().orElse(null));
-//        model.addAttribute("authority", authority);
     }
 }
