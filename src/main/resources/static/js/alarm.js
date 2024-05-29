@@ -5,7 +5,6 @@ document.addEventListener("DOMContentLoaded", function() {
         return value === null || value === undefined || value.trim() === '';
     }
 
-
     async function fetchAndDisplayNotifications() {
 
 
@@ -18,15 +17,7 @@ document.addEventListener("DOMContentLoaded", function() {
             // console.log("After processed accessTokent is " + accessTokenfinal)
         }
 
-
-
-
-
         try {
-
-
-
-
 
             const option = {
                 method : "GET",
@@ -39,17 +30,11 @@ document.addEventListener("DOMContentLoaded", function() {
 
             // console.log(response)
 
-
-
-
-
             if (!response.ok) {
                 throw new Error('Network response was not ok');
             }
 
             const notifications = await response.json();
-
-
 
             // 시간 기준으로 정렬
             notifications.sort((a, b) => new Date(b.time) - new Date(a.time));
