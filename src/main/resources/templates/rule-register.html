@@ -31,6 +31,9 @@
 </head>
 
 <body class="g-sidenav-show bg-gray-100">
+<div class="position-absolute w-100 h-100 top-0"
+     style="background-image: url('/img/bg-rule-register.jpg'); background-size: cover; background-position: center; min-height: 100vh; opacity: 0.5">
+</div>
 <aside th:replace="fragments/sidebar"></aside>
 <div class="main-content position-relative max-height-vh-100 h-100">
     <div th:replace="fragments/nav"></div>
@@ -50,17 +53,13 @@
                     <div class="form-group">
                         <label for="place">장소</label>
                         <select id="place" name="place" class="form-control">
-                            <option value="Class A">Class A</option>
-                            <option value="Class B">Class B</option>
-                            <option value="Lobby">Lobby</option>
+                            <option th:each="place : ${placeList}" th:value="${place.getPlaceName()}" th:text="${place.getPlaceName()}"></option>
                         </select>
                     </div>
                     <div class="form-group">
                         <label for="deviceName">추가할 장치</label>
                         <select id="deviceName" name="deviceName" class="form-control">
-                            <option value="에어컨">에어컨</option>
-                            <option value="조명">조명</option>
-                            <option value="공기 청정기">공기 청정기</option>
+                            <option th:each="device : ${deviceList}" th:value="${device.getDeviceName()}" th:text="${device.getDeviceName()}"></option>
                         </select>
                     </div>
                 </div>
@@ -98,8 +97,10 @@
                 </button>
                 <div class="form-group card mb-3" style="max-width: 50%; margin: 0 auto;">
                     <div class="form-group">
-                        <label for="occupancyCheckRequired">재실 필요 유무</label>
-                        <select id="occupancyCheckRequired" name="occupancyCheckRequired" class="form-control">
+                        <label for="occupancyCheckRequired" class="jua-regular mt-4"
+                               style="font-size: 1.1rem !important;">재실 필요 유무</label>
+                        <select id="occupancyCheckRequired" name="occupancyCheckRequired" class="form-control"
+                                style="max-width: 50%; margin: 0 auto;">
                             <option value="true">Yes</option>
                             <option value="false">No</option>
                         </select>
