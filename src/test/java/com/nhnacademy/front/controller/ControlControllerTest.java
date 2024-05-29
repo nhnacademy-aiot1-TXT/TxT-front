@@ -4,6 +4,7 @@ import com.nhnacademy.front.adaptor.DeviceSettingAdapter;
 import com.nhnacademy.front.dto.DeviceResponse;
 import com.nhnacademy.front.dto.PlaceResponse;
 import com.nhnacademy.front.interceptor.LoginCheckInterceptor;
+import com.nhnacademy.front.utils.JwtUtil;
 import com.nhnacademy.front.utils.RedisUtil;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -12,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.security.authentication.TestingAuthenticationToken;
 import org.springframework.test.web.servlet.MockMvc;
 
 import javax.servlet.http.Cookie;
@@ -33,6 +35,8 @@ class ControlControllerTest {
     private MockMvc mockMvc;
     @MockBean
     private LoginCheckInterceptor loginCheckInterceptor;
+    @MockBean
+    private JwtUtil jwtUtil;
     @MockBean
     private RedisUtil redisUtil;
     @MockBean
@@ -58,6 +62,7 @@ class ControlControllerTest {
         given(deviceSettingAdapter.getDeviceListByPlace(anyString(), anyLong())).willReturn(List.of(DeviceResponse.builder().deviceName("test device").aiMode(1).build()));
         given(redisUtil.getDeviceStatus(DEVICE_KEY, "test device:test place")).willReturn(true);
         given(redisUtil.getMode(anyString(), anyString())).willReturn(true);
+        given(jwtUtil.getAuthentication(anyString())).willReturn(new TestingAuthenticationToken("test", "test"));
 
         mockMvc.perform(get("/control/1").cookie(new Cookie("accessToken", ACCESS_TOKEN))).andDo(print()).andExpect(status().isOk()).andExpect(handler().handlerType(ControlController.class)).andExpect(handler().methodName("control")).andExpect(model().attribute("status", Map.of("test device", true))).andExpect(model().attribute("placeList", List.of(PlaceResponse.builder().placeName("test place").placeCode("test place").build()))).andExpect(model().attribute("aiMode", true)).andExpect(model().attribute("custom", Map.of("test device", true))).andExpect(view().name("control"));
     }
