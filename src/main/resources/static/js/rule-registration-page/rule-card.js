@@ -35,9 +35,9 @@ function createConditionGroup() {
                 <select id="on_comparisonOperator[${index}]" name="on_comparisonOperator[${index}]" class="form-control">
                     <option value="GREATER_THAN">&gt;</option>
                     <option value="LESS_THAN">&lt;</option>
-                    <option value="EQUAL_TO">==</option>
-                    <option value="GREATER_THAN_OR_EQUAL_TO">&gt;=</option>
-                    <option value="LESS_THAN_OR_EQUAL_TO">&lt;=</option>
+                    <option value="EQUAL">==</option>
+                    <option value="GREATER_THAN_OR_EQUAL">&gt;=</option>
+                    <option value="LESS_THAN_OR_EQUAL">&lt;=</option>
                 </select>
                 
                 <label for="on_standardValue[${index}]">On 기준값</label>
@@ -49,9 +49,9 @@ function createConditionGroup() {
                 <select id="off_comparisonOperator[${index}]" name="off_comparisonOperator[${index}]" class="form-control">
                     <option value="GREATER_THAN">&gt;</option>
                     <option value="LESS_THAN">&lt;</option>
-                    <option value="EQUAL_TO">==</option>
-                    <option value="GREATER_THAN_OR_EQUAL_TO">&gt;=</option>
-                    <option value="LESS_THAN_OR_EQUAL_TO">&lt;=</option>
+                    <option value="EQUAL">==</option>
+                    <option value="GREATER_THAN_OR_EQUAL">&gt;=</option>
+                    <option value="LESS_THAN_OR_EQUAL">&lt;=</option>
                 </select>
                 
                 <label for="off_standardValue[${index}]}">Off 기준값</label>
@@ -127,7 +127,6 @@ function submitForm() {
 
     // AI 모드 데이터 추가
     const aiModesContainer = document.getElementById('aiModesContainer');
-    let aiModeHasValue = false;
 
     const aiModeData = {
         mqttInInfos: [],
@@ -139,14 +138,10 @@ function submitForm() {
         const mqttUrl = document.getElementById(`aiMode_mqttUrl[${i}]`).value;
         const topic = document.getElementById(`aiMode_topic[${i}]`).value;
 
-        if (mqttUrl !== "" || topic !== "") {
-            aiModeHasValue = true;
+        if (mqttUrl !== "" && topic !== "" && aiModeData.hour !== "" && aiModeData.minutes !== "") {
+            aiModeData.mqttInInfos.push({mqttUrl, topic});
+            jsonData.aiMode = aiModeData;
         }
-        aiModeData.mqttInInfos.push({mqttUrl, topic});
-    }
-
-    if (aiModeHasValue || aiModeData.hour !== "" || aiModeData.minutes !== "") {
-        jsonData.aiMode = aiModeData;
     }
 
     // 커스텀 모드 데이터 추가
@@ -191,8 +186,8 @@ function submitForm() {
         alert("Custom Mode의 모든 필드를 채워주세요.");
         return;
     }
-
     jsonData.customMode = customModeData;
+
 
     // rule register info request
     const csrfToken = getCookie('XSRF-TOKEN');
