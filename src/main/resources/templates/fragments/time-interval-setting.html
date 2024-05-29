@@ -13,16 +13,16 @@
                 <div class="card-body d-flex align-items-center justify-content-center">
                     <div class="row mt-5">
                         <div class="mb-3 col">
-                            <input id="hour" type="text" class="form-control max-width-200" name="hour"
+                            <input id="hour" type="text" class="form-control max-width-200 text-lg" name="hour"
                                    th:placeholder="${currentPlace.getCycle().getHour()}"
                                    th:value="${currentPlace.getCycle().getHour()}" disabled>
-                            <label for="hour">HOUR</label>
+                            <label for="hour" class="text-2xl">HOUR</label>
                         </div>
                         <div class="mb-3 col">
-                            <input id="minute" type="text" class="form-control max-width-200" name="minute"
+                            <input id="minute" type="text" class="form-control max-width-200 text-lg" name="minute"
                                    th:placeholder="${currentPlace.getCycle().getMinute()}"
                                    th:value="${currentPlace.getCycle().getMinute()}" disabled>
-                            <label for="minute">MINUTE</label>
+                            <label for="minute" class="text-2xl">MINUTE</label>
                         </div>
                     </div>
                 </div>

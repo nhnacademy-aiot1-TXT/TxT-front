@@ -53,9 +53,8 @@
     <div class="container-fluid py-4">
         <div class="row">
             <div class="col" th:each="device : ${deviceList}" th:if="${!device.getDeviceName().equals('light')}">
-                    <th:block
-                            th:replace="'device-setting/' + ${device.getDeviceName().toLowerCase()} + '-setting'"/>
-                </div>
+                <th:block
+                        th:replace="'device-setting/' + ${device.getDeviceName().toLowerCase()} + '-setting'"/>
             </div>
         </div>
         <div class="col d-flex justify-content-center align-items-center" th:if="${currentPlace == null}">

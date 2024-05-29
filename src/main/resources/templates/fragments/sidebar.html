@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns="http://www.w3.org/1999/html">
+<html lang="en" xmlns="http://www.w3.org/1999/html" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
@@ -40,7 +40,7 @@
                     <span class="nav-link-text ms-1">Home</span>
                 </a>
             </li>
-            <th:block th:if="${authority != null}">
+            <th:block sec:authorize="isAuthenticated()">
                 <li class="nav-item">
                     <a class="nav-link " href="/user/profile">
                         <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
@@ -50,7 +50,7 @@
                     </a>
                 </li>
             </th:block>
-            <th:block th:if="${authority == 'ROLE_ADMIN'}">
+            <th:block sec:authorize="hasRole('ROLE_ADMIN')">
                 <li class="nav-item">
                     <a class="nav-link " href="/admin/manage">
                         <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
@@ -60,7 +60,7 @@
                     </a>
                 </li>
             </th:block>
-            <th:block th:if="${authority == 'ROLE_ADMIN'}">
+            <th:block sec:authorize="hasRole('ROLE_ADMIN')">
                 <li class="nav-item">
                     <a class="nav-link " href="/admin/detail-sensor-info">
                         <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
@@ -70,7 +70,7 @@
                     </a>
                 </li>
             </th:block>
-            <th:block th:if="${authority != null}">
+            <th:block sec:authorize="isAuthenticated()">
                 <li class="nav-item">
                     <a class="nav-link " href="/control">
                         <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
@@ -80,7 +80,7 @@
                     </a>
                 </li>
             </th:block>
-            <th:block th:if="${authority != null}">
+            <th:block sec:authorize="isAuthenticated()">
                 <li class="nav-item">
                     <a class="nav-link " href="/device/settings">
                         <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
@@ -90,7 +90,7 @@
                     </a>
                 </li>
             </th:block>
-            <th:block th:if="${authority != null}">
+            <th:block sec:authorize="hasRole('ROLE_ADMIN')">
                 <li class="nav-item">
                     <a class="nav-link " href="/admin/rule/register">
                         <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
