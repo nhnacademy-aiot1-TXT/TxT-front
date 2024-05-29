@@ -31,7 +31,18 @@ public class JwtUtil {
      * @throws JsonProcessingException
      */
     public Authentication getAuthentication(AccessTokenResponse accessTokenResponse) throws JsonProcessingException {
-        String payload = new String(Base64.getDecoder().decode(accessTokenResponse.getAccessToken().split("\\.")[1]));
+        return getAuthentication(accessTokenResponse.getAccessToken());
+    }
+
+    /**
+     * jwt의 authority를 가져와 Authentication 반환하는 메서드
+     *
+     * @param accessToken jwt accessToken
+     * @return Authentication
+     * @throws JsonProcessingException
+     */
+    public Authentication getAuthentication(String accessToken) throws JsonProcessingException {
+        String payload = new String(Base64.getDecoder().decode(accessToken.split("\\.")[1]));
 
         Map<String, Object> map = mapper.readValue(payload, Map.class);
         String username = (String) map.get("userId");
