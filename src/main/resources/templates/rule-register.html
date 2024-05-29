@@ -53,13 +53,15 @@
                     <div class="form-group">
                         <label for="place">장소</label>
                         <select id="place" name="place" class="form-control">
-                            <option th:each="place : ${placeList}" th:value="${place.getPlaceName()}" th:text="${place.getPlaceName()}"></option>
+                            <option th:each="place : ${placeList}" th:value="${place.getPlaceCode()}"
+                                    th:text="${place.getPlaceName()}"></option>
                         </select>
                     </div>
                     <div class="form-group">
                         <label for="deviceName">추가할 장치</label>
                         <select id="deviceName" name="deviceName" class="form-control">
-                            <option th:each="device : ${deviceList}" th:value="${device.getDeviceName()}" th:text="${device.getDeviceName()}"></option>
+                            <option th:each="device : ${deviceList}" th:value="${device.getDeviceName()}"
+                                    th:text="${device.getDeviceName()}"></option>
                         </select>
                     </div>
                 </div>
