@@ -1,16 +1,16 @@
 function chatDraw(ctx) {
 
-    let gradientStroke1 = ctx.createLinearGradient(0, 230, 0, 50);
+    let gradientStroke1 = ctx.createLinearGradient(0, 300, 0, 0);
 
-    gradientStroke1.addColorStop(1, 'rgba(94,114,228,0.4)');
-    gradientStroke1.addColorStop(0.2, 'rgba(72,72,176,0.0)');
-    gradientStroke1.addColorStop(0, 'rgba(94,114,228,0)');
+    gradientStroke1.addColorStop(1, 'rgba(236, 95, 92, 0.3)');
+    gradientStroke1.addColorStop(0.1, 'rgba(244, 136, 117, 0)');
+    gradientStroke1.addColorStop(0, 'rgba(254, 181, 145, 0)');
 
-    let gradientStroke2 = ctx.createLinearGradient(0, 230, 0, 50);
+    let gradientStroke2 = ctx.createLinearGradient(0, 400, 0, 0);
 
-    gradientStroke2.addColorStop(1, 'rgba(20,23,39,0.4)');
-    gradientStroke2.addColorStop(0.2, 'rgba(72,72,176,0.0)');
-    gradientStroke2.addColorStop(0, 'rgba(20,23,39,0)');
+    gradientStroke2.addColorStop(1, 'rgba(7, 151, 255,0.3)');
+    gradientStroke2.addColorStop(0.1, 'rgba(87, 185, 255, 0)');
+    gradientStroke2.addColorStop(0, 'rgba(163, 217, 255, 0)');
 
     return new Chart(ctx, {
         type: "line",
@@ -19,22 +19,20 @@ function chatDraw(ctx) {
             datasets: [{
                 label: "Maximum",
                 tension: 0.4,
-                borderWidth: 0,
                 pointRadius: 0,
-                borderColor: "#5e72e4",
+                borderColor: "#FDB08E",
                 backgroundColor: gradientStroke1,
-                borderWidth: 3,
+                borderWidth: 2,
                 fill: true,
                 maxBarThickness: 6,
                 data: []
             }, {
                 label: "Minimum",
                 tension: 0.4,
-                borderWidth: 0,
                 pointRadius: 0,
-                borderColor: "#172b4d",
+                borderColor: "#A3D9FF",
                 backgroundColor: gradientStroke2,
-                borderWidth: 3,
+                borderWidth: 2,
                 fill: true,
                 maxBarThickness: 6,
                 data: []
