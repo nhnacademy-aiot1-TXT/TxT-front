@@ -31,7 +31,7 @@ public class JwtUtil {
      * @throws JsonProcessingException
      */
     public Authentication getAuthentication(AccessTokenResponse accessTokenResponse) throws JsonProcessingException {
-        return getAuthentication(accessTokenResponse.getAccessToken().split("\\.")[1]);
+        return getAuthentication(accessTokenResponse.getAccessToken());
     }
 
     /**
