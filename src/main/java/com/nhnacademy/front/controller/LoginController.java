@@ -2,10 +2,7 @@ package com.nhnacademy.front.controller;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.nhnacademy.front.adaptor.UserAdapter;
-import com.nhnacademy.front.dto.AccessTokenResponse;
-import com.nhnacademy.front.dto.LoginRequest;
-import com.nhnacademy.front.dto.RefreshTokenResponse;
-import com.nhnacademy.front.dto.TokensResponse;
+import com.nhnacademy.front.dto.*;
 import com.nhnacademy.front.utils.JwtUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -36,16 +33,17 @@ public class LoginController {
      * @param loginRequest 로그인 요청 정보
      * @param response     HTTP 응답 객체
      * @param csrfToken    CSRF 토큰
-     * @exception RuntimeException TxT-auth 의 RuntimeException 을 받아온다.
      * @return redirect 할 URL 문자열
+     * @throws RuntimeException TxT-auth 의 RuntimeException 을 받아온다.
      */
 
     @PostMapping("/login")
     public String login(LoginRequest loginRequest, HttpServletResponse response, @RequestAttribute("_csrf") CsrfToken csrfToken, Model model) {
-        try{
+        try {
             TokensResponse tokens = userAdapter.doLogin(loginRequest, csrfToken.getToken());
 
-            if (!userAdapter.getUserData(tokens.getAccessToken().getAccessToken()).getStatusName().equals("ACTIVE")){
+            UserDataResponse userData = userAdapter.getUserData(tokens.getAccessToken().getAccessToken());
+            if (!userData.getStatusName().equals("ACTIVE") && userData.getProvider().equals("Default")) {
                 model.addAttribute("errorMessage", "관리자의 승인이 필요한 계정입니다.");
                 model.addAttribute("loginRequest", loginRequest);
                 return "login";
@@ -68,11 +66,11 @@ public class LoginController {
 
         } catch (RuntimeException | JsonProcessingException e) {
             String errorMessage = "";
-            if (e.toString().contains("401")){
+            if (e.toString().contains("401")) {
                 errorMessage = "아이디 또는 비밀번호가 일치하지 않습니다.";
             }
             model.addAttribute("errorMessage", errorMessage);
-            if (!loginRequest.getId().isEmpty()){
+            if (!loginRequest.getId().isEmpty()) {
                 model.addAttribute("loginRequest", loginRequest);
             }
             return "login";
