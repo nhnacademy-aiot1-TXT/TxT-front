@@ -40,7 +40,7 @@ public class IndexController {
             }
         }
 
-        model.addAttribute("accessTokenTemp", AccessTokenUtil.findAccessTokenInRequest(request));
+
         model.addAttribute("placeList", placeList);
 
         return "index";

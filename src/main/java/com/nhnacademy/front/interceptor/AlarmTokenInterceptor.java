@@ -46,7 +46,7 @@ public class AlarmTokenInterceptor implements HandlerInterceptor {
         if (!Objects.isNull(accessToken) && modelAndView != null) {
 
             ModelMap model = modelAndView.getModelMap();
-            model.addAttribute("accessTokenInter", AccessTokenUtil.findAccessTokenInRequest(request));
+            model.addAttribute("interceptedAccessToken", AccessTokenUtil.findAccessTokenInRequest(request));
 
 
         }

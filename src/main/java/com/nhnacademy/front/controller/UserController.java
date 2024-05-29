@@ -71,7 +71,7 @@ public class UserController {
             model.addAttribute("successMessage", "수정이 완료되었습니다.");
         }
 
-        model.addAttribute("accessTokenTemp", AccessTokenUtil.findAccessTokenInRequest(request));
+
 
         return "profile";
     }

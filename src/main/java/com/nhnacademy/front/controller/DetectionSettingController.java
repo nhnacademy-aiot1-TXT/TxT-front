@@ -40,7 +40,7 @@ public class DetectionSettingController {
 
         model.addAttribute("placeList", placeList);
         model.addAttribute("detect", response);
-        model.addAttribute("accessTokenTemp", AccessTokenUtil.findAccessTokenInRequest(request));
+
 
         return "device-setting/setting-view";
     }

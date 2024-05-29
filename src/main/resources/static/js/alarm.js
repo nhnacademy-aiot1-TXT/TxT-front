@@ -9,21 +9,17 @@ document.addEventListener("DOMContentLoaded", function() {
 
 
 
-        let accessTokenfinal = accessToken;
-        if (isEmptyValue(accessToken)) {
-            accessTokenfinal = accessTokenTemp;
-        }
 
         try {
 
             const option = {
                 method : "GET",
                 headers : {
-                    Authorization: accessTokenfinal
+                    Authorization: accessToken
                 }
 
             }
-            const response = await fetch('http://contxt.co.kr/api/common/notification', option);
+            const response = await fetch('http://localhost:8000/api/common/notification', option);
 
             if (!response.ok) {
                 throw new Error('Network response was not ok');

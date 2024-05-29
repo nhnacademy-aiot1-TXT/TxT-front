@@ -218,7 +218,7 @@ public class AdminController {
         model.addAttribute("sensorDataList", sensorData);
 
 
-        model.addAttribute("accessTokenTemp", AccessTokenUtil.findAccessTokenInRequest(request));
+
 
 
         return "dataLog";
