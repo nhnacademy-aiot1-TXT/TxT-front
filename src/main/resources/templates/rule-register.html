@@ -4,7 +4,7 @@
     <meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="icon" type="image/png" href="/img/TxT-Title-Image.jpeg">
-    <title>장치 추가</title>
+    <title>장치 제어 규칙 등록</title>
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet"/>
     <link href="/css/nucleo-icons.css" rel="stylesheet"/>
     <link href="/css/nucleo-svg.css" rel="stylesheet"/>
@@ -32,12 +32,11 @@
 
 <body class="g-sidenav-show bg-gray-100">
 <div class="position-absolute w-100 h-100 top-0"
-     style="background-image: url('/img/bg-rule-register.jpg'); background-size: cover; background-position: center; min-height: 100vh; opacity: 0.5">
+     style="background-image: url('/img/device-register1.jpg'); background-size: cover; background-position: center; min-height: 100vh; opacity: 0.7">
 </div>
 <aside th:replace="fragments/sidebar"></aside>
 <div class="main-content position-relative max-height-vh-100 h-100">
     <div th:replace="fragments/nav"></div>
-
     <div class="card text-center" id="main-body" style="padding-left: 10px; width: 50%; margin: 0 auto;">
         <h2 class="jua-regular" style="margin-bottom: 5px; margin-top: 25px;">장치 관리</h2>
         <form id="ruleAddForm" action="/admin/rule/send-data" method="post" class="px-4 py-3"
@@ -69,9 +68,42 @@
             </div>
 
             <div class="page ai-mode">
-                <h4 class="jua-regular">AI 모드 설정</h4>
+                <div class="row justify-content-center">
+                    <div class="col-1">
+                    </div>
+                    <h4 class="jua-regular col-2">AI 모드 설정</h4>
+                    <div class="col-1">
+                    </div>
+                </div>
                 <div id="aiModesContainer"></div>
-                <button type="button" class="btn bg-gradient-primary" onclick="createAiModeGroup()">AI Mode 추가</button>
+                <div class="row justify-content-center">
+                    <div class="col-1"></div>
+                    <div class="col-2">
+                        <button type="button" class="btn bg-gradient-primary" onclick="createAiModeGroup()">AI Mode 추가</button>
+                    </div>
+                    <div class="col-1">
+                        <button type="button"
+                                class="btn btn-icon btn-2 btn-info"
+                                data-container="body"
+                                data-bs-toggle="popover"
+                                data-bs-placement="bottom"
+                                data-html="true"
+                                data-bs-content="
+                                        <b>학원 mqtt</b>
+                                        </br>
+                                        tcp://133.186.153.19:1883
+                                        </br>
+                                        <b>TxT mqtt</b>
+                                        </br>
+                                        tcp://133.186.229.200:1883
+                                        </br>
+                                        <b>토픽 예시</b>
+                                        </br>
+                                        data/s/nhnacademy/b/gyeongnam/p/+/d/+/e/+">
+                            <span class="btn-inner--icon"><i class="ni ni-bulb-61"></i></span>
+                        </button>
+                    </div>
+                </div>
                 <div class="form-group card mb-3" style="max-width: 50%; margin: 0 auto;">
                     <div class="card-header">
                         <div class="form-label jua-regular" style="font-size: 1rem !important;">메시지 보내는 간격</div>
@@ -148,7 +180,14 @@
         }
         Scrollbar.init(document.querySelector('#sidenav-scrollbar'), options);
     }
-</script>
 
+    var popoverTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="popover"]'))
+    var popoverList = popoverTriggerList.map(function (popoverTriggerEl) {
+        return new bootstrap.Popover(popoverTriggerEl,{
+                html: true
+        });
+    })
+</script>
+<script src="/js/argon-dashboard.min.js?v=2.0.4"></script>
 </body>
 </html>
