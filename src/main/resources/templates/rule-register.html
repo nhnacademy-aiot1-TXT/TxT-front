@@ -37,13 +37,41 @@
 <aside th:replace="fragments/sidebar"></aside>
 <div class="main-content position-relative max-height-vh-100 h-100">
     <div th:replace="fragments/nav"></div>
+    <div class="modal fade" id="modal-notification" tabindex="-1" role="dialog" aria-labelledby="modal-notification" aria-hidden="true">
+        <div class="modal-dialog modal-danger modal-dialog-centered modal-" role="document">
+            <div class="modal-content">
+                <div class="modal-header jua-regular">
+                    <h3 class="modal-title text-info fw-lighter" id="modal-title-notification">설정 예시</h3>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body jua-regular">
+                    <div class="py-3">
+                        <h4 class="text-dark fw-lighter">학원 mqtt</h4>
+                        <p class="fw-light text-lg">tcp://133.186.153.19:1883</p>
+                        <h4 class="text-dark mt-4 fw-lighter">TxT mqtt</h4>
+                        <p class="fw-light text-lg">tcp://133.186.229.200:1883</p>
+                        <h4 class="text-dark mt-4 fw-lighter">토픽 예시</h4>
+                        <p class="fw-light text-lg">data/s/nhnacademy/b/gyeongnam/p/+/d/+/e/+</p>
+                    </div>
+                </div>
+                <div class="modal-footer jua-regular">
+                    <button type="button" class="btn btn-info ml-auto fw-lighter" data-bs-dismiss="modal" style="font-size: 1rem;">닫기</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <div class="card text-center" id="main-body" style="padding-left: 10px; width: 50%; margin: 0 auto;">
         <h2 class="jua-regular" style="margin-bottom: 5px; margin-top: 25px;">장치 관리</h2>
+
         <form id="ruleAddForm" action="/admin/rule/send-data" method="post" class="px-4 py-3"
               enctype="application/x-www-form-urlencoded">
             <label>
                 <input name="_csrf" hidden="" th:id="${_csrf.token}" th:value="${_csrf.getToken()}">
             </label>
+
             <div class="page card active" style="max-width: 50%; margin: 0 auto;">
                 <div class="card-header">
                     <div class="form-label jua-regular" style="font-size: 1.5rem !important;">공통 설정</div>
@@ -83,23 +111,9 @@
                     </div>
                     <div class="col-1">
                         <button type="button"
-                                class="btn btn-icon btn-2 btn-info"
-                                data-container="body"
-                                data-bs-toggle="popover"
-                                data-bs-placement="bottom"
-                                data-html="true"
-                                data-bs-content="
-                                        <b>학원 mqtt</b>
-                                        </br>
-                                        tcp://133.186.153.19:1883
-                                        </br>
-                                        <b>TxT mqtt</b>
-                                        </br>
-                                        tcp://133.186.229.200:1883
-                                        </br>
-                                        <b>토픽 예시</b>
-                                        </br>
-                                        data/s/nhnacademy/b/gyeongnam/p/+/d/+/e/+">
+                                class="btn btn-block btn-info mb-3"
+                                data-bs-toggle="modal"
+                                data-bs-target="#modal-notification">
                             <span class="btn-inner--icon"><i class="ni ni-bulb-61"></i></span>
                         </button>
                     </div>
@@ -135,23 +149,9 @@
                     </div>
                     <div class="col-1">
                         <button type="button"
-                                class="btn btn-icon btn-2 btn-info"
-                                data-container="body"
-                                data-bs-toggle="popover"
-                                data-bs-placement="bottom"
-                                data-html="true"
-                                data-bs-content="
-                                        <b>학원 mqtt</b>
-                                        </br>
-                                        tcp://133.186.153.19:1883
-                                        </br>
-                                        <b>TxT mqtt</b>
-                                        </br>
-                                        tcp://133.186.229.200:1883
-                                        </br>
-                                        <b>토픽 예시</b>
-                                        </br>
-                                        data/s/nhnacademy/b/gyeongnam/p/+/d/+/e/+">
+                                class="btn btn-block btn-info mb-3"
+                                data-bs-toggle="modal"
+                                data-bs-target="#modal-notification">
                             <span class="btn-inner--icon"><i class="ni ni-bulb-61"></i></span>
                         </button>
                     </div>
