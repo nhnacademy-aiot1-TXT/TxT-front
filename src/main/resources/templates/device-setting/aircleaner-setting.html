@@ -1,17 +1,18 @@
-<div class="card shadow-lg mt-3 h-100">
+<div class="card shadow-lg mt-6 h-100">
     <div class="card-header pb-0">
         <div class="d-flex align-items-center">
-            <p class="mb-0 text-bold text-2xl">공기청정기 모드 설정</p>
+            <p class="mb-0 text-bold text-2xl" style="color: #344767">공기청정기 모드 설정</p>
         </div>
         <div class="d-flex align-items-center">
             <p class="mb-0 text-bold"><br>커스텀모드일때 사용자가 설정한 값에 따라 자동으로 공기청정기를 끄고 켭니다.</p>
         </div>
     </div>
-    <div class="card-body p-3 d-flex justify-content-center align-items-center">
+    <div class="card-body p-3 d-flex justify-content-center align-items-center min-height-160">
         <div>
             <div class="row px-2" th:each="deviceSensor : ${deviceSensorMap[device.getDeviceName()]}">
                 <div class="col-md-4 d-flex align-items-center justify-content-center">
-                    <p class="mb-0 text-center text-2xl text-bold" th:text="${deviceSensor.getSensorName()}"></p>
+                    <p class="mb-0 text-center text-2xl text-bold" style="margin-top: 1.8rem"
+                       th:text="${deviceSensor.getSensorName()}"></p>
                 </div>
                 <div class="col-md-4 mx-0 my-2">
                     <div>
