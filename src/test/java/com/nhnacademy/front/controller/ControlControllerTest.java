@@ -60,7 +60,7 @@ class ControlControllerTest {
         given(deviceSettingAdapter.getPlaceList(anyString())).willReturn(List.of(PlaceResponse.builder().placeName("test place").placeCode("test place").build()));
         given(deviceSettingAdapter.getPlace(anyString(), anyLong())).willReturn(PlaceResponse.builder().placeName("test place").placeCode("test place").build());
         given(deviceSettingAdapter.getDeviceListByPlace(anyString(), anyLong())).willReturn(List.of(DeviceResponse.builder().deviceName("test device").aiMode(1).build()));
-        given(redisUtil.getDeviceStatus(DEVICE_KEY, "test device:test place")).willReturn(true);
+        given(redisUtil.getDeviceStatus(DEVICE_KEY, "test place_test device")).willReturn(true);
         given(redisUtil.getMode(anyString(), anyString())).willReturn(true);
         given(jwtUtil.getAuthentication(anyString())).willReturn(new TestingAuthenticationToken("test", "test"));
 
