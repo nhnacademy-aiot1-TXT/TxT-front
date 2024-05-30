@@ -129,7 +129,7 @@
                         <div class="form-check form-switch">
                             <input class="form-check-input" type="checkbox"
                                    th:id="${device.getDeviceName().toLowerCase().concat('-').concat('custom-mode')}"
-                                   th:disabled="${aiMode}"
+                                   th:disabled="${device.getAiMode() == 1 && aiMode}"
                                    th:checked="${custom[device.getDeviceName().toLowerCase()]}">
                             <label class="form-check-label"
                                    th:for="${device.getDeviceName().toLowerCase().concat('-').concat('custom-mode')}">
@@ -141,7 +141,7 @@
                                    type="checkbox"
                                    th:id="${device.getDeviceName().toLowerCase()}"
                                    th:checked="${status[device.getDeviceName().toLowerCase()]}"
-                                   th:disabled="${aiMode} or ${custom[device.getDeviceName().toLowerCase()]}">
+                                   th:disabled="${device.getAiMode() == 1 && aiMode} or ${custom[device.getDeviceName().toLowerCase()]}">
                             <label class="form-check-label" th:for="${device.getDeviceName().toLowerCase()}"
                                    th:text="${device.getDeviceName().toUpperCase().concat(' SWITCH')}"></label>
                         </div>
