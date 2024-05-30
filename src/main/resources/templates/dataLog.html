@@ -22,9 +22,10 @@
 
 <body class="g-sidenav-show bg-gray-100">
 <div class="position-absolute w-100 min-height-300 top-0"
-     style="background-image: url('/img/log_temperature.jpg'); background-position-y: 50%; background-attachment: local">
+     style="background-image: url('/img/log_temperature.jpg'); background-position-y: 50%;  background-attachment: local;">
     <span class="mask bg-primary opacity-6"></span>
 </div>
+
 
 <aside th:replace="fragments/sidebar"></aside>
 
@@ -86,13 +87,15 @@
             <div class="col-md-9">
                 <div class="card shadow-lg">
                     <div class="card-header pb-0"></div>
-                    <h3 id = "titleSensorData" class="text-center"></h3>
+                    <h3 id="titleSensorData" class="text-center"></h3>
                     <table class="table align-items-center mb-0">
                         <thead class="text-white">
                         <tr>
                             <th class="text-uppercase text-secondary text-sm font-weight-bolder opacity-7">날짜</th>
-                            <th id="theadMaxSensorData" class="text-uppercase text-secondary text-sm font-weight-bolder opacity-7"></th>
-                            <th id="theadMinSensorData" class="text-uppercase text-secondary text-sm font-weight-bolder opacity-7"></th>
+                            <th id="theadMaxSensorData"
+                                class="text-uppercase text-secondary text-sm font-weight-bolder opacity-7"></th>
+                            <th id="theadMinSensorData"
+                                class="text-uppercase text-secondary text-sm font-weight-bolder opacity-7"></th>
                         </tr>
                         </thead>
                         <tbody id="weeklyBody" class="mb-0 text-xm">
@@ -172,5 +175,6 @@
 
     });
 </script>
+<script src="/js/argon-dashboard.min.js?v=2.0.4"></script>
 </body>
 </html>

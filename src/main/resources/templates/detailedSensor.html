@@ -31,6 +31,10 @@
     <link href="/css/nucleo-svg.css" rel="stylesheet"/>
     <!-- CSS Files -->
     <link id="pagestyle" href="/css/argon-dashboard.css?v=2.0.4" rel="stylesheet"/>
+    <!-- 폰트 -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Jua&display=swap" rel="stylesheet">
 
     <script th:inline="javascript">const accessToken = [[${interceptedAccessToken}]];</script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
@@ -48,9 +52,9 @@
 
     <div class="container-fluid py-3">
         <div class="row text-capitalize justify-content-center">
-            <h4 class="card text-center"
-                style="width: 300px; background-image: linear-gradient(120deg, #a1c4fd 0%, #c2e9fb 100%);">Detail Sensor
-                Info</h4>
+            <div class="card text-center text-4xl jua-regular"
+                 style="width: 300px; background-image: linear-gradient(120deg, #a1c4fd 0%, #c2e9fb 100%);">
+                상세 센서 정보</div>
             <div class="dropdown">
                 <button class="btn bg-gradient-primary dropdown-toggle" type="button" id="placeDropdownButton"
                         data-bs-toggle="dropdown" aria-expanded="false" th:text="${currentPlace.getPlaceName()}">
@@ -295,23 +299,108 @@
         let ctx = document.getElementById(sensorName + "-chart").getContext('2d');
         let gradientStroke = ctx.createLinearGradient(0, 230, 0, 50);
 
-        gradientStroke.addColorStop(1, 'rgba(240,191,206,0.4)');
-        gradientStroke.addColorStop(0.2, 'rgba(241,192,208,0.1)');
-        gradientStroke.addColorStop(0, 'rgba(250,219,206,0.05)');
-        chart.data = {
-            labels: [],
-            datasets: [{
-                label: [],
-                tension: 0.4,
-                pointRadius: 0,
-                borderColor: "#F0BFCE",
-                backgroundColor: gradientStroke,
-                borderWidth: 3,
-                fill: true,
-                maxBarThickness: 6,
-                data: []
-            }]
-        };
+        switch (sensorName) {
+            case 'temperature':
+                gradientStroke.addColorStop(1, 'rgba(240,191,206,0.4)');
+                gradientStroke.addColorStop(0.2, 'rgba(241,192,208,0.1)');
+                gradientStroke.addColorStop(0, 'rgba(250,219,206,0.05)');
+                chart.data = {
+                    labels: [],
+                    datasets: [{
+                        label: [],
+                        tension: 0.4,
+                        pointRadius: 0,
+                        borderColor: "#F0BFCE",
+                        backgroundColor: gradientStroke,
+                        borderWidth: 2,
+                        fill: true,
+                        maxBarThickness: 6,
+                        data: []
+                    }]
+                };
+                break;
+            case 'illumination':
+                gradientStroke.addColorStop(1, 'rgba(248, 247, 212,0.4)');
+                gradientStroke.addColorStop(0.2, 'rgba(244,241,220,0.1)');
+                gradientStroke.addColorStop(0, 'rgba(248,245,234,0.1)');
+                chart.data = {
+                    labels: [],
+                    datasets: [{
+                        label: [],
+                        tension: 0.4,
+                        pointRadius: 0,
+                        borderColor: "rgba(251,215,43,0.72)",
+                        backgroundColor: gradientStroke,
+                        borderWidth: 2,
+                        fill: true,
+                        maxBarThickness: 6,
+                        data: []
+                    }]
+                };
+                break;
+
+            case 'humidity':
+                gradientStroke.addColorStop(1, 'rgba(135,105,210,0.3)');
+                gradientStroke.addColorStop(0.2, 'rgba(136,209,208,0.1)');
+                gradientStroke.addColorStop(0, 'rgba(250,219,206,0.05)');
+                chart.data = {
+                    labels: [],
+                    datasets: [{
+                        label: [],
+                        tension: 0.4,
+                        pointRadius: 0,
+                        borderColor: "#83B1D6",
+                        backgroundColor: gradientStroke,
+                        borderWidth: 2,
+                        fill: true,
+                        maxBarThickness: 6,
+                        data: []
+                    }]
+                };
+                break;
+
+            case 'co2':
+                gradientStroke.addColorStop(1, 'rgba(99, 209, 177,0.4)');
+                gradientStroke.addColorStop(0.2, 'rgba(160, 210, 195,0.1)');
+                gradientStroke.addColorStop(0, 'rgba(208, 211, 210,0.05)');
+                chart.data = {
+                    labels: [],
+                    datasets: [{
+                        label: [],
+                        tension: 0.4,
+                        pointRadius: 0,
+                        borderColor: "#1DD1A1",
+                        backgroundColor: gradientStroke,
+                        borderWidth: 2,
+                        fill: true,
+                        maxBarThickness: 6,
+                        data: []
+                    }]
+                };
+                break;
+
+            default:
+                gradientStroke.addColorStop(1, 'rgba(240,191,206,0.4)');
+                gradientStroke.addColorStop(0.2, 'rgba(241,192,208,0.1)');
+                gradientStroke.addColorStop(0, 'rgba(250,219,206,0.05)');
+                chart.data = {
+                    labels: [],
+                    datasets: [{
+                        label: [],
+                        tension: 0.4,
+                        pointRadius: 0,
+                        borderColor: "#F0BFCE",
+                        backgroundColor: gradientStroke,
+                        borderWidth: 3,
+                        fill: true,
+                        maxBarThickness: 6,
+                        data: []
+                    }]
+                };
+                break;
+        }
+
+
 
         for (let data of dataList) {
             let dateTime = new Date(Date.parse(data.time) - (540 * 60 * 1000));
