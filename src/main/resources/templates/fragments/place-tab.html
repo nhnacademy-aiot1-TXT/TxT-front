@@ -5,15 +5,16 @@
     <title>Title</title>
 </head>
 <body>
-<div class="nav-wrapper position-relative end-0">
-    <div class="nav nav-pills nav-fill p-2">
+<div class="nav-wrapper d-flex justify-content-center mt-4 mb-3  end-0">
+    <div class="nav nav-pills nav-fill p-3 shadow-lg" style=" min-width: 950px">
         <div class="nav-item" th:each="place : ${placeList}">
-            <a th:text="${place.getPlaceName()}" class="nav-link mb-0 px-1 py-1 text-bold"
+            <a th:text="${place.getPlaceName()}" class="nav-link mb-0 px-1 py-1 h4 text-bold"
                th:href="@{'/device/settings/' + ${place.getPlaceId()}}"
                th:style="${#strings.contains(#httpServletRequest.getRequestURI(), place.getPlaceId()) ? 'color: #344767; background-color: #fff; box-shadow: 0px 1px 5px 1px #ddd' : ''}">
             </a>
         </div>
         <div class="nav-item" sec:authorize="hasRole('ROLE_ADMIN')">
+        <div class="nav-item h4">
             <a class="nav-link mb-0 px-1 py-1 text-bold"
                href="/detect/settings/"
                th:style="${#strings.contains(#httpServletRequest.getRequestURI(), 'detect') ? 'color: #344767; background-color: #fff; box-shadow: 0px 1px 5px 1px #ddd' : ''}">
