@@ -24,8 +24,20 @@ public class DeviceSettingController {
 
     @GetMapping
     public String settingView() {
+
+
         return "redirect:/device/settings/1";
     }
+
+
+    /**
+     * 특정 장소의 장치 설정 정보를 조회하는 요청을 처리하는 매서드.
+     *
+     * @param placeId 장소 ID
+     * @param request HTTP 요청 객체
+     * @param model 뷰에 전달할 데이터를 담은 모델 객체
+     * @return 장치 설정 뷰 페이지의 뷰 이름
+     */
 
     @GetMapping("/{placeId}")
     public String getDeviceSettingInfo(@PathVariable(required = false) Long placeId, HttpServletRequest request, Model model) {
@@ -44,8 +56,21 @@ public class DeviceSettingController {
         model.addAttribute("currentPlace", currentPlace);
         model.addAttribute("placeList", placeList);
         model.addAttribute("deviceSensorMap", deviceSensorMap);
+
+
         return "device-setting/setting-view";
     }
+
+    /**
+     * 특정 장소의 설정을 업데이트하는 요청을 처리하는 매서드.
+     *
+     * @param request HTTP 요청 객체
+     * @param placeId 장소 ID
+     * @param placeName 장소 이름
+     * @param hour 시간(시)
+     * @param minute 시간(분)
+     * @return 설정 페이지로의 리다이렉트 URL
+     */
 
     @PostMapping("/place/{placeId}")
     public String updateDeviceSettingInfo(HttpServletRequest request, @PathVariable Long placeId, @RequestParam String placeName, int hour, int minute) {
@@ -56,6 +81,20 @@ public class DeviceSettingController {
         return "redirect:/device/settings/{placeId}";
 
     }
+
+    /**
+     * 특정 장치의 센서 설정을 업데이트하는 요청을 처리하는 매서드.
+     *
+     * @param request HTTP 요청 객체
+     * @param placeId 장소 ID
+     * @param placeName 장소 이름
+     * @param deviceName 장치 이름
+     * @param sensorName 센서 이름
+     * @param mode 장치 모드
+     * @param onValue 활성화 값
+     * @param offValue 비활성화 값
+     * @return 설정 페이지로의 리다이렉트 URL
+     */
 
     @PostMapping("/{placeId}/{deviceName}/{sensorName}")
     public String updateDeviceSensorSettingInfo(HttpServletRequest request, @PathVariable Long placeId, @RequestParam String placeName, @PathVariable String deviceName, @PathVariable String sensorName, @RequestParam(required = false) AircleanerMode mode, @RequestParam(required = false) Float onValue, @RequestParam(required = false) Float offValue) {

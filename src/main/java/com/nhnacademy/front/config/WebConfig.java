@@ -1,6 +1,7 @@
 package com.nhnacademy.front.config;
 
 import com.nhnacademy.front.interceptor.AddAuthorityToModelInterceptor;
+import com.nhnacademy.front.interceptor.NotificationTokenInterceptor;
 import com.nhnacademy.front.interceptor.LoggedInUserAccessInterceptor;
 import com.nhnacademy.front.interceptor.LoginCheckInterceptor;
 import lombok.RequiredArgsConstructor;
@@ -24,6 +25,8 @@ public class WebConfig implements WebMvcConfigurer {
     private final AddAuthorityToModelInterceptor addAuthorityToModelInterceptor;
     private final LoginCheckInterceptor loginCheckInterceptor;
     private final LoggedInUserAccessInterceptor loggedInUserAccessInterceptor;
+
+    private final NotificationTokenInterceptor notificationTokenInterceptor;
 
     /**
      * Url 과 html View 를 연결하는 메서드.
@@ -65,6 +68,8 @@ public class WebConfig implements WebMvcConfigurer {
                 .excludePathPatterns("/auth/login", "/login", "/register", "/auth/register", "/error", "/oauth2/**", "/css/**", "/js/**", "/img/**");
         registry.addInterceptor(loggedInUserAccessInterceptor)
                 .addPathPatterns("/auth/login", "/auth/register");
+        registry.addInterceptor(notificationTokenInterceptor)
+                .excludePathPatterns("auth/login", "/auth/register","/login", "/register", "/control", "/device/settings");
     }
 
     @Bean

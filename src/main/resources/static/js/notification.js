@@ -1,10 +1,14 @@
 document.addEventListener("DOMContentLoaded", function() {
-    const alarmListContainer = document.getElementById('alarmList');
+    const notificationListContainer = document.getElementById('notificationList');
+
+    function isEmptyValue(value) {
+        return value === null || value === undefined || value.trim() === '';
+    }
 
     async function fetchAndDisplayNotifications() {
+
+
         try {
-
-
 
             const option = {
                 method : "GET",
@@ -15,24 +19,18 @@ document.addEventListener("DOMContentLoaded", function() {
             }
             const response = await fetch('https://contxt.co.kr/api/common/notification', option);
 
-
-
-            console.log(accessToken)
-            console.log(response);
             if (!response.ok) {
                 throw new Error('Network response was not ok');
             }
 
             const notifications = await response.json();
 
-
-
             // 시간 기준으로 정렬
             notifications.sort((a, b) => new Date(b.time) - new Date(a.time));
 
             const chunk = notifications.slice(0,5);
 
-            const alarmListHtml = chunk.map(notification => `
+            const notificationListHtml = chunk.map(notification => `
                 <li class="mb-2">
                     <a class="dropdown-item border-radius-md">
                         <div class="d-flex py-1">
@@ -53,7 +51,7 @@ document.addEventListener("DOMContentLoaded", function() {
                 </li>
             `).join('');
 
-            alarmListContainer.innerHTML = alarmListHtml;
+            notificationListContainer.innerHTML = notificationListHtml;
         } catch (error) {
             console.error('Failed to fetch notifications:', error);
         }
