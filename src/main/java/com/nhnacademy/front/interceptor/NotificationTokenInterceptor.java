@@ -2,7 +2,6 @@ package com.nhnacademy.front.interceptor;
 
 import com.nhnacademy.front.utils.AccessTokenUtil;
 import lombok.extern.slf4j.Slf4j;
-import lombok.extern.slf4j.XSlf4j;
 import org.springframework.stereotype.Component;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.servlet.HandlerInterceptor;
@@ -19,7 +18,7 @@ import java.util.Objects;
  */
 @Slf4j
 @Component
-public class AlarmTokenInterceptor implements HandlerInterceptor {
+public class NotificationTokenInterceptor implements HandlerInterceptor {
 
     /**
      * 요청이 처리되기 전에 호출되는 메서드로, 로그인 상태를 확인하고 처리를 결정.
