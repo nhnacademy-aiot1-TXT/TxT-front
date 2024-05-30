@@ -8,8 +8,6 @@ document.addEventListener("DOMContentLoaded", function() {
     async function fetchAndDisplayNotifications() {
 
 
-
-
         try {
 
             const option = {

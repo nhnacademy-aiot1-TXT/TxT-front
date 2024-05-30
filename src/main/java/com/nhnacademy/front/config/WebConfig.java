@@ -69,7 +69,7 @@ public class WebConfig implements WebMvcConfigurer {
         registry.addInterceptor(loggedInUserAccessInterceptor)
                 .addPathPatterns("/auth/login", "/auth/register");
         registry.addInterceptor(alarmTokenInterceptor)
-                .excludePathPatterns("auth/login", "/auth/register","/login", "/register");
+                .excludePathPatterns("auth/login", "/auth/register","/login", "/register", "/control", "/device/settings");
     }
 
     @Bean

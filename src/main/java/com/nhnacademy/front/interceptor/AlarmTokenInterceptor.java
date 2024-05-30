@@ -1,6 +1,8 @@
 package com.nhnacademy.front.interceptor;
 
 import com.nhnacademy.front.utils.AccessTokenUtil;
+import lombok.extern.slf4j.Slf4j;
+import lombok.extern.slf4j.XSlf4j;
 import org.springframework.stereotype.Component;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.servlet.HandlerInterceptor;
@@ -15,6 +17,7 @@ import java.util.Objects;
 /**
  * 특정상황을 제외하고 accessToken을 view에 attribute로 추가하는 interceptor
  */
+@Slf4j
 @Component
 public class AlarmTokenInterceptor implements HandlerInterceptor {
 
@@ -28,27 +31,24 @@ public class AlarmTokenInterceptor implements HandlerInterceptor {
      */
     @Override
     public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler, ModelAndView modelAndView) throws Exception {
-        if (Objects.isNull(request.getCookies())) {
-            return;
-        }
+
+
+        int status = response.getStatus();
+        boolean isRedirect = status >= 300 && status < 400;
 
         if (Objects.isNull(request.getCookies())) {
             return;
         }
-
 
         Cookie accessToken = Arrays.stream(request.getCookies())
                 .filter(cookie -> "accessToken".equals(cookie.getName()))
                 .findFirst()
                 .orElse(null);
 
-
-        if (!Objects.isNull(accessToken) && modelAndView != null) {
+        if (!Objects.isNull(accessToken) && modelAndView != null && !isRedirect) {
 
             ModelMap model = modelAndView.getModelMap();
             model.addAttribute("interceptedAccessToken", AccessTokenUtil.findAccessTokenInRequest(request));
-
-
         }
     }
 }
