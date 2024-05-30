@@ -46,7 +46,7 @@ public class ControlController {
      *
      * @param request HTTP 요청 객체
      * @param placeId 장소 ID
-     * @param model 뷰에 전달할 데이터를 담은 모델 객체
+     * @param model   뷰에 전달할 데이터를 담은 모델 객체
      * @return 컨트롤 페이지의 뷰 이름
      */
 
@@ -61,7 +61,7 @@ public class ControlController {
         Map<String, Object> statusMap = new HashMap<>();
         Map<String, Object> customMap = new HashMap<>();
         deviceList.forEach(deviceResponse -> {
-            Object deviceStatus = redisUtil.getDeviceStatus(DEVICE_KEY, deviceResponse.getDeviceName().toLowerCase().concat(":").concat(currentPlace.getPlaceCode()));
+            Object deviceStatus = redisUtil.getDeviceStatus(DEVICE_KEY, currentPlace.getPlaceCode().concat("_").concat(deviceResponse.getDeviceName().toLowerCase()));
             Object customMode = redisUtil.getMode(CUSTOM_MODE, currentPlace.getPlaceCode().concat("_").concat(deviceResponse.getDeviceName().toLowerCase()));
             statusMap.put(deviceResponse.getDeviceName().toLowerCase(), deviceStatus);
             customMap.put(deviceResponse.getDeviceName().toLowerCase(), customMode);
@@ -78,7 +78,6 @@ public class ControlController {
         model.addAttribute("custom", customMap);
 
 
-
         return "control";
     }
 
@@ -87,7 +86,7 @@ public class ControlController {
      * 주어진 장소 코드와 켜기/끄기 상태를 받아와서 해당 장치에 대한 제어 메시지를 RabbitMQ를 통해 전송합니다.
      *
      * @param placeCode 장소 코드
-     * @param isOn 조명 상태 (켜짐: true, 꺼짐: false)
+     * @param isOn      조명 상태 (켜짐: true, 꺼짐: false)
      * @return 제어 페이지로의 리다이렉트 URL
      */
 
@@ -105,7 +104,7 @@ public class ControlController {
      * 주어진 장소 코드와 켜기/끄기 상태를 받아와서 해당 장치에 대한 제어 메시지를 RabbitMQ를 통해 전송합니다.
      *
      * @param placeCode 장소 코드
-     * @param isOn 에어컨 상태 (켜짐: true, 꺼짐: false)
+     * @param isOn      에어컨 상태 (켜짐: true, 꺼짐: false)
      * @return 제어 페이지로의 리다이렉트 URL
      */
 
@@ -123,7 +122,7 @@ public class ControlController {
      * 주어진 장소 코드와 켜기/끄기 상태를 받아와서 해당 장치에 대한 제어 메시지를 RabbitMQ를 통해 전송합니다.
      *
      * @param placeCode 장소 코드
-     * @param isOn 공기 청정기 상태 (켜짐: true, 꺼짐: false)
+     * @param isOn      공기 청정기 상태 (켜짐: true, 꺼짐: false)
      * @return 제어 페이지로의 리다이렉트 URL
      */
 
@@ -141,7 +140,7 @@ public class ControlController {
      * 주어진 장소 코드와 켜기/끄기 상태를 받아와서 해당 장소의 인공지능 모드를 설정합니다.
      *
      * @param placeCode 장소 코드
-     * @param isOn 인공지능 모드 상태 (활성화: true, 비활성화: false)
+     * @param isOn      인공지능 모드 상태 (활성화: true, 비활성화: false)
      * @return 제어 페이지로의 리다이렉트 URL
      */
 
