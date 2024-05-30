@@ -1,5 +1,5 @@
 document.addEventListener("DOMContentLoaded", function() {
-    const alarmListContainer = document.getElementById('alarmList');
+    const notificationListContainer = document.getElementById('notificationList');
 
     function isEmptyValue(value) {
         return value === null || value === undefined || value.trim() === '';
@@ -17,7 +17,7 @@ document.addEventListener("DOMContentLoaded", function() {
                 }
 
             }
-            const response = await fetch('https://contxt.co.kr/api/common/notification', option);
+            const response = await fetch('http://localhost:8000/api/common/notification', option);
 
             if (!response.ok) {
                 throw new Error('Network response was not ok');
@@ -30,7 +30,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
             const chunk = notifications.slice(0,5);
 
-            const alarmListHtml = chunk.map(notification => `
+            const notificationListHtml = chunk.map(notification => `
                 <li class="mb-2">
                     <a class="dropdown-item border-radius-md">
                         <div class="d-flex py-1">
@@ -51,7 +51,7 @@ document.addEventListener("DOMContentLoaded", function() {
                 </li>
             `).join('');
 
-            alarmListContainer.innerHTML = alarmListHtml;
+            notificationListContainer.innerHTML = notificationListHtml;
         } catch (error) {
             console.error('Failed to fetch notifications:', error);
         }
