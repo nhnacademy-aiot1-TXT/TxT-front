@@ -72,6 +72,7 @@ public class WebConfig implements WebMvcConfigurer {
                 .excludePathPatterns("auth/login", "/auth/register","/login", "/register", "/control", "/device/settings", "/detect/settings");
     }
 
+
     @Bean
     public Map<String, String> deviceIconMap() {
         return Map.of(
