@@ -42,9 +42,9 @@
                 <form action="/admin/detail-sensor-info/log" method="get">
                     <div class="row">
                         <div class="col-3">
-                            <div class="form-group">
+                            <div class="form-group ">
                                 <label for="placeCode">장소</label>
-                                <select class="form-control" id="placeCode" name="placeCode">
+                                <select class="form-control" style="min-width: 83px;" id="placeCode" name="placeCode">
                                     <option th:each="place : ${placeList}"
                                             th:text="${place.getPlaceName()}"
                                             th:value="${place.getPlaceCode()}"></option>
@@ -52,9 +52,9 @@
                             </div>
                         </div>
                         <div class="col-3">
-                            <div class="form-group">
+                            <div class="form-group ">
                                 <label for="sensorType">센서</label>
-                                <select class="form-control" id="sensorType" name="sensorType">
+                                <select class="form-control" style="min-width: 83px;" id="sensorType" name="sensorType">
                                     <option value="temperature">온도</option>
                                     <option value="humidity">습도</option>
                                     <option value="illumination">조도</option>
@@ -63,9 +63,9 @@
                             </div>
                         </div>
                         <div class="col-3">
-                            <div class="form-group">
+                            <div class="form-group ">
                                 <label for="period">주기</label>
-                                <select class="form-control" id="period" name="period">
+                                <select class="form-control" style="min-width: 83px;" id="period" name="period">
                                     <option value="day">일</option>
                                     <option value="week">주</option>
                                     <option value="month">월</option>
@@ -73,8 +73,8 @@
                             </div>
                         </div>
                         <div class="col-3 d-flex align-items-center justify-content-center">
-                            <button class="btn btn-primary" type="submit"
-                                    style="margin-bottom: 0 !important; margin-top: 0.9rem !important;">조회
+                            <button class="btn btn-primary"style="margin-bottom: 0 !important; margin-top: 0.9rem !important; min-width: 83px;">
+                                조회
                             </button>
                         </div>
                     </div>

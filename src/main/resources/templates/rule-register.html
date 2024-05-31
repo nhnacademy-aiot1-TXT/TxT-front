@@ -63,7 +63,7 @@
         </div>
     </div>
 
-    <div class="card text-center" id="main-body" style="padding-left: 10px; width: 50%; margin: 0 auto;">
+    <div class="card text-center" id="main-body" style="padding-left: 10px; width: 50%; margin: 0 auto; min-width: 500px">
         <h2 class="jua-regular" style="margin-bottom: 5px; margin-top: 25px;">장치 관리</h2>
 
         <form id="ruleAddForm" action="/admin/rule/send-data" method="post" class="px-4 py-3"
@@ -99,17 +99,17 @@
                 <div class="row justify-content-center">
                     <div class="col-1">
                     </div>
-                    <h4 class="jua-regular col-2">AI 모드 설정</h4>
+                    <h4 class="jua-regular col-2" style="min-width: 133px">AI 모드 설정</h4>
                     <div class="col-1">
                     </div>
                 </div>
                 <div id="aiModesContainer"></div>
                 <div class="row justify-content-center">
-                    <div class="col-1"></div>
+                    <div class="col-2"></div>
                     <div class="col-2">
                         <button type="button" class="btn bg-gradient-primary" onclick="createAiModeGroup()">AI Mode 추가</button>
                     </div>
-                    <div class="col-1">
+                    <div class="col-2">
                         <button type="button"
                                 class="btn btn-block btn-info mb-3"
                                 data-bs-toggle="modal"
@@ -142,12 +142,12 @@
                 <h4 class="jua-regular">커스텀 모드 설정</h4>
                 <div id="conditionsContainer"></div>
                 <div class="row justify-content-center">
-                    <div class="col-1"></div>
+                    <div class="col-2"></div>
                     <div class="col-2">
                         <button type="button" class="btn bg-gradient-primary" onclick="createConditionGroup()">Condition 추가
                         </button>
                     </div>
-                    <div class="col-1">
+                    <div class="col-2">
                         <button type="button"
                                 class="btn btn-block btn-info mb-3"
                                 data-bs-toggle="modal"
