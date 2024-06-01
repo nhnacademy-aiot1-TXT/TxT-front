@@ -12,13 +12,22 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
 
+/**
+ * 규칙 등록 API 요청을 처리하기 위한 클래스
+ */
 @RestController
 @RequestMapping("/admin/rule")
 @RequiredArgsConstructor
 public class RuleRegisterRestController {
-
     private final RuleRegisterAdaptor ruleRegisterAdaptor;
 
+    /**
+     * 규칙을 등록하는 메서드
+     *
+     * @param request          the request
+     * @param ruleRegisterInfo the rule register info
+     * @return the rule register info
+     */
     @PostMapping("/send-data")
     public ResponseEntity<String> getRuleRegisterInfo(HttpServletRequest request, @RequestBody String ruleRegisterInfo) {
         String accessToken = AccessTokenUtil.findAccessTokenInRequest(request);

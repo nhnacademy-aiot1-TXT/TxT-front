@@ -1,5 +1,8 @@
 package com.nhnacademy.front.mode;
 
+/**
+ * 공기청정기 모드를 처리하기 위한 클래스
+ */
 public enum AircleanerMode {
     COMFORT(300f, 100f),
     NORMAL(400f, 200f);

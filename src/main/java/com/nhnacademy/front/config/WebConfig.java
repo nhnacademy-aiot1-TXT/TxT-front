@@ -1,9 +1,9 @@
 package com.nhnacademy.front.config;
 
 import com.nhnacademy.front.interceptor.AddAuthorityToModelInterceptor;
-import com.nhnacademy.front.interceptor.NotificationTokenInterceptor;
 import com.nhnacademy.front.interceptor.LoggedInUserAccessInterceptor;
 import com.nhnacademy.front.interceptor.LoginCheckInterceptor;
+import com.nhnacademy.front.interceptor.NotificationTokenInterceptor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.context.annotation.Bean;
@@ -69,10 +69,14 @@ public class WebConfig implements WebMvcConfigurer {
         registry.addInterceptor(loggedInUserAccessInterceptor)
                 .addPathPatterns("/auth/login", "/auth/register");
         registry.addInterceptor(notificationTokenInterceptor)
-                .excludePathPatterns("auth/login", "/auth/register","/login", "/register", "/control", "/device/settings", "/detect/settings");
+                .excludePathPatterns("auth/login", "/auth/register", "/login", "/register", "/control", "/device/settings", "/detect/settings");
     }
 
-
+    /**
+     * 장치에 해당하는 그림을 매칭하기 위한 빈 메서드
+     *
+     * @return
+     */
     @Bean
     public Map<String, String> deviceIconMap() {
         return Map.of(

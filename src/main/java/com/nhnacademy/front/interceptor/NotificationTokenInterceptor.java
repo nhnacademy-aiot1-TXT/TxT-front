@@ -15,6 +15,9 @@ import java.util.Objects;
 
 /**
  * 특정상황을 제외하고 accessToken을 view에 attribute로 추가하는 interceptor
+ *
+ * @author parksangwon
+ * @version 1.0.0
  */
 @Slf4j
 @Component
@@ -22,16 +25,15 @@ public class NotificationTokenInterceptor implements HandlerInterceptor {
 
     /**
      * 요청이 처리되기 전에 호출되는 메서드로, 로그인 상태를 확인하고 처리를 결정.
-     * @param request HTTP 요청 객체
-     * @param response HTTP 응답 객체
-     * @param handler 요청을 처리할 핸들러 객체
+     *
+     * @param request      HTTP 요청 객체
+     * @param response     HTTP 응답 객체
+     * @param handler      요청을 처리할 핸들러 객체
      * @param modelAndView 화면에 나타낼 model
      * @throws Exception 예외 발생 시
      */
     @Override
-    public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler, ModelAndView modelAndView) throws Exception {
-
-
+    public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler, ModelAndView modelAndView) {
         int status = response.getStatus();
         boolean isRedirect = status >= 300 && status < 400;
 

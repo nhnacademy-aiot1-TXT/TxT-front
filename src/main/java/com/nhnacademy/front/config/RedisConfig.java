@@ -12,31 +12,29 @@ import org.springframework.data.redis.serializer.StringRedisSerializer;
 
 /**
  * Redis 설정 구성 클래스
+ *
+ * @author parksangwon
+ * @version 1.0.0
  */
 @Configuration
 public class RedisConfig {
+    @Value("${spring.redis.host}")
+    private String hostname;
+    @Value("${spring.redis.port}")
+    private int port;
+    @Value("${spring.redis.password}")
+    private String password;
+    @Value("${spring.redis.blackList.database}")
+    private int blackListDatabase;
+    @Value("${spring.redis.device.database}")
+    private int deviceDatabase;
+
     /**
      * RedisTemplate 빈 생성
      *
      * @param redisConnectionFactory Redis 연결 팩토리
      * @return RedisTemplate 객체
      */
-
-    @Value("${spring.redis.host}")
-    private String hostname;
-
-    @Value("${spring.redis.port}")
-    private int port;
-
-    @Value("${spring.redis.password}")
-    private String password;
-
-    @Value("${spring.redis.blackList.database}")
-    private int blackListDatabase;
-
-    @Value("${spring.redis.device.database}")
-    private int deviceDatabase;
-
     @Bean
     public RedisTemplate<String, Object> redisTemplate(RedisConnectionFactory redisConnectionFactory) {
         RedisTemplate<String, Object> redisTemplate = new RedisTemplate<>();
@@ -49,6 +47,11 @@ public class RedisConfig {
         return redisTemplate;
     }
 
+    /**
+     * Redis connection factory black list redis connection factory.
+     *
+     * @return the redis connection factory
+     */
     public RedisConnectionFactory redisConnectionFactoryBlackList() {
         RedisStandaloneConfiguration configuration = new RedisStandaloneConfiguration();
         configuration.setHostName(hostname);
@@ -60,6 +63,11 @@ public class RedisConfig {
         return lettuceConnectionFactory;
     }
 
+    /**
+     * 블랙리스트를 관리하는 RedisTemplate 빈 메서드
+     *
+     * @return the redis template
+     */
     @Bean
     public RedisTemplate<String, Object> redisTemplateBlackList() {
         RedisTemplate<String, Object> redisTemplate = new RedisTemplate<>();
@@ -72,6 +80,11 @@ public class RedisConfig {
         return redisTemplate;
     }
 
+    /**
+     * Redis connection factory device redis connection factory.
+     *
+     * @return the redis connection factory
+     */
     public RedisConnectionFactory redisConnectionFactoryDevice() {
         RedisStandaloneConfiguration configuration = new RedisStandaloneConfiguration();
         configuration.setHostName(hostname);
@@ -83,6 +96,11 @@ public class RedisConfig {
         return lettuceConnectionFactory;
     }
 
+    /**
+     * 장치 관련 정보를 관리하는 RedisTemplate 빈 메서드
+     *
+     * @return the redis template
+     */
     @Bean
     public RedisTemplate<String, Object> redisTemplateDevice() {
         RedisTemplate<String, Object> redisTemplate = new RedisTemplate<>();
@@ -95,6 +113,11 @@ public class RedisConfig {
         return redisTemplate;
     }
 
+    /**
+     * AI 결과를 관리하는 RedisTemplate 빈 메서드
+     *
+     * @return the redis template
+     */
     @Bean
     public RedisTemplate<String, String> redisTemplateAI() {
         RedisTemplate<String, String> redisTemplate = new RedisTemplate<>();
