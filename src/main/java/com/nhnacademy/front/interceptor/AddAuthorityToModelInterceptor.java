@@ -19,6 +19,9 @@ import java.util.Objects;
 
 /**
  * Model에 authority 속성을 추가해주는 interceptor입니다.
+ *
+ * @author parksangwon
+ * @version 1.0.0
  */
 @Component
 @RequiredArgsConstructor

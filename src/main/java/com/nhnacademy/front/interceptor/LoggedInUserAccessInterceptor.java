@@ -11,6 +11,9 @@ import java.util.Objects;
 
 /**
  * 로그인 시, auth/login, auth/register 등 특정 url 을 접근하지 못하도록 하는 인터셉터.
+ *
+ * @author parksangwon
+ * @version 1.0.0
  */
 @Component
 public class LoggedInUserAccessInterceptor implements HandlerInterceptor {

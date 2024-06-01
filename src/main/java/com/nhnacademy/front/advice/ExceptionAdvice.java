@@ -37,9 +37,9 @@ public class ExceptionAdvice {
         if (exception.status() == 401) {
             try {
                 Cookie refreshToken = Arrays.stream(request.getCookies())
-                                            .filter(cookie -> cookie.getName().equals("refreshToken"))
-                                            .findFirst()
-                                            .orElse(null);
+                        .filter(cookie -> cookie.getName().equals("refreshToken"))
+                        .findFirst()
+                        .orElse(null);
 
                 if (Objects.nonNull(refreshToken) && !"".equals(refreshToken.getValue())) {
                     AccessTokenResponse accesstokenresponse = userAdapter.reissue(refreshToken.getValue());
@@ -63,6 +63,12 @@ public class ExceptionAdvice {
         return "redirect:/error";
     }
 
+    /**
+     * 규칙을 등록할 때 발생하는 예외를 처리하기 위한 메서드
+     *
+     * @param exception 규칙 등록 예외
+     * @return 규칙 등록 페이지
+     */
     @ExceptionHandler(DeviceRegisterException.class)
     public String exceptionHandler(DeviceRegisterException exception) {
         log.error(exception.getMessage(), exception);

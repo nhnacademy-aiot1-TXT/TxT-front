@@ -17,21 +17,25 @@ import javax.servlet.http.HttpServletRequest;
 import java.time.LocalTime;
 import java.util.List;
 
+/**
+ * 탐지 시간 설정 API 요청을 처리하는 Controller 클래스
+ *
+ * @author parksangwon
+ * @version 1.0.0
+ */
 @Controller
 @RequiredArgsConstructor
 @RequestMapping("/detect/settings")
 public class DetectionSettingController {
     private final DeviceSettingAdapter deviceSettingAdapter;
 
-
     /**
      * 침입 감지 정보를 조회하는 요청을 처리하는 매서드.
      *
      * @param request HTTP 요청 객체
-     * @param model 뷰에 전달할 데이터를 담은 모델 객체
+     * @param model   뷰에 전달할 데이터를 담은 모델 객체
      * @return 설정 뷰 페이지의 뷰 이름
      */
-
     @GetMapping
     public String getDetectionInfo(HttpServletRequest request, Model model) {
         String accessToken = AccessTokenUtil.findAccessTokenInRequest(request);
@@ -48,17 +52,16 @@ public class DetectionSettingController {
     /**
      * 침입 감지 정보를 업데이트하는 요청을 처리하는 매서드.
      *
-     * @param request HTTP 요청 객체
+     * @param request        HTTP 요청 객체
      * @param timeIntervalId 감지 시간 간격 ID
-     * @param sensorId 센서 ID
-     * @param sensorName 센서 이름
-     * @param onHour 켜기 시간(시)
-     * @param onMinute 켜기 시간(분)
-     * @param offHour 끄기 시간(시)
-     * @param offMinute 끄기 시간(분)
+     * @param sensorId       센서 ID
+     * @param sensorName     센서 이름
+     * @param onHour         켜기 시간(시)
+     * @param onMinute       켜기 시간(분)
+     * @param offHour        끄기 시간(시)
+     * @param offMinute      끄기 시간(분)
      * @return 감지 설정 페이지로의 리다이렉트 URL
      */
-
     @PostMapping
     public String updateDetectionInfo(
             HttpServletRequest request,

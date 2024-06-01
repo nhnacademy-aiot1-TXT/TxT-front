@@ -20,6 +20,9 @@ import javax.validation.Valid;
 
 /**
  * 로그인 처리 Controller 클래스
+ *
+ * @author parksangwon
+ * @version 1.0.0
  */
 @Slf4j
 @Controller
