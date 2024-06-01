@@ -95,7 +95,6 @@ public class AdminController {
 
     /**
      * 사용자 허용 요청을 처리하고 지정된 URL로 리디렉션하는 매서드.
-     * <p>
      * 이 메서드는 "/manage/permit" URL에 대한 POST 요청에 매핑되어 있습니다.
      * 요청에서 선택된 사용자 ID를 가져와 {@code PermitUserRequest} 객체 리스트를 생성한 후,
      * 접근 토큰과 사용자 요청 리스트를 사용하여 {@code userAdapter}의 {@code permitUser} 메서드를 호출합니다.
