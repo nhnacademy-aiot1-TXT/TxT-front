@@ -30,7 +30,7 @@ public class RedisUtil {
     }
 
     public Object getMode(String key, String hashKey) {
-        return redisTemplateDevice.opsForHash().get(key, hashKey);
+        return redisTemplateDevice.opsForHash().get(key, hashKey) == null ? Boolean.FALSE : redisTemplateDevice.opsForHash().get(key, hashKey);
     }
 
     public void setMode(String key, String hashKey, boolean value) {
@@ -38,7 +38,7 @@ public class RedisUtil {
     }
 
     public Object getDeviceStatus(String key, String hashKey) {
-        return redisTemplateDevice.opsForHash().get(key, hashKey);
+        return redisTemplateDevice.opsForHash().get(key, hashKey) == null ? Boolean.FALSE : redisTemplateDevice.opsForHash().get(key, hashKey);
     }
 
     public Object getAiInfo(String key, String hashKey) {
