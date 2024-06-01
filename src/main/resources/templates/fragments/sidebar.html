@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/html" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script>
+        window.onload = function () {
+            const currentUrl = window.location.pathname;
+
+            const navItems = document.querySelectorAll(".nav-item");
+            navItems.forEach(function (item) {
+                const link = item.querySelector("a");
+                const href = link.getAttribute("href");
+                if (href === currentUrl.replace(/\/\d+$/, '')) {
+                    link.classList.add("active");
+                }
+            });
+        };
+    </script>
+</head>
+<body>
+<aside class="sidenav bg-white navbar navbar-vertical navbar-expand-xs border-0 border-radius-xl my-3 fixed-start ms-4 "
+       id="sidenav-main">
+    <div class="sidenav-header">
+        <i class="fas fa-times p-3 cursor-pointer text-secondary opacity-5 position-absolute end-0 top-0 d-none d-xl-none"
+           aria-hidden="true" id="iconSidenav"></i>
+        <a class="navbar-brand m-0" href="/">
+            <img src="/img/TxT-Title-Image.jpeg" class="navbar-brand-img h-100" alt="main_logo">
+            <span class="ms-1 font-weight-bold">TxT</span>
+        </a>
+    </div>
+    <hr class="horizontal dark mt-0">
+    <div class="collapse navbar-collapse  w-auto " id="sidenav-collapse-main">
+        <ul class="navbar-nav">
+            <li class="nav-item">
+                <a class="nav-link" href="/">
+                    <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
+                        <i class="ni ni-tv-2 text-primary text-sm opacity-10"></i>
+                    </div>
+                    <span class="nav-link-text ms-1">Home</span>
+                </a>
+            </li>
+            <th:block sec:authorize="isAuthenticated()">
+                <li class="nav-item">
+                    <a class="nav-link " href="/user/profile">
+                        <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
+                            <i class="ni ni-single-02 text-body text-sm opacity-10"></i>
+                        </div>
+                        <span class="nav-link-text ms-1">마이페이지</span>
+                    </a>
+                </li>
+            </th:block>
+            <th:block sec:authorize="hasRole('ROLE_ADMIN')">
+                <li class="nav-item">
+                    <a class="nav-link " href="/admin/manage">
+                        <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
+                            <i class="ni ni-badge text-info text-sm opacity-10"></i>
+                        </div>
+                        <span class="nav-link-text ms-1">회원 관리</span>
+                    </a>
+                </li>
+            </th:block>
+            <th:block sec:authorize="hasRole('ROLE_ADMIN')">
+                <li class="nav-item">
+                    <a class="nav-link " href="/admin/detail-sensor-info">
+                        <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
+                            <i class="ni ni-chart-pie-35 text-warning text-sm opacity-10"></i>
+                        </div>
+                        <span class="nav-link-text ms-1">상세 센서 정보</span>
+                    </a>
+                </li>
+            </th:block>
+            <th:block sec:authorize="isAuthenticated()">
+                <li class="nav-item">
+                    <a class="nav-link " href="/control">
+                        <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
+                            <i class="ni ni-ui-04 text-dark text-sm opacity-10"></i>
+                        </div>
+                        <span class="nav-link-text ms-1">장치 제어</span>
+                    </a>
+                </li>
+            </th:block>
+            <th:block sec:authorize="isAuthenticated()">
+                <li class="nav-item">
+                    <a class="nav-link " href="/device/settings">
+                        <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
+                            <i class="ni ni-settings text-success text-sm opacity-10"></i>
+                        </div>
+                        <span class="nav-link-text ms-1">설정</span>
+                    </a>
+                </li>
+            </th:block>
+            <th:block sec:authorize="hasRole('ROLE_ADMIN')">
+                <li class="nav-item">
+                    <a class="nav-link " href="/admin/rule/register">
+                        <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
+                            <i class="ni ni-single-copy-04 text-black-50 text-sm opacity-10"></i>
+                        </div>
+                        <span class="nav-link-text ms-1">장치 제어 규칙 등록</span>
+                    </a>
+                </li>
+            </th:block>
+        </ul>
+    </div>
+</aside>
+</body>
+</html>

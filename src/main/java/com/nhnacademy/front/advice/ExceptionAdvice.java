@@ -2,6 +2,7 @@ package com.nhnacademy.front.advice;
 
 import com.nhnacademy.front.adaptor.UserAdapter;
 import com.nhnacademy.front.dto.AccessTokenResponse;
+import com.nhnacademy.front.error.DeviceRegisterException;
 import feign.FeignException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -25,16 +26,20 @@ public class ExceptionAdvice {
 
     /**
      * FeignException 예외 처리 메서드
+     *
      * @param exception FeignException 객체
-     * @param request HTTP 요청 객체
-     * @param response HTTP 응답 객체
+     * @param request   HTTP 요청 객체
+     * @param response  HTTP 응답 객체
      * @return redirect 할 URL 문자열
      */
     @ExceptionHandler(FeignException.class)
     public String feignExceptionHandler(FeignException exception, HttpServletRequest request, HttpServletResponse response) {
         if (exception.status() == 401) {
             try {
-                Cookie refreshToken = Arrays.stream(request.getCookies()).filter(cookie -> cookie.getName().equals("refreshToken")).findFirst().orElse(null);
+                Cookie refreshToken = Arrays.stream(request.getCookies())
+                        .filter(cookie -> cookie.getName().equals("refreshToken"))
+                        .findFirst()
+                        .orElse(null);
 
                 if (Objects.nonNull(refreshToken) && !"".equals(refreshToken.getValue())) {
                     AccessTokenResponse accesstokenresponse = userAdapter.reissue(refreshToken.getValue());
@@ -55,6 +60,18 @@ public class ExceptionAdvice {
             return "redirect:/";
         }
 
-        return "redirect:/logout";
+        return "redirect:/error";
+    }
+
+    /**
+     * 규칙을 등록할 때 발생하는 예외를 처리하기 위한 메서드
+     *
+     * @param exception 규칙 등록 예외
+     * @return 규칙 등록 페이지
+     */
+    @ExceptionHandler(DeviceRegisterException.class)
+    public String exceptionHandler(DeviceRegisterException exception) {
+        log.error(exception.getMessage(), exception);
+        return "redirect:/admin/device/register";
     }
 }

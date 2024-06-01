@@ -4,6 +4,7 @@ import com.nhnacademy.front.adaptor.UserAdapter;
 import com.nhnacademy.front.utils.RedisUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.csrf.CsrfToken;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,6 +18,9 @@ import java.util.Objects;
 
 /**
  * 로그아웃 처리 Controller 클래스
+ *
+ * @author parksangwon
+ * @version 1.0.0
  */
 @Slf4j
 @Controller
@@ -60,6 +64,8 @@ public class LogoutController {
             response.addCookie(refreshCookie);
             userAdapter.doLogout(refreshCookie.getValue(), csrfToken.getToken());
         }
+
+        SecurityContextHolder.getContext().setAuthentication(null);
 
         return "redirect:/";
     }

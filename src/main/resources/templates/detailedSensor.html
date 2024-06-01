@@ -1,0 +1,455 @@
+<!--
+=========================================================
+* Argon Dashboard 2 - v2.0.4
+=========================================================
+
+* Product Page: https://www.creative-tim.com/product/argon-dashboard
+* Copyright 2022 Creative Tim (https://www.creative-tim.com)
+* Licensed under MIT (https://www.creative-tim.com/license)
+* Coded by Creative Tim
+
+=========================================================
+
+* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+-->
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="icon" type="image/png" href="/img/TxT-Title-Image.jpeg">
+    <title>
+        상세 센서 정보
+    </title>
+    <!--     Fonts and icons     -->
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet"/>
+    <!-- Nucleo Icons -->
+    <link href="/css/nucleo-icons.css" rel="stylesheet"/>
+    <link href="/css/nucleo-svg.css" rel="stylesheet"/>
+    <!-- Font Awesome Icons -->
+    <script src="https://kit.fontawesome.com/42d5adcbca.js" crossorigin="anonymous"></script>
+    <link href="/css/nucleo-svg.css" rel="stylesheet"/>
+    <!-- CSS Files -->
+    <link id="pagestyle" href="/css/argon-dashboard.css?v=2.0.4" rel="stylesheet"/>
+    <!-- 폰트 -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Jua&display=swap" rel="stylesheet">
+
+    <script th:inline="javascript">const accessToken = [[${interceptedAccessToken}]];</script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+
+<body class="g-sidenav-show bg-gray-100">
+
+<div class="position-absolute w-100 h-100 top-0"
+     style="background-image: url('/img/bg-detailSensor.jpg'); background-size: cover; background-position-y: 50%;">
+</div>
+<aside th:replace="fragments/sidebar"></aside>
+
+<main class="main-content position-relative border-radius-lg ">
+    <div th:replace="fragments/nav"></div>
+
+    <div class="container-fluid py-3">
+        <div class="row text-capitalize justify-content-center">
+            <div class="card text-center text-4xl jua-regular"
+                 style="width: 300px; background-image: linear-gradient(120deg, #a1c4fd 0%, #c2e9fb 100%);">
+                상세 센서 정보</div>
+            <div class="dropdown">
+                <button class="btn bg-gradient-primary dropdown-toggle" type="button" id="placeDropdownButton"
+                        data-bs-toggle="dropdown" aria-expanded="false" th:text="${currentPlace.getPlaceName()}">
+                </button>
+                <ul id="placeDropdownMenuButton" class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                    <li th:each="place : ${placeList}">
+                        <a class="dropdown-item" th:text="${place.getPlaceName()}"
+                           th:href="@{detail-sensor-info(placeCode = ${place.getPlaceCode()})}">
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="row mt-0">
+            <div class="col-lg-6 mb-lg-0 mb-4">
+                <div class="card z-index-2 h-100">
+                    <div class="card-header pb-0 pt-3 bg-transparent">
+                        <h6 class="text-capitalize">Temperature</h6>
+                    </div>
+                    <div class="card-body p-3">
+                        <a class="nav-link"
+                           th:href="@{detail-sensor-info/log(placeCode = ${currentPlace.getPlaceCode()}, sensorType = 'temperature')}">
+                            <div class="chart">
+                                <canvas id="temperature-chart" width="800" height="400"></canvas>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6 mb-lg-0 mb-4">
+                <div class="card z-index-2 h-100">
+                    <div class="card-header pb-0 pt-3 bg-transparent">
+                        <h6 class="text-capitalize">Illumination</h6>
+                    </div>
+                    <div class="card-body p-3">
+                        <a class="nav-link "
+                           th:href="@{detail-sensor-info/log(placeCode = ${currentPlace.getPlaceCode()}, sensorType = 'illumination')}">
+                            <div class="chart">
+                                <canvas id="illumination-chart" width="800" height="400"></canvas>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row mt-4">
+            <div class="col-lg-6 mb-lg-0 mb-4">
+                <div class="card z-index-2 h-100">
+                    <div class="card-header pb-0 pt-3 bg-transparent">
+                        <h6 class="text-capitalize">Humidity</h6>
+                    </div>
+                    <div class="card-body p-3">
+                        <a class="nav-link "
+                           th:href="@{detail-sensor-info/log(placeCode = ${currentPlace.getPlaceCode()}, sensorType = 'humidity')}">
+                            <div class="chart">
+                                <canvas id="humidity-chart" width="800" height="400"></canvas>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6 mb-lg-0 mb-4">
+                <div class="card z-index-2 h-100">
+                    <div class="card-header pb-0 pt-3 bg-transparent">
+                        <h6 class="text-capitalize">Co2</h6>
+                    </div>
+                    <div class="card-body p-3">
+                        <a class="nav-link "
+                           th:href="@{detail-sensor-info/log(placeCode = ${currentPlace.getPlaceCode()}, sensorType = 'co2')}">
+                            <div class="chart">
+                                <canvas id="co2-chart" width="800" height="400"></canvas>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+<!--   Core JS Files   -->
+<script src="/js/core/popper.min.js"></script>
+<script src="/js/core/bootstrap.min.js"></script>
+<script src="/js/plugins/perfect-scrollbar.min.js"></script>
+<script src="/js/plugins/smooth-scrollbar.min.js"></script>
+<script src="/js/plugins/chartjs.min.js"></script>
+<script src="/js/plugins/jquery-3.7.1.min.js"></script>
+
+<!-- 그래프 script -->
+<script th:inline="javascript">
+    function drawChart(sensorName) {
+        let ctx = document.getElementById(sensorName + "-chart").getContext('2d');
+        let gradientStroke = ctx.createLinearGradient(0, 230, 0, 50);
+
+        gradientStroke.addColorStop(1, 'rgba(240,191,206,0.4)');
+        gradientStroke.addColorStop(0.2, 'rgba(241,192,208,0.1)');
+        gradientStroke.addColorStop(0, 'rgba(250,219,206,0.05)');
+        return new Chart(ctx, {
+            type: "line",
+            data: {
+                labels: [],
+                datasets: [{
+                    label: [],
+                    tension: 0.4,
+                    pointRadius: 0,
+                    borderColor: "#172b4d",
+                    backgroundColor: gradientStroke,
+                    borderWidth: 3,
+                    fill: true,
+                    maxBarThickness: 6,
+                    data: []
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        display: false,
+                    }
+                },
+                interaction: {
+                    intersect: false,
+                    mode: 'index',
+                },
+                animations: {
+                    y: {
+                        easing: 'linear',
+                        duration: 0,
+                    }
+                },
+                scales: {
+                    y: {
+                        grid: {
+                            drawBorder: false,
+                            display: true,
+                            drawOnChartArea: true,
+                            drawTicks: false,
+                            borderDash: [5, 5]
+                        },
+                        ticks: {
+                            display: true,
+                            padding: 20,
+                            font: {
+                                size: 11,
+                                family: "Open Sans",
+                                style: 'normal',
+                                lineHeight: 2
+                            },
+                        }
+                    },
+                    x: {
+                        grid: {
+                            drawBorder: false,
+                            display: false,
+                            drawOnChartArea: false,
+                            drawTicks: false,
+                            borderDash: [5, 5]
+                        },
+                        ticks: {
+                            display: false,
+                            // 글씨색깔
+                            color: '#333',
+                            padding: 20,
+                            font: {
+                                size: 11,
+                                family: "Open Sans",
+                                style: 'normal',
+                                lineHeight: 2
+                            },
+                        }
+                    },
+                    xAxes: {
+                        ticks: {
+                            autoSkip: true,
+                            maxTicksLimit: 10,
+                        }
+                    },
+                },
+            }
+        });
+    }
+
+    function addData(chart, label, data) {
+        if (chart.data.labels.length > 400) { // 최대 데이터 포인트 수를 100으로 제한
+            chart.data.labels.shift(); // 가장 오래된 라벨 제거
+            chart.data.datasets.forEach((dataset) => {
+                dataset.data.shift(); // 가장 오래된 데이터 포인트 제거
+            });
+        }
+
+        chart.data.labels.push(label);
+        chart.data.datasets.forEach((dataset) => {
+            dataset.data.push(data);
+        });
+
+        chart.update();
+    }
+
+    function addDataUpdate(chart, label, data) {
+        if (chart.data.labels.length > 400) { // 최대 데이터 포인트 수를 100으로 제한
+            chart.data.labels.shift(); // 가장 오래된 라벨 제거
+            chart.data.datasets.forEach((dataset) => {
+                dataset.data.shift(); // 가장 오래된 데이터 포인트 제거
+            });
+        }
+
+        chart.data.labels.push(label);
+        chart.data.datasets.forEach((dataset) => {
+            dataset.data.push(data);
+        });
+
+        chart.update();
+    }
+
+    async function apiData(chart, domain, sensorName, currentPlace) {
+        // 새로운 데이터 포인트 생성 (예: 사인파)
+        const fullDomain = domain + "/api/sensor/" + sensorName + "?place=" + currentPlace;
+        const option = {
+            method: "GET",
+            headers: {
+                Authorization: accessToken
+            }
+        }
+
+        let data = await (await fetch(fullDomain, option)).json();
+        let dateTime = new Date(Date.parse(data.time) - (540 * 60 * 1000));
+        addData(chart, dateTime.getHours() + '시 ' + dateTime.getMinutes() + '분 ' + dateTime.getSeconds() + '초', data.value);
+    }
+
+    async function apiDataMean(chart, domain, sensorName, currentPlace, addDataFunction) {
+        // 새로운 데이터 포인트 생성 (예: 사인파)
+        const fullDomain = domain + "/api/sensor/" + sensorName + "/day-mean?place=" + currentPlace;
+        const option = {
+            method: "GET",
+            headers: {
+                Authorization: accessToken
+            }
+        }
+
+        let dataList = await (await fetch(fullDomain, option)).json();
+
+        let ctx = document.getElementById(sensorName + "-chart").getContext('2d');
+        let gradientStroke = ctx.createLinearGradient(0, 230, 0, 50);
+
+        switch (sensorName) {
+            case 'temperature':
+                gradientStroke.addColorStop(1, 'rgba(240,191,206,0.4)');
+                gradientStroke.addColorStop(0.2, 'rgba(241,192,208,0.1)');
+                gradientStroke.addColorStop(0, 'rgba(250,219,206,0.05)');
+                chart.data = {
+                    labels: [],
+                    datasets: [{
+                        label: [],
+                        tension: 0.4,
+                        pointRadius: 0,
+                        borderColor: "#fd5585",
+                        backgroundColor: gradientStroke,
+                        borderWidth: 2,
+                        fill: true,
+                        maxBarThickness: 6,
+                        data: []
+                    }]
+                };
+                break;
+            case 'illumination':
+                gradientStroke.addColorStop(1, 'rgba(248, 247, 212,0.4)');
+                gradientStroke.addColorStop(0.2, 'rgba(244,241,220,0.1)');
+                gradientStroke.addColorStop(0, 'rgba(248,245,234,0.1)');
+                chart.data = {
+                    labels: [],
+                    datasets: [{
+                        label: [],
+                        tension: 0.4,
+                        pointRadius: 0,
+                        borderColor: "rgb(220,188,36)",
+                        backgroundColor: gradientStroke,
+                        borderWidth: 2,
+                        fill: true,
+                        maxBarThickness: 6,
+                        data: []
+                    }]
+                };
+                break;
+
+            case 'humidity':
+                gradientStroke.addColorStop(1, 'rgba(135,105,210,0.3)');
+                gradientStroke.addColorStop(0.2, 'rgba(136,209,208,0.1)');
+                gradientStroke.addColorStop(0, 'rgba(250,219,206,0.05)');
+                chart.data = {
+                    labels: [],
+                    datasets: [{
+                        label: [],
+                        tension: 0.4,
+                        pointRadius: 0,
+                        borderColor: "#46a4f5",
+                        backgroundColor: gradientStroke,
+                        borderWidth: 2,
+                        fill: true,
+                        maxBarThickness: 6,
+                        data: []
+                    }]
+                };
+                break;
+
+            case 'co2':
+                gradientStroke.addColorStop(1, 'rgba(99, 209, 177,0.4)');
+                gradientStroke.addColorStop(0.2, 'rgba(160, 210, 195,0.1)');
+                gradientStroke.addColorStop(0, 'rgba(208, 211, 210,0.05)');
+                chart.data = {
+                    labels: [],
+                    datasets: [{
+                        label: [],
+                        tension: 0.4,
+                        pointRadius: 0,
+                        borderColor: "#1db48c",
+                        backgroundColor: gradientStroke,
+                        borderWidth: 2,
+                        fill: true,
+                        maxBarThickness: 6,
+                        data: []
+                    }]
+                };
+                break;
+
+            default:
+                gradientStroke.addColorStop(1, 'rgba(240,191,206,0.4)');
+                gradientStroke.addColorStop(0.2, 'rgba(241,192,208,0.1)');
+                gradientStroke.addColorStop(0, 'rgba(250,219,206,0.05)');
+                chart.data = {
+                    labels: [],
+                    datasets: [{
+                        label: [],
+                        tension: 0.4,
+                        pointRadius: 0,
+                        borderColor: "#F0BFCE",
+                        backgroundColor: gradientStroke,
+                        borderWidth: 3,
+                        fill: true,
+                        maxBarThickness: 6,
+                        data: []
+                    }]
+                };
+                break;
+        }
+
+
+
+        for (let data of dataList) {
+            let dateTime = new Date(Date.parse(data.time) - (540 * 60 * 1000));
+            addData(chart, dateTime.getHours() + '시 ' + dateTime.getMinutes() + '분 ' + dateTime.getSeconds() + '초', data.value);
+        }
+    }
+
+    document.addEventListener('DOMContentLoaded', function () {
+        const domain = "https://contxt.co.kr"
+        const currentPlace = [[${currentPlace.getPlaceCode()}]];
+
+        const temperatureChart = drawChart('temperature');
+        const illuminationChart = drawChart('illumination');
+        const humidityChart = drawChart('humidity');
+        const co2Chart = drawChart('co2');
+
+        apiDataMean(temperatureChart, domain, 'temperature', currentPlace, addData);
+        apiDataMean(illuminationChart, domain, 'illumination', currentPlace, addData);
+        apiDataMean(humidityChart, domain, 'humidity', currentPlace, addData);
+        apiDataMean(co2Chart, domain, 'co2', currentPlace, addData);
+
+        setInterval(() => {
+            apiData(temperatureChart, domain, 'temperature', currentPlace);
+            apiData(illuminationChart, domain, 'illumination', currentPlace);
+            apiData(humidityChart, domain, 'humidity', currentPlace);
+            apiData(co2Chart, domain, 'co2', currentPlace);
+        }, 10 * 1000);
+
+        setInterval(() => {
+            apiDataMean(temperatureChart, domain, 'temperature', currentPlace, addDataUpdate);
+            apiDataMean(illuminationChart, domain, 'illumination', currentPlace, addDataUpdate);
+            apiDataMean(humidityChart, domain, 'humidity', currentPlace, addDataUpdate);
+            apiDataMean(co2Chart, domain, 'co2', currentPlace, addDataUpdate);
+        }, 60 * 60 * 1000);
+    });
+</script>
+<script>
+    var win = navigator.platform.indexOf('Win') > -1;
+    if (win && document.querySelector('#sidenav-scrollbar')) {
+        var options = {
+            damping: '0.5'
+        }
+        Scrollbar.init(document.querySelector('#sidenav-scrollbar'), options);
+    }
+</script>
+
+<!-- Github buttons -->
+<script async defer src="https://buttons.github.io/buttons.js"></script>
+<!-- Control Center for Soft Dashboard: parallax effects, scripts for the example pages etc -->
+<script src="/js/argon-dashboard.min.js?v=2.0.4"></script>
+</body>
+</html>

@@ -1,0 +1,37 @@
+spring:
+  redis:
+    host: 133.186.244.96
+    port: 6379
+    database: 18
+    password: '*N2vya7H@muDTwdNMR!'
+    blackList:
+      database: 10
+    device:
+      database: 13
+  session:
+    store-type: redis
+  rabbitmq:
+    username: user
+    password: user
+    host: 133.186.221.92
+    port: 5672
+    device-control-exchange: txt.device.control
+  profiles:
+    active: prod
+
+  spring:
+    devtools:
+      livereload:
+        enabled: true
+  freemarker:
+    cache: false
+management:
+  endpoints:
+    web:
+      exposure:
+        include: beans, conditions, configprops, env, health, httpexchanges, info, loggers, metrics, mappings, threaddump, shutdown
+      base-path: /front-server/manage
+  endpoint:
+    health:
+      show-details: always
+

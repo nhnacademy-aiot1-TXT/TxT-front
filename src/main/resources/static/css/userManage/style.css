@@ -1,0 +1,612 @@
+/* styles.css */
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th, td {
+    padding: 8px;
+    text-align: left;
+}
+
+th {
+    background-color: #f8e1b6;
+}
+
+#numbers li a.active {
+    opacity: 1;
+    background: #333333;
+    color: #ffffff;
+}
+
+.buttonTest2 {
+    text-align: center;
+    width: 50%;
+}
+
+.pagination {
+    list-style: none;
+    display: inline-block;
+    padding: 0;
+    margin-top: 20px;
+}
+
+.pagination li {
+    display: inline;
+    text-align: center;
+}
+
+.pagination a {
+    float: left;
+    display: block;
+    font-size: 14px;
+    text-decoration: none;
+    padding: 5px 12px;
+    color: #95a0ad;
+    line-height: 1.5;
+}
+
+.first {
+    margin-right: 15px;
+    color: #0d6efd;
+}
+
+.last {
+    color: #2e9cdf;
+}
+
+
+/*/
+ * Bootstrap v4.3.1 (https://getbootstrap.com/)
+ * Copyright 2011-2019 The Bootstrap Authors
+ * Copyright 2011-2019 Twitter, Inc.
+ * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
+ */
+:root {
+    --blue: #007bff;
+    --indigo: #6610f2;
+    --purple: #6f42c1;
+    --pink: #e83e8c;
+    --red: #dc3545;
+    --orange: #fd7e14;
+    --yellow: #ffc107;
+    --green: #28a745;
+    --teal: #20c997;
+    --cyan: #17a2b8;
+    --white: #fff;
+    --gray: #6c757d;
+    --gray-dark: #343a40;
+    --primary: #007bff;
+    --secondary: #6c757d;
+    --success: #28a745;
+    --info: #17a2b8;
+    --warning: #ffc107;
+    --danger: #dc3545;
+    --light: #f8f9fa;
+    --dark: #343a40;
+    --breakpoint-xs: 0;
+    --breakpoint-sm: 576px;
+    --breakpoint-md: 768px;
+    --breakpoint-lg: 992px;
+    --breakpoint-xl: 1200px;
+    --font-family-sans-serif: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+    --font-family-monospace: SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+}
+
+*,
+*::before,
+*::after {
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+html {
+    font-family: sans-serif;
+    line-height: 1.15;
+    -webkit-text-size-adjust: 100%;
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+}
+
+article, aside, figcaption, figure, footer, header, hgroup, main, nav, section {
+    display: block;
+}
+
+body {
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.5;
+    color: #212529;
+    text-align: left;
+    background-color: #fff;
+}
+
+.pagination {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    padding-left: 0;
+    list-style: none;
+    border-radius: 0.25rem;
+}
+
+.page-link {
+    position: relative;
+    display: block;
+    padding: 0.5rem 0.75rem;
+    margin-left: -1px;
+    line-height: 1.25;
+    color: #007bff;
+    background-color: #fff;
+    border: 1px solid #dee2e6;
+}
+
+.page-link:hover {
+    z-index: 2;
+    color: #0056b3;
+    text-decoration: none;
+    background-color: #e9ecef;
+    border-color: #dee2e6;
+}
+
+.page-link:focus {
+    z-index: 2;
+    outline: 0;
+    -webkit-box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+    box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+}
+
+.page-item:first-child .page-link {
+    margin-left: 0;
+    border-top-left-radius: 0.25rem;
+    border-bottom-left-radius: 0.25rem;
+}
+
+.page-item:last-child .page-link {
+    border-top-right-radius: 0.25rem;
+    border-bottom-right-radius: 0.25rem;
+}
+
+.page-item.active .page-link {
+    z-index: 1;
+    color: #fff;
+    background-image: linear-gradient(-135deg, #1de9b6 0%, #1dc4e9 100%); /* 그라디언트 배경 적용 */
+    border-color: #1de9b6;
+}
+
+.page-item.disabled .page-link {
+    color: #6c757d;
+    pointer-events: none;
+    cursor: auto;
+    background-color: #fff;
+    border-color: #dee2e6;
+}
+
+.pagination-lg .page-link {
+    padding: 0.75rem 1.5rem;
+    font-size: 1.25rem;
+    line-height: 1.5;
+}
+
+.pagination-lg .page-item:first-child .page-link {
+    border-top-left-radius: 0.3rem;
+    border-bottom-left-radius: 0.3rem;
+}
+
+.pagination-lg .page-item:last-child .page-link {
+    border-top-right-radius: 0.3rem;
+    border-bottom-right-radius: 0.3rem;
+}
+
+.pagination-sm .page-link {
+    padding: 0.25rem 0.5rem;
+    font-size: 0.875rem;
+    line-height: 1.5;
+}
+
+.pagination-sm .page-item:first-child .page-link {
+    border-top-left-radius: 0.2rem;
+    border-bottom-left-radius: 0.2rem;
+}
+
+.pagination-sm .page-item:last-child .page-link {
+    border-top-right-radius: 0.2rem;
+    border-bottom-right-radius: 0.2rem;
+}
+
+.alert {
+    position: relative;
+    padding: 0.75rem 1.25rem;
+    margin-bottom: 1rem;
+    border: 1px solid transparent;
+    border-radius: 0.25rem;
+}
+
+.alert-heading {
+    color: inherit;
+}
+
+.alert-link {
+    font-weight: 700;
+}
+
+.alert-dismissible {
+    padding-right: 4rem;
+}
+
+.alert-dismissible .close {
+    position: absolute;
+    top: 0;
+    right: 0;
+    padding: 0.75rem 1.25rem;
+    color: inherit;
+}
+
+.alert-primary {
+    color: #004085;
+    background-color: #cce5ff;
+    border-color: #b8daff;
+}
+
+.alert-primary hr {
+    border-top-color: #9fcdff;
+}
+
+.alert-primary .alert-link {
+    color: #002752;
+}
+
+.alert-secondary {
+    color: #383d41;
+    background-color: #e2e3e5;
+    border-color: #d6d8db;
+}
+
+.alert-secondary hr {
+    border-top-color: #c8cbcf;
+}
+
+.alert-secondary .alert-link {
+    color: #202326;
+}
+
+.alert-success {
+    color: #155724;
+    background-color: #d4edda;
+    border-color: #c3e6cb;
+}
+
+.alert-success hr {
+    border-top-color: #b1dfbb;
+}
+
+.alert-success .alert-link {
+    color: #0b2e13;
+}
+
+.alert-info {
+    color: #0c5460;
+    background-color: #d1ecf1;
+    border-color: #bee5eb;
+}
+
+.alert-info hr {
+    border-top-color: #abdde5;
+}
+
+.alert-info .alert-link {
+    color: #062c33;
+}
+
+.alert-warning {
+    color: #856404;
+    background-color: #fff3cd;
+    border-color: #ffeeba;
+}
+
+.alert-warning hr {
+    border-top-color: #ffe8a1;
+}
+
+.alert-warning .alert-link {
+    color: #533f03;
+}
+
+.alert-danger {
+    color: #721c24;
+    background-color: #f8d7da;
+    border-color: #f5c6cb;
+}
+
+.alert-danger hr {
+    border-top-color: #f1b0b7;
+}
+
+.alert-danger .alert-link {
+    color: #491217;
+}
+
+.alert-light {
+    color: #818182;
+    background-color: #fefefe;
+    border-color: #fdfdfe;
+}
+
+.alert-light hr {
+    border-top-color: #ececf6;
+}
+
+.alert-light .alert-link {
+    color: #686868;
+}
+
+.alert-dark {
+    color: #1b1e21;
+    background-color: #d6d8d9;
+    border-color: #c6c8ca;
+}
+
+.alert-dark hr {
+    border-top-color: #b9bbbe;
+}
+
+.alert-dark .alert-link {
+    color: #040505;
+}
+
+
+.rounded-sm {
+    border-radius: 0.2rem !important;
+}
+
+.rounded {
+    border-radius: 0.25rem !important;
+}
+
+.rounded-top {
+    border-top-left-radius: 0.25rem !important;
+    border-top-right-radius: 0.25rem !important;
+}
+
+.rounded-right {
+    border-top-right-radius: 0.25rem !important;
+    border-bottom-right-radius: 0.25rem !important;
+}
+
+.rounded-bottom {
+    border-bottom-right-radius: 0.25rem !important;
+    border-bottom-left-radius: 0.25rem !important;
+}
+
+.rounded-left {
+    border-top-left-radius: 0.25rem !important;
+    border-bottom-left-radius: 0.25rem !important;
+}
+
+.rounded-lg {
+    border-radius: 0.3rem !important;
+}
+
+.rounded-circle {
+    border-radius: 50% !important;
+}
+
+.rounded-pill {
+    border-radius: 50rem !important;
+}
+
+.rounded-0 {
+    border-radius: 0 !important;
+}
+
+.img {
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center center;
+}
+
+.table-wrap {
+    overflow-x: scroll;
+}
+
+.table {
+    min-width: 100px !important;
+    width: 100%;
+    -webkit-box-shadow: 0px 5px 12px -12px rgba(0, 0, 0, 0.29);
+    -moz-box-shadow: 0px 5px 12px -12px rgba(0, 0, 0, 0.29);
+    box-shadow: 0px 5px 12px -12px rgba(0, 0, 0, 0.29);
+}
+
+.table thead th {
+    border: none;
+    padding: 30px;
+    font-size: 13px;
+    font-weight: 500;
+    color: gray;
+}
+
+.table thead tr {
+    background: #fff;
+    border-bottom: 4px solid #eceffa;
+}
+
+.table tbody tr {
+    margin-bottom: 10px;
+    border-bottom: 4px solid #f8f9fd;
+}
+
+.table tbody tr:last-child {
+    border-bottom: 0;
+}
+
+.table tbody th, .table tbody td {
+    border: none;
+    padding: 30px;
+    font-size: 14px;
+    background: #fff;
+    vertical-align: middle;
+}
+
+.table tbody td.status span {
+    position: relative;
+    border-radius: 30px;
+    padding: 4px 10px 4px 25px;
+}
+
+.table tbody td.status span:after {
+    position: absolute;
+    top: 9px;
+    left: 10px;
+    width: 10px;
+    height: 10px;
+    content: '';
+    border-radius: 50%;
+}
+
+.table tbody td.status .active {
+    background: #cff6dd;
+    color: #1fa750;
+}
+
+.table tbody td.status .active:after {
+    background: #23bd5a;
+}
+
+.table tbody td.status .waiting {
+    background: #fdf5dd;
+    color: #cfa00c;
+}
+
+.table tbody td.status .waiting:after {
+    background: #f2be1d;
+}
+
+.table tbody td .img {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+}
+
+.table tbody td .email span {
+    display: block;
+}
+
+.table tbody td .email span:last-child {
+    font-size: 12px;
+    color: rgba(0, 0, 0, 0.3);
+}
+
+.table tbody td .close span {
+    font-size: 12px;
+    color: #dc3545;
+}
+
+.checkbox-wrap {
+    display: block;
+    position: relative;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: 500;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+/* Hide the browser's default checkbox */
+.checkbox-wrap input {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+    height: 0;
+    width: 0;
+}
+
+/* Create a custom checkbox */
+.checkmark {
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+/* Create the checkmark/indicator (hidden when not checked) */
+.checkmark:after {
+    content: "\f0c8";
+    font-family: "FontAwesome";
+    position: absolute;
+    color: rgba(0, 0, 0, 0.1);
+    font-size: 20px;
+    margin-top: -14px;
+    -webkit-transition: 0.3s;
+    -o-transition: 0.3s;
+    transition: 0.3s;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .checkmark:after {
+        -webkit-transition: none;
+        -o-transition: none;
+        transition: none;
+    }
+}
+
+/*!* Show the checkmark when checked *!*/
+.checkbox-wrap input:checked ~ .checkmark:after {
+    display: block;
+    content: "\f14a";
+    /*font-family: "FontAwesome";*/
+    color: rgba(0, 0, 0, 0.2);
+}
+
+/*Style the checkmark/indicator*/
+.checkbox-primary {
+    color: #40bfc1;
+}
+
+.checkbox-primary input:checked ~ .checkmark:after {
+    color: #40bfc1;
+}
+
+.my-btn {
+    padding: 8px 20px; /* 패딩 설정 */
+    border: none; /* 테두리 없앰 */
+    color: white; /* 글자 색상 */
+    font-size: 16px; /* 글자 크기 */
+    cursor: pointer; /* 마우스 오버 시 커서 변경 */
+    outline: none; /* 클릭 시 발생하는 외곽선 제거 */
+    transition: all 0.3s ease; /* 부드러운 전환 효과 */
+    border-radius: 20px; /* 모서리 둥글게 처리 */
+}
+
+.my-btn-purple {
+    background-image: linear-gradient(-135deg, #899fd4 0%, #a389d4 100%); /* 그라디언트 배경 적용 */
+    color: white; /* 글자 색상 */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.25); /* 그림자 효과 */
+}
+
+.my-btn-purple2 {
+    background-image: linear-gradient(-135deg, rgba(137, 159, 212, 0.5) 0%, rgba(163, 137, 212, 0.5) 100%); /* 투명도를 조정하여 그라디언트 배경 적용 */
+    color: white; /* 글자 색상 */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.25); /* 그림자 효과 */
+}
+
+.my-btn-green {
+    background-image: linear-gradient(-135deg, #1de9b6 0%, #1dc4e9 100%); /* 그라디언트 배경 적용 */
+    color: white; /* 글자 색상 */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.25); /* 그림자 효과 */
+}
+
+.my-btn:hover {
+    box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15); /* 마우스 오버 시 그림자 강조 */
+}
+
+.text-purple-border {
+    color: #6610f2; /* 글자 색상 설정 */
+    font-weight: bold; /* 글자 두께를 굵게 설정 */
+}
+
+.scroll_x_bar {
+    overflow-x: scroll;
+}

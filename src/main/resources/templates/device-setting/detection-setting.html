@@ -1,0 +1,52 @@
+<div class="card shadow-lg mt-3 h-100" style="max-width: 1000px">
+    <div class="card-header pb-0">
+        <div class="d-flex align-items-center">
+            <p class="mb-0 text-bold text-2xl" style="color: #344767">시간 설정</p>
+        </div>
+        <div class="d-flex align-items-center">
+            <p class="mb-0 text-bold"><br>시작시간 이후부터 종료시간까지 재실이 감지되면 알림을 보냅니다.</p>
+        </div>
+    </div>
+    <div class="card-body">
+        <form role="form" th:action="@{'/detect/settings'}"
+              method="post">
+            <input type="hidden" name="sensorId" th:value="${detect.getSensorId()}"/>
+            <input type="hidden" name="sensorName" th:value="${detect.getSensorName()}"/>
+            <input type="hidden" name="timeIntervalId" th:value="${detect.getTimeIntervalId()}"/>
+            <div class="row">
+                <div class="row mt-5 w-50">
+                    <div class="mb-3 col-md-6">
+                        <input id="onHour" type="text" class="form-control text-lg" name="onHour"
+                               th:placeholder="${detect.getBegin().getHour()}"
+                               th:value="${detect.getBegin().getHour()}">
+                        <label for="onHour" class="text-2xl">HOUR</label>
+                    </div>
+                    <div class="mb-3 col-md-6">
+                        <input id="onMinute" type="text" class="form-control text-lg" name="onMinute"
+                               th:placeholder="${detect.getBegin().getMinute()}"
+                               th:value="${detect.getBegin().getMinute()}">
+                        <label for="onMinute" class="text-2xl">MINUTE</label>
+                    </div>
+                </div>
+                <p class="w-1 mt-6 me-3">~</p>
+                <div class="row mt-5 w-50">
+                    <div class="mb-3 col-md-6">
+                        <input id="offHour" type="text" class="form-control text-lg" name="offHour"
+                               th:placeholder="${detect.getEnd().getHour()}"
+                               th:value="${detect.getEnd().getHour()}">
+                        <label for="offHour" class="text-2xl">HOUR</label>
+                    </div>
+                    <div class="mb-3 col-md-6">
+                        <input id="offMinute" type="text" class="form-control text-lg" name="offMinute"
+                               th:placeholder="${detect.getEnd().getMinute()}"
+                               th:value="${detect.getEnd().getMinute()}">
+                        <label for="offMinute" class="text-2xl">MINUTE</label>
+                    </div>
+                </div>
+            </div>
+            <div class="text-center mt-4">
+                <button type="submit" class="btn bg-gradient-primary w-50 my-4 mb-2">Setting</button>
+            </div>
+        </form>
+    </div>
+</div>
