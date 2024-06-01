@@ -11,6 +11,9 @@ import org.springframework.context.annotation.Configuration;
 
 /**
  * rabbit MQ 관련 설정 파일 클래스
+ *
+ * @author parksangwon
+ * @version 1.0.0
  */
 @Configuration
 public class RabbitmqConfig {
