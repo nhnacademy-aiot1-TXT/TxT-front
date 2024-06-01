@@ -26,7 +26,7 @@ public interface DeviceSettingAdapter {
     PlaceResponse getPlace(@RequestHeader("Authorization") String accessToken, @PathVariable Long placeId);
 
     /**
-     * 장소에 있는 장지 정보를 조회하기 위한 메서드
+     * 장소에 있는 장치 정보를 조회하기 위한 메서드
      *
      * @param accessToken the access token
      * @param placeId     the place id
@@ -36,7 +36,7 @@ public interface DeviceSettingAdapter {
     List<DeviceResponse> getDeviceListByPlace(@RequestHeader("Authorization") String accessToken, @PathVariable Long placeId);
 
     /**
-     * 장소에 있는 장지 정보를 조회하기 위한 메서드
+     * 장소에 있는 장치 정보를 조회하기 위한 메서드
      *
      * @param accessToken the access token
      * @param placeName   the place name
