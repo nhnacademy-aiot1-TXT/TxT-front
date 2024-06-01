@@ -123,13 +123,14 @@ document.addEventListener('DOMContentLoaded', function () {
         const response = await fetch(url, option);
         const data = await response.json();
 
-        deviceName.innerText = data.deviceName;
-        time.innerText = data.time;
-        indoorTemperature.innerText = data.indoorTemperature + '도';
-        indoorHumidity.innerText = data.indoorHumidity + '%';
-        outdoorTemperature.innerText = data.outdoorTemperature + '도';
-        outdoorHumidity.innerText = data.outdoorHumidity + '%';
-        totalPeopleCount.innerText = data.totalPeopleCount + '명';
-        result.innerText = data.result;
+        const errorMessage = '데이터를 찾을 수 없습니다.'
+        deviceName.innerText = data.deviceName == null ? errorMessage : data.deviceName;
+        time.innerText = data.time == null ? errorMessage : data.time;
+        indoorTemperature.innerText = data.indoorTemperature == null ? errorMessage : data.indoorTemperature;
+        indoorHumidity.innerText = data.indoorHumidity == null ? errorMessage : data.indoorHumidity;
+        outdoorTemperature.innerText = data.outdoorTemperature == null ? errorMessage : data.outdoorTemperature;
+        outdoorHumidity.innerText = data.outdoorHumidity == null ? errorMessage : data.outdoorHumidity;
+        totalPeopleCount.innerText = data.totalPeopleCount == null ? errorMessage : data.totalPeopleCount;
+        result.innerText = data.result == null ? errorMessage : data.result;
     })
 });

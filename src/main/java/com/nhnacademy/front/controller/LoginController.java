@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestAttribute;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
+import javax.validation.Valid;
 
 /**
  * 로그인 처리 Controller 클래스
@@ -38,7 +39,7 @@ public class LoginController {
      */
 
     @PostMapping("/login")
-    public String login(LoginRequest loginRequest, HttpServletResponse response, @RequestAttribute("_csrf") CsrfToken csrfToken, Model model) {
+    public String login(@Valid LoginRequest loginRequest, HttpServletResponse response, @RequestAttribute("_csrf") CsrfToken csrfToken, Model model) {
         try {
             TokensResponse tokens = userAdapter.doLogin(loginRequest, csrfToken.getToken());
 
