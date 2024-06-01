@@ -14,6 +14,9 @@ import javax.servlet.http.HttpServletRequest;
 
 /**
  * 규칙 등록 API 요청을 처리하기 위한 클래스
+ *
+ * @author parksangwon
+ * @version 1.0.0
  */
 @RestController
 @RequestMapping("/admin/rule")
