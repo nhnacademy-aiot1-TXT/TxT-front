@@ -126,11 +126,11 @@ document.addEventListener('DOMContentLoaded', function () {
         const errorMessage = '데이터를 찾을 수 없습니다.'
         deviceName.innerText = data.deviceName == null ? errorMessage : data.deviceName;
         time.innerText = data.time == null ? errorMessage : data.time;
-        indoorTemperature.innerText = data.indoorTemperature == null ? errorMessage : data.indoorTemperature;
-        indoorHumidity.innerText = data.indoorHumidity == null ? errorMessage : data.indoorHumidity;
-        outdoorTemperature.innerText = data.outdoorTemperature == null ? errorMessage : data.outdoorTemperature;
-        outdoorHumidity.innerText = data.outdoorHumidity == null ? errorMessage : data.outdoorHumidity;
-        totalPeopleCount.innerText = data.totalPeopleCount == null ? errorMessage : data.totalPeopleCount;
+        indoorTemperature.innerText = data.indoorTemperature == null ? errorMessage : data.indoorTemperature + '도';
+        indoorHumidity.innerText = data.indoorHumidity == null ? errorMessage : data.indoorHumidity + '%';
+        outdoorTemperature.innerText = data.outdoorTemperature == null ? errorMessage : data.outdoorTemperature + '도';
+        outdoorHumidity.innerText = data.outdoorHumidity == null ? errorMessage : data.outdoorHumidity + '%';
+        totalPeopleCount.innerText = data.totalPeopleCount == null ? errorMessage : data.totalPeopleCount + '명';
         result.innerText = data.result == null ? errorMessage : data.result;
     })
 });
