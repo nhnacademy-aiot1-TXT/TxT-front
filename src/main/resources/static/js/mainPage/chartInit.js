@@ -30,6 +30,52 @@ async function chartInit(domain, name, date, place) {
     }
     chart.data.datasets[0].data = data.map(item => item[maxValue]);
     chart.data.datasets[1].data = data.map(item => item[minValue]);
+
+    switch (name) {
+        case "co2":
+            chart.options.plugins.annotation = {
+                annotations : {
+                    line1 : {
+                        type: 'line',
+                        yMin: 1000,
+                        yMax: 1000,
+                        borderColor: 'rgb(122,122,122)',
+                        borderDash: [6, 6],
+                        borderWidth: 2
+                    }
+                }
+            }
+            break;
+        case "humidity":
+            chart.options.plugins.annotation = {
+                annotations : {
+                    line1 : {
+                        type: 'line',
+                        yMin: 50,
+                        yMax: 50,
+                        borderColor: 'rgb(122,122,122)',
+                        borderDash: [6, 6],
+                        borderWidth: 2
+                    }
+                }
+            }
+            break;
+        case "temperature":
+            chart.options.plugins.annotation = {
+                annotations : {
+                    line1 : {
+                        type: 'line',
+                        yMin: 24,
+                        yMax: 24,
+                        borderColor: 'rgb(122,122,122)',
+                        borderDash: [6, 6],
+                        borderWidth: 2
+                    }
+                }
+            }
+            break;
+        default:
+    }
     chart.update();
 }
 

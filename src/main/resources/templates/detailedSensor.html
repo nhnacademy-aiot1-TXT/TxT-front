@@ -141,7 +141,7 @@
 <script src="/js/plugins/smooth-scrollbar.min.js"></script>
 <script src="/js/plugins/chartjs.min.js"></script>
 <script src="/js/plugins/jquery-3.7.1.min.js"></script>
-
+<script src="/js/plugins/chartjs-plugin-annotation.min.js"></script>
 <!-- 그래프 script -->
 <script th:inline="javascript">
     function drawChart(sensorName) {
@@ -151,6 +151,7 @@
         gradientStroke.addColorStop(1, 'rgba(240,191,206,0.4)');
         gradientStroke.addColorStop(0.2, 'rgba(241,192,208,0.1)');
         gradientStroke.addColorStop(0, 'rgba(250,219,206,0.05)');
+
         return new Chart(ctx, {
             type: "line",
             data: {
@@ -173,7 +174,7 @@
                 plugins: {
                     legend: {
                         display: false,
-                    }
+                    },
                 },
                 interaction: {
                     intersect: false,
@@ -318,6 +319,18 @@
                         data: []
                     }]
                 };
+                chart.options.plugins.annotation = {
+                    annotations : {
+                        line1 : {
+                            type: 'line',
+                            yMin: 24,
+                            yMax: 24,
+                            borderColor: 'rgb(122,122,122)',
+                            borderDash: [6, 6],
+                            borderWidth: 2
+                        }
+                    }
+                }
                 break;
             case 'illumination':
                 gradientStroke.addColorStop(1, 'rgba(248, 247, 212,0.4)');
@@ -357,6 +370,18 @@
                         data: []
                     }]
                 };
+                chart.options.plugins.annotation = {
+                    annotations : {
+                        line1 : {
+                            type: 'line',
+                            yMin: 50,
+                            yMax: 50,
+                            borderColor: 'rgb(122,122,122)',
+                            borderDash: [6, 6],
+                            borderWidth: 2
+                        }
+                    }
+                }
                 break;
 
             case 'co2':
@@ -377,6 +402,18 @@
                         data: []
                     }]
                 };
+                chart.options.plugins.annotation = {
+                    annotations : {
+                        line1 : {
+                            type: 'line',
+                            yMin: 1000,
+                            yMax: 1000,
+                            borderColor: 'rgb(122,122,122)',
+                            borderDash: [6, 6],
+                            borderWidth: 2
+                        }
+                    }
+                }
                 break;
 
             default:

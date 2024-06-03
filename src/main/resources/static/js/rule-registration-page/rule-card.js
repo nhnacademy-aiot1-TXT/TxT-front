@@ -22,12 +22,12 @@ function createConditionGroup() {
           <div id="collapseBody${index}" class="card-body collapse show">
               <div class="form-group">
                   <label for="customMode_mqttUrl[${index}]">MQTT URL</label>
-                  <input type="text" id="customMode_mqttUrl[${index}]" name="customMode_mqttUrl[${index}]" class="form-control" value="134.">
+                  <input type="text" id="customMode_mqttUrl[${index}]" name="customMode_mqttUrl[${index}]" class="form-control">
               </div>
 
               <div class="form-group">
                   <label for="customMode_topic[${index}]">Topic</label>
-                  <input type="text" id="customMode_topic[${index}]" name="customMode_topic[${index}]" class="form-control" value="cus/+/">
+                  <input type="text" id="customMode_topic[${index}]" name="customMode_topic[${index}]" class="form-control">
               </div>
 
               <div class="form-group">
