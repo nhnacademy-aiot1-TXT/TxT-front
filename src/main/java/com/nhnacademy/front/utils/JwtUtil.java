@@ -17,6 +17,9 @@ import java.util.stream.Collectors;
 
 /**
  * jwt 관련 유틸리티 클래스
+ *
+ * @author parksangwon
+ * @version 1.0.0
  */
 @Service
 @RequiredArgsConstructor

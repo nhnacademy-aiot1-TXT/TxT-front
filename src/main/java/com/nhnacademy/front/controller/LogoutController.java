@@ -18,6 +18,9 @@ import java.util.Objects;
 
 /**
  * 로그아웃 처리 Controller 클래스
+ *
+ * @author parksangwon
+ * @version 1.0.0
  */
 @Slf4j
 @Controller
