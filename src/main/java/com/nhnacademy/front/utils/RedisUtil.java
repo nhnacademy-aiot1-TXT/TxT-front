@@ -1,10 +1,13 @@
 package com.nhnacademy.front.utils;
 
+import com.nhnacademy.front.dto.ValueMessage;
+import com.nhnacademy.front.service.RabbitmqService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.serializer.Jackson2JsonRedisSerializer;
 import org.springframework.stereotype.Component;
 
+import java.util.Objects;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -19,6 +22,8 @@ public class RedisUtil {
     private final RedisTemplate<String, Object> redisTemplateBlackList;
     private final RedisTemplate<String, Object> redisTemplateDevice;
     private final RedisTemplate<String, String> redisTemplateAI;
+    private final RabbitmqService rabbitmqService;
+    private static final String ROUTE_KEY_PREFIX = "txt.";
 
     /**
      * 블랙리스트에 항목을 추가하는 메서드
@@ -40,7 +45,13 @@ public class RedisUtil {
      * @return the mode
      */
     public Object getMode(String key, String hashKey) {
-        return redisTemplateDevice.opsForHash().get(key, hashKey) == null ? Boolean.FALSE : redisTemplateDevice.opsForHash().get(key, hashKey);
+        Boolean modeStatus = (Boolean) redisTemplateDevice.opsForHash().get(key, hashKey);
+        if (Objects.isNull(modeStatus)) {
+            redisTemplateDevice.opsForHash().put(key, hashKey, false);
+            modeStatus = Boolean.FALSE;
+        }
+
+        return modeStatus;
     }
 
     /**
@@ -62,7 +73,17 @@ public class RedisUtil {
      * @return the device status
      */
     public Object getDeviceStatus(String key, String hashKey) {
-        return redisTemplateDevice.opsForHash().get(key, hashKey) == null ? Boolean.FALSE : redisTemplateDevice.opsForHash().get(key, hashKey);
+        Boolean deviceStatus = (Boolean) redisTemplateDevice.opsForHash().get(key, hashKey);
+        if (Objects.isNull(deviceStatus)) {
+            int index = hashKey.lastIndexOf('_');
+            String place = hashKey.substring(0, index);
+            String device = hashKey.substring(index + 1);
+            ValueMessage valueMessage = new ValueMessage(place, false);
+            rabbitmqService.sendMessage(valueMessage, ROUTE_KEY_PREFIX.concat(device));
+            deviceStatus = Boolean.FALSE;
+        }
+
+        return deviceStatus;
     }
 
     /**
