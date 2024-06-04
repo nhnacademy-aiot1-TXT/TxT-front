@@ -17,7 +17,7 @@ document.addEventListener("DOMContentLoaded", function() {
                 }
 
             }
-            const response = await fetch('https://contxt.co.kr/api/common/notification', option);
+            const response = await fetch('/api/common/notification', option);
 
             if (!response.ok) {
                 throw new Error('Network response was not ok');
