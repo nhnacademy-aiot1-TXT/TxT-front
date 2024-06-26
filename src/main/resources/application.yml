@@ -13,7 +13,7 @@ spring:
   rabbitmq:
     username: guest
     password: guest
-    host: 180.210.81.216
+    host: 180.210.82.110
     port: 5672
     device-control-exchange: txt.device.control
   profiles:
