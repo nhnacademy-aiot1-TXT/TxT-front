@@ -1,19 +1,19 @@
 spring:
   redis:
-    host: 133.186.244.96
-    port: 6379
-    database: 18
+    host: 133.186.241.167
     password: '*N2vya7H@muDTwdNMR!'
+    port: 6379
+    database: 268
     blackList:
-      database: 10
+      database: 260
     device:
-      database: 13
+      database: 263
   session:
     store-type: redis
   rabbitmq:
-    username: user
-    password: user
-    host: 133.186.221.92
+    username: guest
+    password: guest
+    host: 180.210.81.216
     port: 5672
     device-control-exchange: txt.device.control
   profiles:
