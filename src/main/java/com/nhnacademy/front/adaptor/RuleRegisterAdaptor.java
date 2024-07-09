@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RequestHeader;
 /**
  * 규칙 등록 API 요청을 보내기 위한 adapter 클래스
  */
-@FeignClient(value = "rule-engine", path = "/api/rule")
+@FeignClient(value = "rule-engine", url = "${gateway.url}", path = "/api/rule")
 public interface RuleRegisterAdaptor {
 
     /**
