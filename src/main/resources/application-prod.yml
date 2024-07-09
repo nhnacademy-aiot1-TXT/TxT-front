@@ -2,6 +2,8 @@ gateway:
   url: http://133.186.215.12:8000
 
 eureka:
+  instance:
+    hostname: 133.186.215.12
   client:
     service-url:
       defaultZone: http://admin:1234@133.186.215.12:8761/eureka
