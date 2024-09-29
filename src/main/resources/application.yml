@@ -1,4 +1,6 @@
 spring:
+  application:
+    name: front
   redis:
     host: 146.56.98.218
     password: '*N2vya7H@muDTwdNMR!'
@@ -13,7 +15,7 @@ spring:
   rabbitmq:
     username: guest
     password: guest
-    host: 180.210.81.216
+    host: 180.210.82.110
     port: 5672
     device-control-exchange: txt.device.control
   profiles:
@@ -25,6 +27,7 @@ spring:
         enabled: true
   freemarker:
     cache: false
+
 management:
   endpoints:
     web:
@@ -35,3 +38,7 @@ management:
     health:
       show-details: always
 
+eureka:
+  client:
+    register-with-eureka: true
+    fetch-registry: true
