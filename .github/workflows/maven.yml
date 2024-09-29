@@ -61,4 +61,4 @@ jobs:
             docker rm -f $(docker ps -q -f "name=TxT-front")
             docker rmi $(docker images ${{ secrets.DOCKER_REPO }} -q)
             docker pull ${{ secrets.DOCKER_REPO }}
-            docker run -d -p 8080:8080 --name TxT-front ${{ secrets.DOCKER_REPO }}
+            docker run -d --network config_txt -p 8080:8080 --name TxT-front ${{ secrets.DOCKER_REPO }}
